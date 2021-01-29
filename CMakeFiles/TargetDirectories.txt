@@ -1,0 +1,3 @@
+/home/sio/Projects/test/CMakeFiles/rebuild_cache.dir
+/home/sio/Projects/test/CMakeFiles/edit_cache.dir
+/home/sio/Projects/test/CMakeFiles/test.dir
