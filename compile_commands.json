@@ -1,14 +1,1 @@
-[
-  {
-    "arguments": [
-      "/usr/bin/c++",
-      "-o",
-      "CMakeFiles/test.dir/main.cc.o",
-      "-c",
-      "/home/sio/Projects/test/main.cc"
-    ],
-    "directory": "/home/sio/Projects/test/build",
-    "file": "/home/sio/Projects/test/main.cc",
-    "output": "/home/sio/Projects/test/build/CMakeFiles/test.dir/main.cc.o"
-  }
-]
+[]

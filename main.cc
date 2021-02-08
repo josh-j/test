@@ -4,31 +4,17 @@
 #include <functional>
 #include <variant>
 #include <tuple>
-using std::vector;
+#include <memory>
 
 #include "main.h"
+#include "declarative.h"
 
 
-class DeclarativeInterface {
-public:
-};
+// can i use template deduction on declarative?
+// need a declarative manager
+// need to use smart pointers in declarative
 
-template <class SIGNATURE> class Declarative;
-template <class Ret, class... Args>
-class Declarative<Ret(Args...)> : public DeclarativeInterface {
-  // function
-  // arguments
-public:
-  Declarative(const Declarative &) = delete;
-  void operator=(const Declarative &) = delete;
-
-  Declarative() {}
-  virtual ~Declarative() {}
-  std::function<Ret(Args...)> fn;
-  std::tuple<Args...> params;
-};
-
-std::vector<std::function<void()>> functions;
+std::vector <DeclarativeInterface*> mydecls;
 
 void test1(int& a, int& b) {
   std::cout << a + b << std::endl;
@@ -38,59 +24,79 @@ void test1(int& a, int& b) {
 void test2(std::string name) { std::cout << name << std::endl; }
 
 void Declare_test1(int a, int b) {
-  std::cout << a << " " << b << std::endl;
+  // auto decl_test1 = new Declarative<void(int&, int&)>;
+  // auto b = new Declarative(test1, 5, 10);
+  // decl_test1->assign(test1, a, b);
+  // mydecls.push_back(decl_test1);
 
-  // I need to save the arguments
-  // save the function
-  // Then later be able to loop through multiple functions and call the right arguments
-
-  
-  functions.push_back(std::bind(test1, a, b));
 }
 void Declare_test2(std::string name) {
-  functions.push_back(std::bind(test2, name));
 }
 
-class DeclareInterface {
-public:
-    virtual void operator()() = 0;
-};
 
-class CDeclare_test1 : public DeclareInterface {
-public:
-    void operator()(int a, int b) {
-        _pa = new int;
-        _pb = new int;
-        *_pa = a;
-        *_pb = b;
-
-        test1((*_pa), (*_pb));
-
-    }
-    virtual void operator()() {
-        test1((*_pa), (*_pb));
-    }
-    int* _pa;
-    int* _pb;
-
-};
-
-int main() {
-
+void init() {
   Declare_test1(5, 10);
   Declare_test2("hello");
+}
 
-  Declarative<void(int, int)> a;
-  a.fn = std::bind(test1, 5, 10);
-  a.params = std::make_tuple(5, 10);
+void run() {
+  for (auto fn : mydecls) {
+    fn->operator()();
+  }
+}
 
-  vector<DeclarativeInterface *> decls;
+void draw() {
+  Declare::Window::Area(50,50,250,250);
+  Declare::Window::Type::Theme(windowTheme);
+  {
+    Declare::Window::Area(5, 5, 5, 5); // make this inherit area from parent?
 
-  for (auto i : functions) {
-    i();
+    int count = 0;
+    Declare::Var::Int count = 0;
+    Declare::Button::Label("count: %d", count);
+    Declare::Button::OnPress(lambda(count ++));
+
+    Declare::Button::OnMove(ui.mouseMoved());
+    Declare::Button::Move(50, 50);
+  }
+}
+
+void shutdown() {
+  for (auto fn : mydecls) {
+    delete fn;
+  }
+}
+
+template <class Signature>
+class Functor;
+
+template <class Ret, class... Args>
+class Functor <Ret(Args...)> {
+  public:
+  Functor(Ret(*func)(Args...)) {
+
   }
 
-  for (auto i : functions) {
-    i();
+  Ret(_func)(Args...);
+  std::tuple<Args...> _params;
+};
+
+template <class Fun>
+class Hmm {
+ public:
+  Hmm(Fun fun) {
   }
+};
+
+
+int main() {
+  init();
+  run();
+  run();
+  shutdown();
+  std::string str;
+  std::vector<int> vec;
+
+//  Hmm(init);
+
 }
