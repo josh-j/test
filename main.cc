@@ -14,7 +14,7 @@
 // need a declarative manager
 // need to use smart pointers in declarative
 
-std::vector <DeclarativeInterface*> mydecls;
+std::vector <std::unique_ptr<DeclarativeInterface*>> mydecls;
 
 void test1(int& a, int& b) {
   std::cout << a + b << std::endl;
@@ -29,6 +29,11 @@ void Declare_test1(int a, int b) {
   // decl_test1->assign(test1, a, b);
   // mydecls.push_back(decl_test1);
 
+  auto d = std::make_unique<DeclarativeInterface*>(new Declarative{test1, 5, 10});
+  mydecls.push_back(std::move(d));
+ // auto e = std::make_unique(Declarative{ test1, 5, 10 });
+  //mydecls.push_back(std::move(e));
+
 }
 void Declare_test2(std::string name) {
 }
@@ -40,31 +45,31 @@ void init() {
 }
 
 void run() {
-  for (auto fn : mydecls) {
-    fn->operator()();
+  for (auto& fn : mydecls) {
+    (*fn)->operator()();
   }
 }
 
 void draw() {
-  Declare::Window::Area(50,50,250,250);
-  Declare::Window::Type::Theme(windowTheme);
-  {
-    Declare::Window::Area(5, 5, 5, 5); // make this inherit area from parent?
+  // Declare::Window::Area(50,50,250,250);
+  // Declare::Window::Type::Theme(windowTheme);
+  // {
+  //   Declare::Window::Area(5, 5, 5, 5); // make this inherit area from parent?
 
-    int count = 0;
-    Declare::Var::Int count = 0;
-    Declare::Button::Label("count: %d", count);
-    Declare::Button::OnPress(lambda(count ++));
+  //   int count = 0;
+  //   Declare::Var::Int count = 0;
+  //   Declare::Button::Label("count: %d", count);
+  //   Declare::Button::OnPress(lambda(count ++));
 
-    Declare::Button::OnMove(ui.mouseMoved());
-    Declare::Button::Move(50, 50);
-  }
+  //   Declare::Button::OnMove(ui.mouseMoved());
+  //   Declare::Button::Move(50, 50);
+  // }
 }
 
 void shutdown() {
-  for (auto fn : mydecls) {
-    delete fn;
-  }
+  // for (auto& fn : mydecls) {
+  //   delete fn;
+  // }
 }
 
 template <class Signature>
@@ -81,22 +86,34 @@ class Functor <Ret(Args...)> {
   std::tuple<Args...> _params;
 };
 
-template <class Fun>
+template <typename Fun, class... Args>
 class Hmm {
  public:
-  Hmm(Fun fun) {
+  Hmm(Fun fun, Args... args) :_func{ fun }, _params{args...} {
   }
+
+  void operator()() {
+    _func(std::get<0>(_params));
+    _func("asdf");
+  }
+
+  std::tuple<Args...> _params;
+  Fun _func;
 };
 
+//template <typename Fun>
+//Hmm(Fun) -> Hmm<Fun>;
 
 int main() {
   init();
   run();
   run();
   shutdown();
-  std::string str;
-  std::vector<int> vec;
 
-//  Hmm(init);
+
+  // std::string str;
+  // std::vector<int> vec;
+  //Hmm hmm(test2, "ok");
+  // hmm.operator()();
 
 }
