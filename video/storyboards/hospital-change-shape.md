@@ -4,8 +4,8 @@
 
 - **Format:** observational documentary. Calm, curious narrator, detached but never vague.
 - **Audience:** general public. No prior knowledge of German healthcare assumed.
-- **Length:** about 8¾ minutes, 9 scenes plus an end card. A 5-minute cut is planned below.
-- **Narration:** about 900 words at a slow pace (about 110 words per minute) with pauses.
+- **Length:** about 9½ minutes, 9 scenes plus an end card. A 5-minute cut is planned below.
+- **Narration:** about 1,150 words at a slow pace (about 110 words per minute) with pauses.
 
 ---
 
@@ -173,28 +173,45 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 
 ---
 
-## Scene 7 · Changing shape costs money first
-**06:00 – 06:50**
+## Scene 7 · Changing shape: who pays, and how it is done
+**06:00 – 07:40**
 
-**Picture:** The hospital's published campus plan as an overlay: an outpatient operating centre and day-treatment rooms. A simple line graph dips below zero and then, on one branch only, rises above it. The other branch stays flat.
+**Picture:**
+- **Part A, who pays:** two coloured streams of money flow towards the hospital. Blue from the state, labelled *buildings and equipment*. Green from the insurers, labelled *treatment*. They never mix.
+- **Part B, Saarbrücken:** the hospital's campus plan as an overlay. A new building appears with a large outpatient operating centre on its first floor. Two kinds of surgeon walk in: hospital doctors and local practice doctors. A calendar beside it reads *5–6 years after funding is confirmed*.
+- **Part C, the national fund:** a map of Germany. A single pin lands in Bergisch Gladbach, then more pins appear across five states.
+- **Part D, how it is done:** three quick vignettes. A dedicated day unit where patients arrive, are operated on, recover in chairs and leave. A ward being closed and its rota redrawn. Two hospital logos sliding together on a regional map.
+- **Close:** a line graph dips below zero. On one branch it rises above the line; on the other it stays flat.
 
 **Narration:**
-> The hospital's own plans already point to a new shape: an outpatient operating centre, rooms for day treatment.
+> So how does a hospital change its shape — and who pays for it?
 >
-> But a new shape must be built before it pays. New space. New schedules. Training. Agreements with local doctors. For a while, the hospital pays for the old way and the new way at once.
+> In Germany, the bills are split. The regional state pays for buildings and equipment. The insurers pay for treatment. A new day clinic must be built with one kind of money — and then survive on the other.
 >
-> If it then truly reorganises its wards and staff, the change can pay for itself. If it does not, the hospital has simply taken on new costs while keeping the old ones.
+> Here in Saarbrücken, the state has committed eighty-five million euros to a new health campus. On its first floor, a large outpatient operating centre — where hospital surgeons and local practice doctors will operate side by side, sharing the rooms, the staff, and the cost. Sharing is the point: an empty theatre is expensive; a busy one pays its way.
+>
+> But the building is expected five to six years after its funding is confirmed. The new price is here today.
+>
+> Across the country, a new national fund has begun paying for change. Its first grant, this spring, went to two hospitals in Bergisch Gladbach: fifty-eight million euros, with the operator finding the rest. The money pays to merge, rebuild and refocus — not to keep the lights on.
+>
+> And the hospitals that adapt well tend to do the same few things. They give day surgery its own space, its own list, its own team — instead of squeezing it between inpatient cases. They decide before the day who goes home, not on the day. And they choose what to do with the empty bed: close it and save the money, or give it to a patient who is waiting. Some go further, and agree with their neighbours who does what. Here, when a small hospital in Dudweiler closed, its work was folded into another Saarbrücken hospital — with public money to help it move.
+>
+> None of this is free. A new shape must be built before it pays. If the hospital truly reorganises, the change can pay for itself. If it does not, it has simply added new costs to old ones.
 >
 > The deciding factor is not the discharge time. It is what the hospital can actually change — and how quickly.
 
 **On screen:**
-- *Published campus plan: an outpatient operating centre and day-treatment space. These are plans, not finished facilities.*
+- *Dual financing: the states (Länder) fund investment; health insurers fund running costs through case payments.*
+- *Gesundheitscampus Winterberg: €85m in state funding planned (an earlier 2024 announcement said €70m). Outpatient OP centre open to hospital and practice-based surgeons. Expected 5–6 years after the funding commitment. This is a plan, not a finished facility.*
+- *Hospital Transformation Fund 2026–2035: up to €50bn. First grant on 17 April 2026 to Kliniken Rhein-Berg (Bergisch Gladbach): >€58m (federal ~€45m, NRW ~€13m) of €65m total; the operator, GFO, pays the remainder.*
+- *Saarbrücken: Caritas-Klinikum received about €23m in structural funds linked to the closure of its Dudweiler site.*
+- *Saarland planning report (aktiva, 2025): about 1,010–1,660 fewer beds needed by 2035, mainly because care is moving to outpatient settings.*
 - *ILLUSTRATION: the transition costs money first. Savings come only if the fixed costs actually change.*
 
 ---
 
 ## Scene 8 · Beyond the door
-**06:50 – 07:45**
+**07:40 – 08:35**
 
 **Picture:** The composite patient goes home. A line follows them: a lift from a relative, written instructions, a phone number, a follow-up visit, and a dotted route back to the hospital. A second patient lives alone, and their line has gaps.
 
@@ -214,7 +231,7 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 ---
 
 ## Scene 9 · What will tell us
-**07:45 – 08:30**
+**08:35 – 09:20**
 
 **Picture:** Night again. The planned-surgery floor is dark and the emergency band stays lit. Slowly, a light comes on in a small new wing.
 
@@ -230,14 +247,14 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 ---
 
 ## End card
-**08:30 – 08:45**
+**09:20 – 09:35**
 
 **On screen:**
 
 > **How to judge this reform**
 > Do patients come back unexpectedly? · Can people still get an operation nearby? · Can staff sustain the work? · Do the hospital's accounts balance without hidden cuts?
 
-*Figures from Destatis, BMG, BMF, the 2026 Hybrid-DRG tariff, HerniaSurge guidelines and the City of Saarbrücken. Cost examples are illustrations, not hospital accounts.*
+*Figures from Destatis, BMG, BMF, BAS, DKG/DKI, the 2026 Hybrid-DRG tariff, HerniaSurge guidelines, the Saarland health ministry and the City of Saarbrücken. Cost examples are illustrations, not hospital accounts.*
 
 ---
 
@@ -252,23 +269,55 @@ The same story and ending in about 5 minutes, which suits a social feed. Nothing
 | 3 · One price, two paths | 0:50 | 0:35 | Keep the price, the intent and "a medical judgement". |
 | 4 · The weight passes down | 1:35 | 0:50 | Keep the ageing line, "does not create the gap, but makes it wider", and the chain from government to hospital. Drop the list of pensions and defence. |
 | 5 + 6 · Empty bed + the part that cannot sleep | 2:05 | 1:05 | Merge: the empty bed saves little cash, and readiness costs stay. Keep the €300 / €60 illustration, "two hospitals in three now lose money" and "it arrives in full only in 2030". The €15.4m moves to on-screen text. |
-| 7 · Changing shape costs money first | 0:50 | 0:35 | Keep "what the hospital can actually change". |
+| 7 · Changing shape: who pays | 1:40 | 0:50 | Keep the split bill, the Saarbrücken campus with practice doctors and "five to six years… the new price is here today", one sentence on the day unit and the empty-bed choice, and "what the hospital can actually change". Bergisch Gladbach and Dudweiler move to on-screen text. |
 | 8 · Beyond the door | 0:55 | 0:35 | Keep "It was the care" and "It arrives in a kitchen, a spare room, a daughter's evening." |
 | 9 · What will tell us | 0:45 | 0:40 | Keep "No one in the chain chose this outcome." |
 | End card | 0:15 | 0:10 | Unchanged. |
-| **Total** | **8:45** | **~5:35** | Trim scene 2 to 0:25 and scene 1 to 0:25 if it must land at 5:10. |
+| **Total** | **9:35** | **~5:50** | To land near 5:00: trim scenes 1 and 2 to 0:25 each, scene 4 to 0:40 and scenes 5 + 6 to 0:55. |
 
 ---
 
 ## Changes from the previous draft
 
-- **Shorter.** 16 scenes and 12 minutes became 9 scenes and about 8 minutes. The manufacturing, export and pension material is now one line in scene 4.
+- **Shorter.** 16 scenes and 12 minutes became 9 scenes and about 9½ minutes. The manufacturing, export and pension material is now one line in scene 4.
 - **Plainer language.** "Hybrid-DRG", "PCCL", "allocation" and "G24Q" are gone from the narration. The rate stays as an on-screen example.
 - **Caveats moved on screen.** The narrator states what is known plainly. The limits sit in the on-screen labels.
 - **Generic cost example.** The cost illustrations no longer sit on the real hospital.
 - **Incentive structure.** The film's backbone is now pressure passing down the chain. The economy is shown as a tightening squeeze, not the root cause; that is the corrected version of the "failing economy pushed onto a hospital" framing.
+- **Real adaptation.** Scene 7 shows who pays for change (state investment money versus insurer treatment money), with real examples: the Saarbrücken campus, the first national transformation grant and the Dudweiler consolidation. It also shows what hospitals that adapt well actually do.
 - **A new conclusion.** The ending pays off the title: the rules change fast and the building changes slowly, and the outcome shows in patients, not empty beds.
 - **Detailed figures moved out of the film.** The full cost model and the checklist for hospital managers belong in a companion explainer.
+
+---
+
+## Annex · How hospitals pay for change: real examples
+
+These are for the companion explainer and for the on-screen text, not for narration.
+
+**How the money works.** German hospitals have two separate funding streams. The states (Länder) pay for investment: buildings and major equipment. Health insurers pay running costs through case payments such as DRGs, Hybrid-DRGs and outpatient fees. A day clinic therefore needs investment money to be built, and enough case income to run. Since 2026 there is a third source, the national transformation fund, which pays for restructuring.
+
+| Funding route | What it pays for | Real example | Catch |
+|---|---|---|---|
+| **State investment funding** | New buildings and equipment, including outpatient OP centres | Saarland: €85m planned for the Gesundheitscampus Winterberg in Saarbrücken, with a large outpatient OP centre shared with practice-based surgeons | Slow: built 5–6 years after the funding commitment. States have long underfunded investment overall. |
+| **Hospital Transformation Fund (2026–2035, up to €50bn)** | Merging sites, converting or refocusing hospitals, expanding emergency care | First grant, 17 April 2026: Kliniken Rhein-Berg, Bergisch Gladbach. €58m+ of €65m (federal ~€45m, NRW ~€13m); the operator pays the rest. Five states had grants approved by spring 2026; 254 applications had been filed. | Needs state co-funding and an operator share. Pays for restructuring, not ongoing losses. |
+| **Earlier structural fund (linked to closures)** | Consolidating services when a site closes | Saarbrücken: about €23m to Caritas-Klinikum, linked to closing its Dudweiler site | Tied to giving up a location. |
+| **Operator's own money, loans or the owner** | The share that grants don't cover, plus cash to bridge the transition | GFO's share of the Rhein-Berg project; the City of Saarbrücken's €15.4m support to its hospital in 2026 | Hard for hospitals already making losses. |
+| **Sharing with practice-based doctors** | Keeping theatres busy, which spreads fixed costs | Winterberg OP centre plan: hospital and practice surgeons using the same rooms. Hybrid-DRG rules let participating providers share one case payment. | Needs contracts, scheduling and trust between hospital and practice doctors. |
+| **Case income (Hybrid-DRG, outpatient fees)** | Day-to-day running of the day unit | The 2026 Hybrid-DRG catalogue expanded to 69 groups and 904 procedure codes, adding appendix and gallbladder removal | Only covers running costs if the unit is efficient and kept busy. |
+
+**What well-run day surgery looks like (expert practice):**
+- Use a dedicated outpatient (AOP) structure: its own space, list and team. Don't slot day cases between inpatient cases.
+- Decide day case or inpatient before the day of surgery, with a safe route to stay overnight if needed.
+- Plan theatre slots carefully, with clear handovers between staff groups.
+
+Source: Elisabeth-Krankenhaus Essen at an apoBank event, as reported in Ärzteblatt, May 2026.
+
+**Scale of the opportunity and its limits:**
+- A Barmer analysis for Schleswig-Holstein estimated about 1 in 5 inpatient operations could be done as outpatient care, hernia repair among them.
+- Exclusions apply: significant other illnesses, no one to supervise the patient for the first 24 hours at home, and the very young or very old.
+- Saarland's planning report projects somatic cases falling from about 236,000 (2023) to 209,500–225,000 within ten years, and about 1,010–1,660 fewer beds needed by 2035.
+
+---
 
 ## Fact-check before publishing
 
@@ -280,4 +329,6 @@ The same story and ending in about 5 minutes, which suits a social feed. Nothing
 - [ ] Scene 4: the decline of energy-intensive industry since 2022 and China's shift from customer to competitor. The Bundesbank analysis (original source 8) covers China; add a Destatis production index for energy-intensive industry.
 - [ ] The ~42% contribution total: 18.6 + 14.6 + 2.9 (average additional rate) + 3.6 + 2.6 = 42.3%, from the 2026 rates in the companion explainer. Long-term care varies with child status.
 - [ ] Scene 6: DKI Krankenhaus-Barometer, December 2025 (66% losses in 2024; 14% expect a positive 2025 result). DKG insolvency counts for 2023–2025 (via Ärzteblatt). Destatis hospital counts for 2002 and 2024. KHAG in force 15 April 2026, with its readiness-payment timetable. Note that the DKG and DKI represent hospitals, so attribute their figures.
+- [ ] Scene 7: confirm the Winterberg state funding figure (€85m on the hospital's site; €70m in a February 2024 Ärzteblatt report) and the "5–6 years" timeline from the hospital's press release. Confirm the details of the Caritas-Klinikum/Dudweiler €23m. First transformation-fund grant: BMG/BAS press release of 17 April 2026. aktiva bed figures: Ärzteblatt report on the Saarland planning report.
+- [ ] Scene 7: the "adapt well" practices come from expert recommendations (Elisabeth-Krankenhaus Essen at an apoBank event, Ärzteblatt, May 2026) and general day-surgery practice. Present them as observations, not as measured results.
 - [ ] All other figures come from the original storyboard's source ledger (sources 1–15). Re-check each link on the day the film is published.
