@@ -1,0 +1,26 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 18.95,
+      "text": "When a patient goes home, a bed empties. On paper, a few hundred euros vanish from the bill. But the nurse is still on the rota. Little money is saved — until the hospital truly changes what it spends."
+    },
+    {
+      "start": 19.95,
+      "end": 28.6,
+      "text": "And there is the part that cannot sleep. For years, routine operations helped to pay for it."
+    },
+    {
+      "start": 29.6,
+      "end": 39.4,
+      "text": "Two German hospitals in three are losing money. A payment just for staying ready is now law — but it arrives in full only in twenty thirty."
+    },
+    {
+      "start": 40.9,
+      "end": 43.85,
+      "text": "The new price is already here."
+    }
+  ]
+}

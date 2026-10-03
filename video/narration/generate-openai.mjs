@@ -17,11 +17,10 @@ const DIR = path.dirname(fileURLToPath(import.meta.url));
 const MODEL = process.env.MODEL ?? 'gpt-4o-mini-tts';
 const VOICE = process.env.VOICE ?? 'ballad';
 const SPEED = Number(process.env.SPEED ?? 1.0);
+// Without OPENAI_API_KEY, no Authorization header is sent: use this when an egress proxy
+// injects the credential (e.g. cloud-environment API credentials).
 const KEY = process.env.OPENAI_API_KEY;
-if (!KEY) {
-  console.error('Set OPENAI_API_KEY first.');
-  process.exit(1);
-}
+if (!KEY) console.warn('OPENAI_API_KEY not set: relying on proxy-injected credentials.');
 
 const BASE = `Voice: a warm, older British narrator with received pronunciation. Softly spoken, slight gravel, close to the microphone.
 Tone: calm, gently curious and observational, like a natural-history documentary. Understated, with quiet wonder and occasional dry warmth. Never dramatic, never salesy, never upbeat.
@@ -52,7 +51,7 @@ const PAUSES = {
 async function speak(text, instructions, out) {
   const res = await fetch('https://api.openai.com/v1/audio/speech', {
     method: 'POST',
-    headers: { Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
+    headers: { ...(KEY ? { Authorization: `Bearer ${KEY}` } : {}), 'Content-Type': 'application/json' },
     body: JSON.stringify({ model: MODEL, voice: VOICE, input: text, instructions, speed: SPEED, response_format: 'wav' }),
   });
   if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);

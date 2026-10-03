@@ -1,0 +1,26 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 9.3,
+      "text": "When our patient leaves, the care changes address. Someone must drive them home. Someone should be there tonight."
+    },
+    {
+      "start": 10.3,
+      "end": 18.55,
+      "text": "For those who live alone, or far away, or are frail, the night in hospital was never a habit."
+    },
+    {
+      "start": 20.55,
+      "end": 23.1,
+      "text": "It was the care."
+    },
+    {
+      "start": 24.1,
+      "end": 32.1,
+      "text": "Work that leaves the ward does not vanish. It arrives in a kitchen, a spare room, a daughter's evening."
+    }
+  ]
+}
