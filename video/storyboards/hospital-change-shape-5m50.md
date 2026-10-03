@@ -3,7 +3,7 @@
 *One small operation, and the large change around it.*
 
 - **Format:** natural-history-style observational documentary, English, 5 minutes 50 seconds.
-- **Script:** 8 scenes plus an end card, about 600 words of narration.
+- **Script:** 8 scenes plus an end card, about 645 words of narration (about 117 words per minute; leave the pauses in).
 - **Full research version:** `hospital-change-shape.md` holds the long cut, the funding annex and the source notes. This file is the one to produce.
 
 ---
@@ -48,7 +48,7 @@ The film watches a hospital the way a wildlife documentary watches a creature in
 **Narration:**
 > At night, most of this hospital sleeps. One part never does — the part that waits.
 >
-> Here, in a quiet corner of Germany, a hospital is being asked to change its shape. And it begins with a very small operation.
+> Here, in a quiet corner of Germany, a hospital is being asked to change its shape. It begins with a very small operation.
 
 **On screen:** *Klinikum Saarbrücken · Saarland, Germany*
 
@@ -60,29 +60,33 @@ The film watches a hospital the way a wildlife documentary watches a creature in
 **Picture:** A simple illustration of a weak spot in the groin wall. Then two rooms side by side, one with a recovery chair and one with a bed. A single price label drifts down and settles across both.
 
 **Narration:**
-> A groin hernia is a weak point in the wall of the body — one of the most common reasons an adult has surgery. The repair is routine, and for many patients it needs no night in hospital at all.
+> A groin hernia is a weak point in the wall of the body. Germany repairs around a quarter of a million each year. For most patients, the repair needs no night in hospital at all.
 >
-> In Germany, for years, many stayed the night anyway. Now the rules have changed. For a simple case, the hospital is paid one fixed price — whether the patient goes home that evening, or stays until morning.
+> In Scandinavia and Britain, most go home the same day. In Germany, most have stayed the night. Now the rules have changed. For a simple case, the hospital is paid one fixed price — whether the patient goes home that evening, or stays until morning.
 >
 > Who is fit to go home remains a doctor's decision. The price simply stops paying for nights that are not needed.
 
 **On screen:**
-- *Example 2026 rate: €2,082.60, the same for a day case or one night*
-- *Complex cases are excluded.*
+- *About 250,000 groin hernia repairs a year in Germany (BDC)*
+- *Done as day cases: Germany ~14% (2019, Herniamed registry) · Scandinavia and English-speaking countries >80%*
+- *2026 fixed price for a simple repair: €2,082.60, the same for a day case or an overnight stay. Complex cases are excluded.*
 
 ---
 
 ## Scene 3 · The case for change
 **01:05 – 01:35**
 
-**Picture:** A map of Europe in which countries fill in by hospital beds per person. Germany glows darkest. A second layer shows life expectancy, and Germany sits in the middle of the pack. Then a patient recovers on a sofa at home in daylight.
+**Picture:** A map of Europe in which countries fill in by hospital beds per person. Germany glows almost the darkest. A second layer shows life expectancy, and Germany sits in the middle of the pack.
 
 **Narration:**
-> To the insurers, this change is overdue. Germany has more hospital beds per person than almost any country in Europe, and spends more on health than most of its neighbours — yet its people do not live longer. Recovering at home is often quicker, and safer from infection.
+> To the insurers, this change is overdue. Germany has more hospital beds per person than any country in the European Union but one. It spends more on health per person than any of them. Yet its people live no longer than the European average.
 >
 > Some shrinking, they argue, is not the illness. It is the cure.
 
-**On screen:** *Beds per 1,000 people, spending per person and life expectancy: OECD / EU Country Health Profile (year)* *[figures pending fact-check]*
+**On screen:**
+- *Hospital beds per 100,000 people (2024): Germany 759 · EU average 507. Only Bulgaria has more (Eurostat).*
+- *Health spending per person: highest in the EU (2023). Life expectancy: 81.5 years (2024), about the EU average (OECD/EU Country Health Profile 2025).*
+- *The reform also concentrates complex care where teams do it often, because for some treatments volume is linked to better results.*
 
 ---
 
@@ -96,7 +100,7 @@ The film watches a hospital the way a wildlife documentary watches a creature in
 - At the hospital the weight settles on three objects that cannot move: a building, a night rota and an emergency light.
 
 **Narration:**
-> But the pressure comes from deeper still. Germany is growing older: one person in five is sixty-seven or over, and soon it will be one in four. Fewer workers pay in. More patients need care. And the economy that once paid the bills is losing power — the cheap Russian gas is gone, and Chinese factories now compete with German ones.
+> But the pressure comes from deeper still. One German in five is sixty-seven or over; by 2035, it will be one in four. Fewer workers pay in. More patients need care. And the economy that paid the bills is losing power — the cheap Russian gas is gone, and Chinese factories now compete with German ones.
 >
 > So the weight passes down. Government limits what it adds. Insurers fix their prices. The regions delay new buildings. Each decision is reasonable.
 >
@@ -104,8 +108,9 @@ The film watches a hospital the way a wildlife documentary watches a creature in
 
 **On screen:**
 - *Aged 67+: ~20% (2024) → ~25% (2035 projection)*
-- *Projected insurer funding gap without reform: €19bn (2027) → €44bn (2030). Government estimate.*
-- *A weaker economy widens the gap; it does not create it.*
+- *Insurer funding gap projected without action: €19bn (2027) → €44bn (2030) (BMG). A stabilisation law passed in July 2026 aims to close it.*
+- *Output of energy-intensive industry: down almost 18% since 2021 (Destatis)*
+- *Spending grows faster than income: H1 2026 spending +7.1%, contribution income +4.1% (BMG). A weaker economy widens the gap; it does not create it.*
 
 ---
 
@@ -115,15 +120,15 @@ The film watches a hospital the way a wildlife documentary watches a creature in
 **Picture:** An empty bed casts two shadows, a long one labelled *capacity freed* and a short one labelled *cash saved*. Then back to the night hospital: the planned-surgery floor dims, and thin streams of light from routine operations flow into the amber emergency band and thin out.
 
 **Narration:**
-> When a patient goes home, a bed empties. On paper, a few hundred euros vanish from the bill. But the nurse is still on the rota. The ward is still heated. Very little money has actually been saved — until the hospital truly changes what it spends.
+> When a patient goes home, a bed empties. On paper, a few hundred euros vanish from the bill. But the nurse is still on the rota. Very little money has actually been saved — until the hospital truly changes what it spends.
 >
-> And there is the part that cannot sleep. Emergency teams, intensive care, specialists on call. For years, routine operations helped to pay for them.
+> And there is the part that cannot sleep. For years, routine operations helped to pay for it.
 >
-> Across Germany, two hospitals in three now lose money. A new payment, just for staying ready, is written into law. But it arrives in full only in 2030. The new price is already here.
+> Across Germany, two hospitals in three are losing money. A new payment, just for staying ready, is written into law. But it arrives in full only in 2030. The new price is already here.
 
 **On screen:**
 - *ILLUSTRATION: €300 of costs allocated to one night ≠ €60 actually saved in cash*
-- *2024: 66% of German hospitals made a loss (DKI, a hospital-sector institute)*
+- *2024: 66% of German hospitals made a loss, and ~70% expected one for 2025 (DKI Krankenhaus-Barometer; the DKI is a hospital-sector institute)*
 - *Readiness payments: phased in 2028–29, in full from 2030*
 
 ---
@@ -136,13 +141,13 @@ The film watches a hospital the way a wildlife documentary watches a creature in
 **Narration:**
 > So how does a hospital change shape — and who pays? In Germany the bills are split. The state pays for buildings. The insurers pay for treatment.
 >
-> Here, the state has committed eighty-five million euros to a new campus — with an outpatient theatre where hospital surgeons and local doctors will work side by side, sharing the cost of every room. It is expected five to six years from the funding decision.
+> Here, the state has set aside eighty-five million euros for a new campus — with an outpatient theatre where hospital surgeons and local doctors will work side by side. Once the money is confirmed, it could open in five or six years.
 >
-> The hospitals that adapt well give day surgery its own space and its own team. They decide before the day who goes home. And they choose what to do with the empty bed: close it, or give it to someone who is waiting.
+> The hospitals that adapt well give day surgery its own space. They decide before the day who goes home. And they choose what to do with the empty bed: close it, or give it to someone who is waiting.
 
 **On screen:**
-- *Gesundheitscampus Winterberg: €85m in planned state funding. A plan, not yet built.*
-- *National transformation fund 2026–2035: up to €50bn for restructuring*
+- *Gesundheitscampus Winterberg: €85m in state funds earmarked (2024). So far only planning costs are formally committed. A plan, not yet built.*
+- *National transformation fund 2026–2035: up to €50bn for restructuring. First grant April 2026: €58m to merge two hospitals in Bergisch Gladbach.*
 
 ---
 
@@ -152,13 +157,13 @@ The film watches a hospital the way a wildlife documentary watches a creature in
 **Picture:** The patient is driven home. Close-ups: a wristband cut off, written instructions, a phone placed by the bed. A second home with a person alone at the window, and the dotted line back to the hospital is fainter.
 
 **Narration:**
-> When our patient leaves, the care changes address. Someone must drive them home. Someone should be there tonight. There must be a way back.
+> When our patient leaves, the care changes address. Someone must drive them home. Someone should be there tonight.
 >
 > For those who live alone, or far away, or are frail, the night in hospital was never a habit. It was the care.
 >
 > Work that leaves the ward does not vanish. It arrives in a kitchen, a spare room, a daughter's evening.
 
-**On screen:** *Safe day surgery depends on careful selection and aftercare.*
+**On screen:** *"Day surgery is recommended for the majority of groin hernia repair provided aftercare is organized." (HerniaSurge international guideline, 2018)*
 
 ---
 
@@ -184,7 +189,7 @@ The film watches a hospital the way a wildlife documentary watches a creature in
 > **How to judge the change**
 > Unplanned returns · Access to surgery nearby · Staff who stay · Accounts that balance without hidden cuts
 
-*Facts as of October 2026. Sources: Destatis, BMG, OECD, DKG/DKI, the 2026 Hybrid-DRG tariff, HerniaSurge, the Saarland health ministry, the City of Saarbrücken. Cost examples are illustrations, not hospital accounts.*
+*Facts as of 3 October 2026. Sources: Destatis, BMG, Eurostat, OECD/European Observatory, DKG/DKI, Herniamed, HerniaSurge, the 2026 Hybrid-DRG tariff, the Saarland health ministry, Klinikum Saarbrücken, the City of Saarbrücken. Cost examples are illustrations, not hospital accounts. The full source ledger is in `hospital-change-shape.md`.*
 
 ---
 
@@ -192,8 +197,8 @@ The film watches a hospital the way a wildlife documentary watches a creature in
 
 | Perspective | Where it is heard |
 |---|---|
-| Insurers and government: too many beds, too many stays, and some shrinking is the cure | Scene 3 |
-| Patients who benefit: recovery at home is quicker and carries less infection risk | Scenes 3 and 7 |
+| Insurers and government: too many beds, too many stays, and some shrinking is the cure | Scenes 2 and 3 |
+| Patients who benefit: most can safely go home the same day | Scene 2, plus the HerniaSurge card in scene 7 |
 | Patients at risk: people who live alone or are frail | Scene 7 |
 | Hospitals: fixed costs, readiness, timing | Scenes 5 and 6 |
 | Families: work moves into homes | Scene 7 |

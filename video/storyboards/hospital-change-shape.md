@@ -4,7 +4,7 @@
 
 - **Format:** observational documentary. Calm, curious narrator, detached but never vague.
 - **Audience:** general public. No prior knowledge of German healthcare assumed.
-- **Length:** about 9½ minutes, 9 scenes plus an end card. A 5-minute cut is planned below.
+- **Length:** about 9½ minutes, 9 scenes plus an end card. **This is the long research version. The main production script is `hospital-change-shape-5m50.md`.**
 - **Narration:** about 1,150 words at a slow pace (about 110 words per minute) with pauses.
 
 ---
@@ -18,11 +18,11 @@
 - Many of these operations can be done safely as day surgery if the patient is chosen carefully and has proper aftercare.
 - An empty bed does not save money by itself. Staff, buildings and night cover still cost money until the hospital actually changes them.
 - Changing a hospital costs money first. Any savings come later, and only if the change is real.
-- German hospitals are under broad financial strain. In 2024, two in three lost money, and only about one in seven expected a positive result for 2025 (DKI Krankenhaus-Barometer). Insolvencies are real but fewer than headlines suggest: 34 sites in 2023, 30 in 2024 and 26 in 2025, out of about 1,840 hospitals. Most insolvent hospitals restructure and keep operating; six insolvent clinics closed in 2025. The total number of hospitals has fallen gradually, from 2,221 in 2002 to 1,841 in 2024, through closures and mergers. Some of this shrinking is intended: the national hospital reform aims to concentrate care in fewer, better-equipped sites.
+- German hospitals are under broad financial strain. In 2024, two in three lost money, and only about one in seven expected a positive result for 2025 (DKI Krankenhaus-Barometer). Insolvencies are real but fewer than headlines suggest: 34 sites in 2023, 30 in 2024 and 26 in 2025, out of about 1,840 hospitals. Most insolvent hospitals restructure and keep operating; six insolvent clinics closed in 2025, including some whose proceedings began in earlier years. The total number of hospitals has fallen gradually, from 2,221 in 2002 to 1,841 in 2024, through closures and mergers. Some of this shrinking is intended: the national hospital reform aims to concentrate care in fewer, better-equipped sites.
 - The readiness problem has been recognised in law. The hospital reform (KHVVG, amended by the KHAG in force since April 2026) adds payments for keeping capacity ready and a transformation fund of up to €50bn for 2026–2035. But those payments are budget-neutral in 2026–2027, phase in during 2028–2029, and only take full effect from 2030. The price rule is already here; the readiness money comes later.
 - Pressure passes downward. Each level of the system (government, insurers, the states, the hospital) has sound reasons to push costs to the next. The hospital ends up holding the costs it cannot pass on: its building, its night shift and its emergency readiness. Some of the remaining work moves into patients' homes.
 - Germany's growth model is weakening, and the trend points downward. The model that made it rich relied on cheap Russian gas, strong demand from China, an open American market, and a currency shared with weaker neighbours that kept its exports cheaper than a German currency alone would have. The cheap gas is gone. China is now a competitor in cars, machinery and chemicals. US tariffs have risen. Energy-intensive industry has shrunk.
-- That is a weakening, not a collapse. Germany is still rich, with low public debt and relatively low unemployment, and it has started borrowing to invest. How far the decline goes depends on how well it adapts.
+- That is a weakening, not a collapse. Germany is still rich, with public debt of 63.5% of GDP (end-2025, low among G7 countries), and it has started borrowing to invest. Growth has stalled (2023: -0.8%, 2024: 0.0%, 2025: +0.2%), and registered unemployment has risen to about 3 million (6.4%, September 2026). The research institutes forecast +1.3% growth for 2026. How far the decline goes depends on how well it adapts.
 - The economy tightens the squeeze, but it is not the root. The insurers' gap comes mainly from spending growing faster than income: wages, prices, new treatments and ageing. A strong economy would face it too, only more slowly. Ageing hits both sides at once: more patients, fewer workers paying in, and fewer nurses.
 - Social insurance can be paid for, but at a rising price. Contributions for health, pensions, long-term care and unemployment already take about 42% of a typical salary, shared between employee and employer, and the direction is upward. The real question is who pays more, or who gets less.
 - The day-surgery reform did not come from the economic slump. Germany has long kept patients in hospital more than comparable countries, and the same-price rule was legislated before the downturn was clear.
@@ -110,7 +110,7 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 >
 > Germany is growing older. Today one person in five is sixty-seven or over; by the middle of the next decade, one in four. Fewer workers pay in; more patients need care; the nurses grow older too.
 >
-> Spending on care grows faster than the money paid in — wages, prices, new treatments and age all push it up. And the engine that once paid the bills is losing power. Cheap gas from Russia is gone. China, once Germany's best customer, now builds the cars and machines Germany used to sell it. A weaker economy does not create the gap. But it makes it wider, year after year.
+> Spending on care grows faster than the money paid in — wages, prices, new treatments and age all push it up. And the engine that once paid the bills is losing power. Cheap gas from Russia is gone. China, for years Germany's biggest trading partner, now builds the cars and machines Germany used to sell it. A weaker economy does not create the gap. But it makes it wider, year after year.
 >
 > And pressure, in a system like this, rarely stays where it begins.
 >
@@ -121,7 +121,7 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 **On screen:**
 - *Aged 67+: ~20% (2024) → ~25% (2035 projection)*
 - *Total health spending: €538bn (2024)*
-- *Projected insurer funding gap without reform: €19bn (2027) → €44bn (2030). Government estimate, not a recorded deficit.*
+- *Insurer funding gap projected without action: €19bn (2027) → €44bn (2030) (BMG). A stabilisation law (BStabG) passed in July 2026 aims to close it.*
 - *The day-surgery reform predates the economic slump. Its aim is clinical as well as financial.*
 - *Social contributions in 2026: about 42% of salary (health, pensions, long-term care, unemployment), shared by employee and employer.*
 
@@ -188,13 +188,13 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 >
 > In Germany, the bills are split. The regional state pays for buildings and equipment. The insurers pay for treatment. A new day clinic must be built with one kind of money — and then survive on the other.
 >
-> Here in Saarbrücken, the state has committed eighty-five million euros to a new health campus. On its first floor, a large outpatient operating centre — where hospital surgeons and local practice doctors will operate side by side, sharing the rooms, the staff, and the cost. Sharing is the point: an empty theatre is expensive; a busy one pays its way.
+> Here in Saarbrücken, the state has set aside eighty-five million euros for a new health campus. On its first floor, a large outpatient operating centre — where hospital surgeons and local practice doctors will operate side by side, sharing the rooms, the staff, and the cost. Sharing is the point: an empty theatre is expensive; a busy one pays its way.
 >
 > But the building is expected five to six years after its funding is confirmed. The new price is here today.
 >
 > Across the country, a new national fund has begun paying for change. Its first grant, this spring, went to two hospitals in Bergisch Gladbach: fifty-eight million euros, with the operator finding the rest. The money pays to merge, rebuild and refocus — not to keep the lights on.
 >
-> And the hospitals that adapt well tend to do the same few things. They give day surgery its own space, its own list, its own team — instead of squeezing it between inpatient cases. They decide before the day who goes home, not on the day. And they choose what to do with the empty bed: close it and save the money, or give it to a patient who is waiting. Some go further, and agree with their neighbours who does what. Here, when a small hospital in Dudweiler closed, its work was folded into another Saarbrücken hospital — with public money to help it move.
+> And the hospitals that adapt well tend to do the same few things. They give day surgery its own space, its own list, its own team — instead of squeezing it between inpatient cases. They decide before the day who goes home, not on the day. And they choose what to do with the empty bed: close it and save the money, or give it to a patient who is waiting. Some go further, and agree with their neighbours who does what. Here, a small hospital in Dudweiler has moved most of its work into a larger Saarbrücken site — with public money to help it move.
 >
 > None of this is free. A new shape must be built before it pays. If the hospital truly reorganises, the change can pay for itself. If it does not, it has simply added new costs to old ones.
 >
@@ -204,8 +204,8 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 - *Dual financing: the states (Länder) fund investment; health insurers fund running costs through case payments.*
 - *Gesundheitscampus Winterberg: €85m in state funding planned (an earlier 2024 announcement said €70m). Outpatient OP centre open to hospital and practice-based surgeons. Expected 5–6 years after the funding commitment. This is a plan, not a finished facility.*
 - *Hospital Transformation Fund 2026–2035: up to €50bn. First grant on 17 April 2026 to Kliniken Rhein-Berg (Bergisch Gladbach): >€58m (federal ~€45m, NRW ~€13m) of €65m total; the operator, GFO, pays the remainder.*
-- *Saarbrücken: Caritas-Klinikum received about €23m in structural funds linked to the closure of its Dudweiler site.*
-- *Saarland planning report (aktiva, 2025): about 1,010–1,660 fewer beds needed by 2035, mainly because care is moving to outpatient settings.*
+- *Saarbrücken: about €23m in federal structural-fund money to move Caritas-Klinikum's Dudweiler services to its Rastpfuhl site. Acute care has moved; psychosomatics remains in Dudweiler for now.*
+- *Saarland planning report (aktiva, 2025): about 1,010–1,660 fewer beds needed by 2035 than in the 2023 hospital plan, mainly because care is moving to outpatient settings.*
 - *ILLUSTRATION: the transition costs money first. Savings come only if the fixed costs actually change.*
 
 ---
@@ -298,9 +298,9 @@ These are for the companion explainer and for the on-screen text, not for narrat
 
 | Funding route | What it pays for | Real example | Catch |
 |---|---|---|---|
-| **State investment funding** | New buildings and equipment, including outpatient OP centres | Saarland: €85m planned for the Gesundheitscampus Winterberg in Saarbrücken, with a large outpatient OP centre shared with practice-based surgeons | Slow: built 5–6 years after the funding commitment. States have long underfunded investment overall. |
+| **State investment funding** | New buildings and equipment, including outpatient OP centres | Saarland: €85m earmarked for the Gesundheitscampus Winterberg in Saarbrücken (raised from €70m in 2024), with a large outpatient OP centre shared with practice-based surgeons. So far only planning costs are formally committed. | Slow: could open 5–6 years after the building funds are confirmed. States cover only about half of investment needs (2024: €4.24bn paid against ~€7bn needed, DKG/InEK). |
 | **Hospital Transformation Fund (2026–2035, up to €50bn)** | Merging sites, converting or refocusing hospitals, expanding emergency care | First grant, 17 April 2026: Kliniken Rhein-Berg, Bergisch Gladbach. €58m+ of €65m (federal ~€45m, NRW ~€13m); the operator pays the rest. Five states had grants approved by spring 2026; 254 applications had been filed. | Needs state co-funding and an operator share. Pays for restructuring, not ongoing losses. |
-| **Earlier structural fund (linked to closures)** | Consolidating services when a site closes | Saarbrücken: about €23m to Caritas-Klinikum, linked to closing its Dudweiler site | Tied to giving up a location. |
+| **Earlier structural fund (linked to closures)** | Consolidating services when a site closes | Saarbrücken: about €23m in federal money to Caritas-Klinikum, to move its Dudweiler site to Rastpfuhl (acute care has moved; psychosomatics still in Dudweiler) | Tied to giving up a location. |
 | **Operator's own money, loans or the owner** | The share that grants don't cover, plus cash to bridge the transition | GFO's share of the Rhein-Berg project; the City of Saarbrücken's €15.4m support to its hospital in 2026 | Hard for hospitals already making losses. |
 | **Sharing with practice-based doctors** | Keeping theatres busy, which spreads fixed costs | Winterberg OP centre plan: hospital and practice surgeons using the same rooms. Hybrid-DRG rules let participating providers share one case payment. | Needs contracts, scheduling and trust between hospital and practice doctors. |
 | **Case income (Hybrid-DRG, outpatient fees)** | Day-to-day running of the day unit | The 2026 Hybrid-DRG catalogue expanded to 69 groups and 904 procedure codes, adding appendix and gallbladder removal | Only covers running costs if the unit is efficient and kept busy. |
@@ -315,20 +315,52 @@ Source: Elisabeth-Krankenhaus Essen at an apoBank event, as reported in Ärztebl
 **Scale of the opportunity and its limits:**
 - A Barmer analysis for Schleswig-Holstein estimated about 1 in 5 inpatient operations could be done as outpatient care, hernia repair among them.
 - Exclusions apply: significant other illnesses, no one to supervise the patient for the first 24 hours at home, and the very young or very old.
-- Saarland's planning report projects somatic cases falling from about 236,000 (2023) to 209,500–225,000 within ten years, and about 1,010–1,660 fewer beds needed by 2035.
+- Saarland's planning report projects somatic cases falling from about 236,000 (2023) to 209,500–225,000 within ten years, and about 1,010–1,660 fewer beds needed by 2035 than in the 2023 hospital plan.
 
 ---
 
-## Fact-check before publishing
+## Fact-check ledger (checked 3 October 2026)
 
-- [ ] Scene 2: "In Germany, for a long time, many stayed the night." This is widely reported (German day-surgery rates have been low compared with other European countries) but needs a citation.
-- [ ] Scene 4: confirm the €19bn → €44bn figures still match the latest BMG publication. That page was a draft reform FAQ.
-- [ ] Scene 4: the states (Länder) underfund hospital buildings and equipment. This is widely reported, including by the German Hospital Federation (DKG), but needs a citation.
-- [ ] Scene 4: the date the same-price rule (§115f SGB V) was legislated, to support "predates the economic slump".
-- [ ] Scene 4: the claim that the insurers' gap comes mainly from spending growth rather than the economy. Cite BMG or GKV-Spitzenverband analysis.
-- [ ] Scene 4: the decline of energy-intensive industry since 2022 and China's shift from customer to competitor. The Bundesbank analysis (original source 8) covers China; add a Destatis production index for energy-intensive industry.
-- [ ] The ~42% contribution total: 18.6 + 14.6 + 2.9 (average additional rate) + 3.6 + 2.6 = 42.3%, from the 2026 rates in the companion explainer. Long-term care varies with child status.
-- [ ] Scene 6: DKI Krankenhaus-Barometer, December 2025 (66% losses in 2024; 14% expect a positive 2025 result). DKG insolvency counts for 2023–2025 (via Ärzteblatt). Destatis hospital counts for 2002 and 2024. KHAG in force 15 April 2026, with its readiness-payment timetable. Note that the DKG and DKI represent hospitals, so attribute their figures.
-- [ ] Scene 7: confirm the Winterberg state funding figure (€85m on the hospital's site; €70m in a February 2024 Ärzteblatt report) and the "5–6 years" timeline from the hospital's press release. Confirm the details of the Caritas-Klinikum/Dudweiler €23m. First transformation-fund grant: BMG/BAS press release of 17 April 2026. aktiva bed figures: Ärzteblatt report on the Saarland planning report.
-- [ ] Scene 7: the "adapt well" practices come from expert recommendations (Elisabeth-Krankenhaus Essen at an apoBank event, Ärzteblatt, May 2026) and general day-surgery practice. Present them as observations, not as measured results.
-- [ ] All other figures come from the original storyboard's source ledger (sources 1–15). Re-check each link on the day the film is published.
+Checked by web search on 3 October 2026. Many primary pages (Destatis, BMG, the DKG, the Klinikum, the Saarland ministry) could not be opened directly from this environment, so some verdicts rest on search excerpts of those documents. Items marked ⚠ need a final look at the primary document before broadcast.
+
+| Claim | Verdict | Correct figure or wording | Source |
+|---|---|---|---|
+| Health spending 2024 | ✅ | €538.2bn, 12.4% of GDP; 2025 estimate €579.5bn | [Destatis, 2 Apr 2026](https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/04/PD26_115_23611.html) |
+| Age 67+ share | ✅ | ~20% (2024) → one in four by 2035 in all 27 variants | [Destatis, 11 Dec 2025](https://www.destatis.de/EN/Press/2025/12/PE25_446_12.html) |
+| GKV gap €19bn → €44bn | ✅ with context | A projection without action. The BStabG stabilisation law passed on 10 Jul 2026 and has been in force since 30 Jul 2026. New estimates are due mid-October 2026 ⚠ | [BMG FAQ](https://www.bundesgesundheitsministerium.de/service/gesetze-und-verordnungen/guv-21-lp/gkv-beitragssatzstabilisierungsgesetz-faq) · [BMG, 10 Jul 2026](https://www.bundesgesundheitsministerium.de/ministerium/meldungen/bundestag-beschliesst-gkv-beitragssatzstabilisierunggesetz-pm-10-07-2026) |
+| Gap driven mainly by spending growth | ✅ | H1 2026: spending +7.1% vs contribution income +4.1%. The FinanzKommission names prices and pay as the main driver | [BMG H1 2026](https://www.bundesgesundheitsministerium.de/presse/pressemitteilungen/finanzentwicklung-der-gkv-im-1-halbjahr-2026) · [FinanzKommission, 30 Mar 2026](https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/3_Downloads/F/FinanzKommission_Gesundheit/FinanzKommissionGesundheit_Erster_Bericht_20260330.pdf) |
+| Contributions ~42% | ✅ | 42.3% on average; 42.9% for people without children | [Haufe](https://www.haufe.de/personal/entgelt/beitragssaetze-zur-sozialversicherung_78_493770.html) |
+| G24Q €2,082.60 | ✅ | €2,112.60 with hospital follow-up within 21 days | [KBV, 8 Jan 2026](https://www.kbv.de/praxis/tools-und-services/praxisnachrichten/2026/01-08/hoehe-der-hybrid-drg-steht-jetzt-endgueltig-fest) |
+| §115f predates the slump | ✅ | KHPflEG passed 2 Dec 2022, in force 29 Dec 2022. Hybrid-DRGs since 1 Jan 2024, with hernia repairs in the first catalogue | [Bundestag](https://www.bundestag.de/dokumente/textarchiv/2022/kw48-de-krankenhauspflege-923124) |
+| PCCL ≥3 excluded | ⚠ unverified wording | Complex cases are excluded (confirmed). The exact PCCL rule needs checking in the 2026 Lesefassung. The film says only "complex cases are excluded" | [KBV Lesefassung 2026](https://www.kbv.de/documents/praxis/abrechnung/hybrid-drg/hybrid-drg-2026-ergeba-lesefassung.pdf) |
+| Germany's low day-case rate | ✅ | 14% of inguinal hernia repairs done as day cases (2019, Herniamed registry), against >80% in Anglo-American and Scandinavian countries | [Köckerling et al., Chirurgie 2023](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9950173/) |
+| Hernia repairs per year | ✅ corrected | About 250,000 in Germany. The 300,000 figure covers Germany, Austria and Switzerland together | [BDC](https://www.bdc.de/leistenhernien-operationen-im-visier-der-ambulantisierung/) |
+| HerniaSurge supports day surgery | ✅ | "Day surgery is recommended for the majority of groin hernia repair provided aftercare is organized." | [Hernia 2018;22:1–165](https://link.springer.com/article/10.1007/s10029-017-1668-x) |
+| Barmer: 1 in 5 operations could be outpatient | ✅ | Schleswig-Holstein, 2021 data, published Oct 2023 | [Ärzteblatt](https://www.aerzteblatt.de/news/jede-fuenfte-klinikoperation-waere-auch-ambulant-moeglich-7bd43703-32e0-4486-b9af-2b195480cab1) |
+| 66% of hospitals made losses | ✅ | 2024: 66% loss; 2025: ~70% expect a deficit and ~14% a surplus. The DKI is a hospital-sector institute | [DKI Barometer, 29 Dec 2025](https://www.kma-online.de/aktuelles/klinik-news/detail/krankenhaus-barometer-zwei-drittel-der-kliniken-machen-verluste-55034) |
+| Insolvencies 34/30/26 | ✅ | The 6 closures in 2025 include earlier proceedings | [Ärzteblatt](https://www.aerzteblatt.de/news/zahl-der-krankenhausinsolvenzen-leicht-rucklaufig-baa0da39-9494-44e0-a269-dd83a676ac09) |
+| Hospitals 2,221 → 1,841 | ✅ | 2002 → 2024 | [Destatis, 6 Nov 2025](https://www.destatis.de/DE/Presse/Pressemitteilungen/2025/11/PD25_398_231.html) |
+| KHAG and readiness payments | ✅ | In force 15 Apr 2026. Readiness payments budget-neutral 2026–27, phased in 2028–29, in full from 2030. Fund of up to €50bn, with the federal half from the special fund | [BGBl. 2026 I Nr. 98](https://www.recht.bund.de/bgbl/1/2026/98/VO.html) |
+| States underfund investment | ✅ corrected | 2024: €4.24bn paid against ~€7bn needed, so about half | [Ärzteblatt](https://www.aerzteblatt.de/news/laender-decken-nur-die-haelfte-des-krankenhausinvestitionsbedarfs-c578a98b-b0d1-41de-81da-c99c45c122fe) |
+| Beds, spending, life expectancy (balance) | ✅ | 759 beds per 100k (2024) vs EU 507, second after Bulgaria. Highest spending per person in the EU (2023). Life expectancy 81.5, about the EU average. "Below western European neighbours" ⚠ unverified, so not used | [Eurostat, 13 Jul 2026](https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20260713-1) · [Country Health Profile 2025](https://eurohealthobservatory.who.int/publications/m/germany-country-health-profile-2025) |
+| Volume–outcome rationale | ✅ | Government commission: better survival in certified cancer centres. The hospital lobby disputes the method | [BMG Potenzialanalyse](https://www.bundesgesundheitsministerium.de/presse/pressemitteilungen/potenzialanalyse-krankenhausreform.html) |
+| Energy-intensive industry | ✅ | Down 17.8% vs 2021 (2025) | [Destatis, Feb 2026](https://www.destatis.de/EN/Press/2026/02/PE26_043_421.html) |
+| Russian gas | ✅ | Nord Stream flows stopped in late summer 2022 | [Al Jazeera](https://www.aljazeera.com/news/2023/9/23/what-we-know-about-the-nord-stream-sabotage-one-year-on) |
+| "China, once Germany's best customer" | ❌ corrected | China was never Germany's top export market (the US has been #1 since 2015); China was #2 in 2020–21. It was the biggest *trading partner* in 2016–23 and 2025. Exports to China fell 9.7% in 2025 and roughly a quarter since 2022 | [Destatis, Feb 2026](https://www.destatis.de/EN/Press/2026/02/PE26_056_51.html) · [Bundesbank, Jul 2025](https://publikationen.bundesbank.de/publikationen-en/reports-studies/monthly-reports/monthly-report-july-2025-960438?article=what-s-behind-the-sustained-decline-in-german-export-market-shares--960442) |
+| US tariffs | ✅ for 2025 | 15% ceiling under the EU–US deal from Aug 2025. The 2026 rate after the Supreme Court IEEPA ruling is ⚠ unclear, so refer only to 2025 | [European Commission](https://luxembourg.representation.ec.europa.eu/actualites-et-evenements/actualites/eu-us-trade-deal-explained-2025-07-29_en) |
+| GDP growth | ✅ corrected | 2023 -0.8%, 2024 0.0% (revised), 2025 +0.2%; 2026 forecast +1.3% | [Destatis, Aug 2026](https://www.destatis.de/EN/Press/2026/08/PE26_303_811.html) · [Joint forecast, 24 Sep 2026](https://www.ifo.de/en/press-release/2026-09-24/joint-economic-forecast-autumn-2026-recovery-under-structural-stress) |
+| Debt and unemployment | ✅ with caveat | Debt 63.5% of GDP. Registered unemployment 6.4% (3.01m, Sep 2026) and rising, so "low unemployment" is no longer used | [Bundesbank](https://www.bundesbank.de/en/press/press-releases/deutsche-staatsschulden-992720) |
+| Manufacturing jobs -177,000 | ✅ | 2025 | [BA, Jul 2026](https://www.finanznachrichten.de/nachrichten-2026-07/69030498-beschaeftigung-im-verarbeitenden-gewerbe-um-177-000-gesunken-ba-presseinfo-nr-26-007.htm) |
+| Winterberg €85m | ✅ corrected | Earmarked, raised from €70m (Feb 2024). Only planning costs formally committed; no building funding notice yet. Could open 5–6 years after the funding commitment | [Saarland ministry](https://www.saarland.de/masfg/DE/aktuelles/aktuelle-meldungen/aktuelle-meldungen_2024/aktuelle-meldungen_2024_11/aktuelle-meldungen_20241111_loi_krankenhaus) · [Klinikum](https://www.klinikum-saarbruecken.de/ueber-uns/aktuelles/presse-und-news/pressemitteilung/zukunftskurs-des-winterbergs-wichtige-weichen-wurden-jetzt-gestellt) |
+| Outpatient OP centre with practice doctors | ✅ | Planned for the first floor of the new building | [Klinikum](https://www.klinikum-saarbruecken.de/ueber-uns/aktuelles/presse-und-news/pressemitteilung/gesundheitscampus-auf-dem-winterberg-unsere-zukunftsvision-fuer-die-gesundheitsversorgung) |
+| Dudweiler €23m | ✅ corrected | Federal structural-fund money to move the site to Rastpfuhl. Acute care has moved; psychosomatics remains in Dudweiler, so it is not fully closed | [Saarland ministry, 13 Feb 2024](https://www.saarland.de/masfg/DE/aktuelles/aktuelle-meldungen/aktuelle-meldungen_2024/aktuelle-meldungen_2024-02/aktuelle-meldungen_20240213_cts_foerderung) |
+| City support €15.4m | ✅ | 2026 deficit compensation; about €60m in total since 2020 | [City of Saarbrücken](https://www.saarbruecken.de/rathaus/stadtverwaltung/bekanntmachungen/oeffentliche_bekanntmachungen/bekanntmachungen_detail/article-692f06158ae12) |
+| Klinikum energy savings | ⚠ | A press release on 21 Sep 2026 confirms the topic; its figures are unverified. Don't quote numbers | [Klinikum press page](https://www.klinikum-saarbruecken.de/ueber-uns/aktuelles/presse-und-news) |
+| aktiva report | ✅ | 1,010–1,660 fewer beds by 2035 *than the 2023 plan* | [Ärzteblatt, 4 Apr 2025](https://www.aerzteblatt.de/news/krankenhausreform-gutachten-schlagt-bettenabbau-im-saarland-vor-bf46b25a-d7ce-4d5b-b3c7-c56b8c5bf890) |
+| DRK Saarlouis | ✅ | Filed 10 Nov 2025; proceedings lifted 30 Jun 2026; site secured | [DRK](https://www.drk-krankenhausgesellschaft.saarland/news/eigenverwaltungsverfahren-aufgehoben) |
+| First transformation-fund grant | ✅ | 17 Apr 2026, GFO Kliniken Rhein-Berg. Inpatient care concentrated at Vinzenz-Pallotti-Hospital; Marien-Krankenhaus becomes outpatient-only. Saarland has applied but has no notice yet | [MAGS NRW](https://www.mags.nrw/krankenhaustransformationsfonds-erster-foerderbescheid-geht-nach-nordrhein-westfalen) |
+
+**Before broadcast:**
+- Re-check the GKV figures after the October 2026 Schätzerkreis.
+- Confirm every ⚠ item against its primary document.
+- Ask Klinikum Saarbrücken for comment.
