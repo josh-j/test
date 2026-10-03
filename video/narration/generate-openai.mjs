@@ -3,6 +3,7 @@
 //
 // Usage (from video/):
 //   OPENAI_API_KEY=sk-... node narration/generate-openai.mjs            # all scenes
+// Behind an HTTPS proxy (e.g. cloud sessions), add NODE_USE_ENV_PROXY=1 so Node's fetch uses it.
 //   OPENAI_API_KEY=sk-... node narration/generate-openai.mjs 1 7        # selected scenes
 //   VOICE=onyx SPEED=1.0 node narration/generate-openai.mjs 1           # audition another voice
 //
