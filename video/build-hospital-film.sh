@@ -57,4 +57,14 @@ printf '%s\n' "${selected[@]}" | xargs -P "${JOBS:-3}" -I{} bash -c 'render_one 
 : > out/hospital/list.txt
 for s in "${SCENES[@]}"; do echo "file 'scene-$(printf '%02d' "${s%%|*}").mp4'" >> out/hospital/list.txt; done
 ffmpeg -y -loglevel error -f concat -safe 0 -i out/hospital/list.txt -c copy -movflags +faststart out/hospital/hospital-change-shape.mp4
-echo "film: out/hospital/hospital-change-shape.mp4 ($(ffprobe -v error -show_entries format=duration -of csv=p=0 out/hospital/hospital-change-shape.mp4)s)"
+dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 out/hospital/hospital-change-shape.mp4)
+
+# Soft ambient bed under the narration: reverb, then ducked whenever the voice speaks.
+python3 music/ambient.py "$dur" narration/tracks/ambient.wav
+ffmpeg -y -loglevel error -i out/hospital/hospital-change-shape.mp4 -i narration/tracks/ambient.wav -filter_complex \
+  "[1:a]aecho=0.8:0.7:120|260:0.25|0.18,volume=${MUSIC_GAIN:-0.22}[bed];\
+   [0:a]asplit=2[voice][key];\
+   [bed][key]sidechaincompress=threshold=0.015:ratio=5:attack=120:release=1400[ducked];\
+   [voice][ducked]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[mix]" \
+  -map 0:v -map "[mix]" -c:v copy -c:a aac -b:a 192k -movflags +faststart out/hospital/hospital-change-shape-music.mp4
+echo "film: out/hospital/hospital-change-shape-music.mp4 (${dur}s, with ambient bed); narration only: out/hospital/hospital-change-shape.mp4"
