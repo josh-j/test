@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const MODEL = process.env.MODEL ?? 'gpt-4o-mini-tts';
-const VOICE = process.env.VOICE ?? 'cedar';
+const VOICE = process.env.VOICE ?? 'ballad';
 const SPEED = Number(process.env.SPEED ?? 1.0);
 const KEY = process.env.OPENAI_API_KEY;
 if (!KEY) {
@@ -85,6 +85,16 @@ for (const n of scenes.length ? scenes : [1, 2, 3, 4, 5, 6, 7, 8]) {
     parts.push(`[${i * 2}:a]`, `[${i * 2 + 1}:a]`);
   });
   const filter = `${parts.join('')}concat=n=${parts.length}:v=0:a=1[out]`;
+
+  // Timing sidecar: where each paragraph starts and ends in the joined file (for captions and edits).
+  const dur = (f) => Number(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString());
+  let at = 0;
+  const segments = inputs.map((f, i) => {
+    const start = at, end = at + dur(f);
+    at = end + pauses[Math.min(i, pauses.length - 1)];
+    return { start: +start.toFixed(2), end: +end.toFixed(2), text: paras[i].replace(/\s+/g, ' ').trim() };
+  });
+  writeFileSync(path.join(DIR, `scene-${id}.timing.json`), JSON.stringify({ voice: VOICE, model: MODEL, segments }, null, 2) + '\n');
   const out = path.join(DIR, `scene-${id}.wav`);
   execFileSync('ffmpeg', [...args, '-filter_complex', filter, '-map', '[out]', out]);
   rmSync(tmp, { recursive: true, force: true });

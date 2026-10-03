@@ -1,0 +1,26 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 3.35,
+      "text": "At night, most of this hospital sleeps."
+    },
+    {
+      "start": 4.35,
+      "end": 9.35,
+      "text": "One part never does — the part that waits."
+    },
+    {
+      "start": 11.35,
+      "end": 19.2,
+      "text": "Here, in a quiet corner of Germany, a hospital is being asked to change its shape."
+    },
+    {
+      "start": 20.2,
+      "end": 24.1,
+      "text": "It begins with a very small operation."
+    }
+  ]
+}

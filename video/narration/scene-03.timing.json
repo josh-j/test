@@ -1,0 +1,21 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 18.85,
+      "text": "To the insurers, this change is overdue. Germany has more hospital beds per person than any country in the European Union but one. It spends more on health per person than any of them. Yet its people live no longer than the European average."
+    },
+    {
+      "start": 19.85,
+      "end": 24.95,
+      "text": "Some shrinking, they argue, is not the illness."
+    },
+    {
+      "start": 26.45,
+      "end": 29.05,
+      "text": "It is the cure."
+    }
+  ]
+}

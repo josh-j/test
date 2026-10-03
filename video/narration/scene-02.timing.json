@@ -1,0 +1,26 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 8.35,
+      "text": "A groin hernia is a weak point in the wall of the body. Most patients need no night in hospital to repair it."
+    },
+    {
+      "start": 9.35,
+      "end": 18.35,
+      "text": "In Scandinavia and Britain, most go home the same day. In Germany, most have stayed the night."
+    },
+    {
+      "start": 19.35,
+      "end": 29.6,
+      "text": "Now the rules have changed. For a simple case, the hospital is paid one fixed price — whether the patient goes home that evening, or stays until morning."
+    },
+    {
+      "start": 30.6,
+      "end": 40.1,
+      "text": "Who is fit to go home remains a doctor's decision. The price simply stops paying for nights that are not needed."
+    }
+  ]
+}
