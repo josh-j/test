@@ -1,0 +1,26 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 6.95,
+      "text": "Our operation: a groin hernia repair. Germany does about a quarter of a million a year."
+    },
+    {
+      "start": 7.95,
+      "end": 29.25,
+      "text": "In England and Sweden, about four in five patients go home the same day. In Germany, closer to one in seven — partly because the old payment rules made the overnight stay the default. For most patients that night isn't needed; studies of carefully selected patients find no difference in complications."
+    },
+    {
+      "start": 30.25,
+      "end": 45.15,
+      "text": "So from twenty twenty-four Germany set one price for this operation and many others — the same whether the patient goes home or stays the night. For a simple repair this year: about two thousand euros."
+    },
+    {
+      "start": 46.15,
+      "end": 51.25,
+      "text": "A sensible fix. So why is everyone at the table unhappy?"
+    }
+  ]
+}

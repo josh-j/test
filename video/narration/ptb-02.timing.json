@@ -1,0 +1,31 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 3.1,
+      "text": "Start with what nobody chose."
+    },
+    {
+      "start": 4.1,
+      "end": 18.7,
+      "text": "One German in five is sixty-seven or over; by twenty thirty-five, one in four. More patients, fewer people paying in. Health already costs more than five hundred billion euros a year."
+    },
+    {
+      "start": 19.7,
+      "end": 42.4,
+      "text": "Contributions for health, pensions, care and unemployment take about forty-two percent of a typical salary. This year the public insurers' spending grew seven percent; their income, four. Without action, the government projected a gap of tens of billions a year by twenty thirty — and in July it passed a law to close it."
+    },
+    {
+      "start": 43.4,
+      "end": 60.7,
+      "text": "And the economy that pays the bills has stalled: three years of almost no growth, energy-hungry industry down nearly a fifth since twenty twenty-one, Chinese factories competing with German ones. Growth is expected to pick up a little, then fade again."
+    },
+    {
+      "start": 61.7,
+      "end": 69.85,
+      "text": "Not a collapse. But money will be tight for a long time — and when money is tight, people look for someone to blame."
+    }
+  ]
+}

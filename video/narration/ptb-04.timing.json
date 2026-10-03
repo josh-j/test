@@ -1,0 +1,26 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 14.15,
+      "text": "The insurers point at the bill. Their own research institute found that across these same-price operations, spending in twenty twenty-five was about three hundred and sixty million euros higher, after inflation."
+    },
+    {
+      "start": 15.15,
+      "end": 28.7,
+      "text": "The price blended the old hospital rate with the old outpatient rate — so operations once done cheaply in doctors' practices now earned more. And cases rose by seventeen percent."
+    },
+    {
+      "start": 29.7,
+      "end": 47.2,
+      "text": "So is it the hospitals' and doctors' fault? Not quite. Insurers don't set these prices alone: they negotiate them with hospitals and doctors. This year the three sides couldn't agree, and an arbitration committee decided."
+    },
+    {
+      "start": 48.2,
+      "end": 50.5,
+      "text": "The beam moves on."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 3.05,
+      "text": "So, who is to blame?"
+    },
+    {
+      "start": 4.05,
+      "end": 16.4,
+      "text": "Some of it is no one's fault. An older country and a slower economy squeeze everyone — insurers, hospitals, surgeons, governments — at the same time."
+    },
+    {
+      "start": 17.4,
+      "end": 33.2,
+      "text": "Some of it is the design. When responsibility is split between two capitals, two pipes and a negotiating table, every problem can be passed along, and every actor can be right about someone else."
+    },
+    {
+      "start": 34.2,
+      "end": 59.15,
+      "text": "And some of it is choices — which means it can change. A price that pays nothing for training or for the hardest cases. A readiness payment that moves money rather than adding it. Buildings the states pay for only in part. Rules that for years made the night in hospital the default."
+    },
+    {
+      "start": 60.35,
+      "end": 83,
+      "text": "The direction — sending more patients safely home — is right. The pressure is real. But blame is the easy part. The harder question is ownership: who will be responsible for the whole journey, and be judged by what happens to the patient in that home?"
+    },
+    {
+      "start": 84.2,
+      "end": 88.8,
+      "text": "Until someone owns that, everyone will keep pointing."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 20.8,
+      "text": "Germany's hospitals say they're underfunded. The insurers say hospitals cost too much. Surgeons say the prices ignore what surgery really takes. The states say Berlin is meddling. Berlin says the system has too many beds and too little reform."
+    },
+    {
+      "start": 21.8,
+      "end": 26.45,
+      "text": "Everyone feels the pressure. Everyone points somewhere else."
+    },
+    {
+      "start": 27.95,
+      "end": 37.25,
+      "text": "To find out who's right, we'll follow one small operation through the whole machine — and see where the blame finally lands."
+    }
+  ]
+}

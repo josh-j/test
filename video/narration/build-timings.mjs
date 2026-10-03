@@ -7,11 +7,13 @@ import { fileURLToPath } from 'node:url';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const out = {};
-for (const f of readdirSync(DIR).filter((f) => /^scene-\d\d\.timing\.json$/.test(f)).sort()) {
+for (const f of readdirSync(DIR).filter((f) => /^[a-z]+-\d\d\.timing\.json$/.test(f)).sort()) {
   // Captions show figures as numerals even where the voice script spells them out.
-  out[f.slice(0, 8)] = JSON.parse(readFileSync(path.join(DIR, f), 'utf8')).segments.map((s) => ({
+  out[f.replace('.timing.json', '')] = JSON.parse(readFileSync(path.join(DIR, f), 'utf8')).segments.map((s) => ({
     ...s,
-    text: s.text.replace(/twenty thirty-five/g, '2035').replace(/twenty thirty/g, '2030'),
+    text: s.text
+      .replace(/twenty thirty-five/g, '2035').replace(/twenty thirty/g, '2030')
+      .replace(/twenty twenty-(one|four|five|six)/g, (_, d) => '202' + { one: 1, four: 4, five: 5, six: 6 }[d]),
   }));
 }
 const dest = path.join(DIR, '..', 'scenes', 'lib', 'timings.js');

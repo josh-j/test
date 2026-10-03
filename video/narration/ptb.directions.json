@@ -1,0 +1,43 @@
+{
+ "base": "Voice: a warm, older British narrator with received pronunciation. Softly spoken, close to the microphone.\nTone: a curious, even-handed investigator walking the listener through a puzzle. Calm, thoughtful, quietly engaged; occasional dry warmth. Never dramatic, never salesy, never cynical.\nPacing: unhurried, about 130 words per minute. Let commas breathe; a short natural pause after each sentence. Maintain a consistent British accent throughout.\nDo not imitate any specific real person.",
+ "scenes": {
+  "1": "Cold open. Brisk and intrigued when listing who blames whom, like reading out accusations; slow down for 'Everyone feels the pressure. Everyone points somewhere else.' End with an inviting tone.",
+  "2": "Setting the scene: steady and clear with the numbers. 'Start with what nobody chose' is calm and grave. The last line lands with a hint of a knowing smile.",
+  "3": "Explaining: plain and friendly. 'A sensible fix.' is said approvingly; the final question is genuinely puzzled.",
+  "4": "Laying out the insurers' case fairly, then a gentle 'Not quite.' 'The beam moves on.' is light, almost a stage direction.",
+  "5": "Laying out the hospitals' case with sympathy; firm but fair on 'they're not powerless either'. 'The beam moves on.' light.",
+  "6": "The surgeons' case: respectful, a little warmer. The closing question 'is it the government's fault?' sets up the next chapter.",
+  "7": "Rising up the chain: the back-and-forth of blame quickens slightly, then slows into a reveal for 'Step back and you see why.' The final line is quiet and resonant.",
+  "8": "The verdict: measured and reflective, each of the three layers given weight. The ending is quiet and direct; leave space after 'Until someone owns that, everyone will keep pointing.'"
+ },
+ "pauses": {
+  "1": [
+   1.0,
+   1.5,
+   1.0,
+   1.2
+  ],
+  "2": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.2
+  ],
+  "7": [
+   1.0,
+   1.0,
+   1.2,
+   1.2,
+   1.5
+  ],
+  "8": [
+   1.0,
+   1.0,
+   1.0,
+   1.2,
+   1.2,
+   1.5
+  ]
+ }
+}

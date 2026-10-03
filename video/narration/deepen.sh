@@ -8,13 +8,14 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 SEMITONES="${SEMITONES:-2}"
+PREFIX="${PREFIX:-scene}"
 FORMANT="${FORMANT:-preserved}"
 ratio=$(python3 -c "print(2 ** (-${SEMITONES} / 12))")
 
 if [ "$#" -gt 0 ]; then
-  files=$(for n in "$@"; do printf 'scene-%02d.wav\n' "$n"; done)
+  files=$(for n in "$@"; do printf '%s-%02d.wav\n' "$PREFIX" "$n"; done)
 else
-  files=$(ls scene-[0-9][0-9].wav)
+  files=$(ls "$PREFIX"-[0-9][0-9].wav)
 fi
 
 for f in $files; do

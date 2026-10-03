@@ -1,0 +1,21 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 25,
+      "text": "The surgeons point at what the price can't see. Most agree many patients could go home the same day. But the recommended repair — keyhole surgery with a mesh, with less pain afterwards — costs more on the day. In Germany, three quarters of inpatient repairs used it; only a third of outpatient ones. In Denmark, keyhole and same-day go together."
+    },
+    {
+      "start": 26,
+      "end": 43.95,
+      "text": "And the next surgeon has to learn. Supervised residents in one study took ninety-four minutes; experienced surgeons, seventy — safely. The price has no line for those twenty-four minutes. The surgeons' society warned of exactly this."
+    },
+    {
+      "start": 44.95,
+      "end": 47.25,
+      "text": "So — is it the government's fault?"
+    }
+  ]
+}

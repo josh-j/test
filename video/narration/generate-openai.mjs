@@ -8,7 +8,7 @@
 //   VOICE=onyx SPEED=1.0 node narration/generate-openai.mjs 1           # audition another voice
 //
 // Requires Node 18+ and ffmpeg.
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,6 +17,9 @@ const DIR = path.dirname(fileURLToPath(import.meta.url));
 const MODEL = process.env.MODEL ?? 'gpt-4o-mini-tts';
 const VOICE = process.env.VOICE ?? 'ballad';
 const SPEED = Number(process.env.SPEED ?? 1.0);
+// PREFIX selects a narration set: <prefix>-XX.txt, with optional <prefix>.directions.json
+// ({ base, scenes: { "1": "..." }, pauses: { "1": [..] } }) overriding the defaults below.
+const PREFIX = process.env.PREFIX ?? 'scene';
 // Without OPENAI_API_KEY, no Authorization header is sent: use this when an egress proxy
 // injects the credential (e.g. cloud-environment API credentials).
 const KEY = process.env.OPENAI_API_KEY;
@@ -58,10 +61,17 @@ async function speak(text, instructions, out) {
   writeFileSync(out, Buffer.from(await res.arrayBuffer()));
 }
 
+let base = BASE, sceneDir = SCENE, pauseMap = PAUSES;
+try {
+  const d = JSON.parse(readFileSync(path.join(DIR, `${PREFIX}.directions.json`), 'utf8'));
+  base = d.base ?? base; sceneDir = d.scenes ?? sceneDir; pauseMap = d.pauses ?? {};
+} catch { /* no directions file: use the defaults */ }
+
 const scenes = process.argv.slice(2).map(Number);
 for (const n of scenes.length ? scenes : [1, 2, 3, 4, 5, 6, 7, 8]) {
+  if (!existsSync(path.join(DIR, `${PREFIX}-${String(n).padStart(2, '0')}.txt`))) continue;
   const id = String(n).padStart(2, '0');
-  const paras = readFileSync(path.join(DIR, `scene-${id}.txt`), 'utf8').trim().split(/\n\s*\n/);
+  const paras = readFileSync(path.join(DIR, `${PREFIX}-${id}.txt`), 'utf8').trim().split(/\n\s*\n/);
   const tmp = path.join(DIR, `.tmp-${id}`);
   mkdirSync(tmp, { recursive: true });
 
@@ -69,12 +79,12 @@ for (const n of scenes.length ? scenes : [1, 2, 3, 4, 5, 6, 7, 8]) {
   for (const [i, p] of paras.entries()) {
     const f = path.join(tmp, `p${i}.wav`);
     process.stdout.write(`scene ${id} paragraph ${i + 1}/${paras.length}\r`);
-    await speak(p, `${BASE}\nThis scene: ${SCENE[n]}`, f);
+    await speak(p, `${base}\nThis scene: ${sceneDir[n] ?? ''}`, f);
     inputs.push(f);
   }
 
   // Join paragraphs with pauses: [p0][gap0][p1][gap1]...[pN][tail]
-  const pauses = PAUSES[n] ?? [1.0];
+  const pauses = pauseMap[n] ?? [1.0];
   const args = ['-y', '-loglevel', 'error'];
   const parts = [];
   inputs.forEach((f, i) => {
@@ -93,8 +103,8 @@ for (const n of scenes.length ? scenes : [1, 2, 3, 4, 5, 6, 7, 8]) {
     at = end + pauses[Math.min(i, pauses.length - 1)];
     return { start: +start.toFixed(2), end: +end.toFixed(2), text: paras[i].replace(/\s+/g, ' ').trim() };
   });
-  writeFileSync(path.join(DIR, `scene-${id}.timing.json`), JSON.stringify({ voice: VOICE, model: MODEL, segments }, null, 2) + '\n');
-  const out = path.join(DIR, `scene-${id}.wav`);
+  writeFileSync(path.join(DIR, `${PREFIX}-${id}.timing.json`), JSON.stringify({ voice: VOICE, model: MODEL, segments }, null, 2) + '\n');
+  const out = path.join(DIR, `${PREFIX}-${id}.wav`);
   execFileSync('ffmpeg', [...args, '-filter_complex', filter, '-map', '[out]', out]);
   rmSync(tmp, { recursive: true, force: true });
 
