@@ -1,241 +1,275 @@
 # One Price
 
-*Germany changed how it pays for a common operation. Was it the right idea at the wrong price?*
+*Germany changed how it pays for a common operation, at a time when money is getting tighter for decades. Seen from every seat at the table: was it the right idea at the wrong price?*
 
-- **Framing:** policy as protagonist. "A good idea with the wrong price."
-- **Runtime:** about 8 minutes, in 7 chapters.
-- **Narration:** about 955 words, at about 135 words per minute plus pauses (roughly 7½–8 minutes).
-- **Voice:** curious, investigative and calm. An observer who keeps asking "why?", not a nature film.
-- **Visual style:** to be chosen from the style reel (A–D). The visual notes describe ideas, not a look.
-- **Replaces:** *The Hospital That Must Change Shape*. That film's cost-cascade structure, economic-decline framing and "no one chose this" ending are dropped. Sources: the fact-check ledger at the end of this file.
+- **Framing:** three sides plus the big picture. Each side (the payers, the hospitals, the surgeons) gets its own chapter and its strongest case. The patient runs through all of them. Germany's economy and future frame why any of this matters.
+- **Runtime:** about 9½ minutes, in 9 chapters.
+- **Narration:** about 1,150 words, at about 130 words per minute plus pauses.
+- **Voice:** curious, investigative and calm. Asks "why?", takes no side.
+- **Visual style:** to be chosen from the style reel (A–D).
+- **Replaces:** *The Hospital That Must Change Shape*. That film's cost-cascade structure and "no one chose this" ending are dropped.
 
 ---
 
-## How this keeps people watching
+## The central device: four chairs at a table
 
-1. **A cold open with a real puzzle.** A rule meant to move operations out of hospital beds, and the first bill came in higher. Why? The answer comes in chapter 3.
-2. **One object runs through the whole film: a price tag.** It hangs over a bed, splits, gets stamped "same price", is pulled apart to show what it leaves out, and finally becomes a scorecard. Every chapter changes what the tag means.
-3. **Contrasts instead of lectures.** Denmark against Germany, the simple case against the complex one, a trainee's 94 minutes against an attending surgeon's 70, inpatient laparoscopy at 72% against outpatient at 34%. Pairs are easy to grasp and easy to animate.
-4. **Chapter cards phrased as questions.** "Why does Germany keep people overnight?" sets up each chapter as something to be answered.
-5. **The turn comes at about 4 minutes.** The viewer should agree with the reform in chapter 2, then see what it misses in chapter 4. Being on the reform's side first makes the turn land.
-6. **A specific hospital, not an abstract system.** Klinikum Saarbrücken's real choices give the ending stakes and agency.
-7. **The ending calls back to the opening.** The price tag from the cold open comes back as a scorecard: what the price should pay for, and how we'll know.
+A round table with four chairs runs through the film:
+- **The payer:** insurers and reformers.
+- **The hospital.**
+- **The surgeon.**
+- **The patient,** whose chair stays empty until the end.
+
+Each side's chapter lights up its chair, and its argument appears as cards on the table. The single price tag sits in the middle of the table and changes meaning as the film goes on. In the final chapter, the patient's chair is filled: the system should be judged by what happens to that person.
+
+**Other engagement devices:**
+- **A puzzle in the cold open** that isn't answered until chapter 4.
+- **Chapter cards phrased as questions.**
+- **Paired contrasts:** Denmark and Germany, 94 and 70 minutes, 72% and 34%, spending +7.1% against income +4.1%.
+- **Three "clocks" in the future chapter** that tick at different speeds.
+- **An ending that calls back** to the price tag and the empty chair.
 
 ---
 
 ## Chapter 0 · Cold open
-**0:00 – 0:35**
+**0:00 – 0:40**
 
-**Visual:** Black. A single price tag swings into frame: €2,082.60. Pull back to show it hanging between two silhouettes, a hospital bed and a front door. A map pulse: Denmark, Germany.
+**Visual:** A single price tag (€2,082.60) swings into frame. Pull back to show it in the middle of a round table with four empty chairs. A map pulse: Denmark, then Germany.
 
 **Narration:**
 > In Denmark, almost everyone who has this operation goes home the same day. In Germany, most have stayed the night.
 >
 > So Germany changed one rule: pay hospitals the same, whether the patient stays or goes.
 >
-> Two years later, the first bill came in. It was higher — not lower.
+> The first bill came in higher, not lower. Insurers were unhappy. Hospitals were unhappy. Surgeons were unhappy.
 >
-> How does a sensible idea end up costing more? And what does it mean for the hospitals that have to make it work?
+> How does a sensible idea end up with everyone at the table unhappy — and what does it tell us about where Germany is heading?
 
 **On screen:** *One price · groin hernia repair · Germany 2026*
 
-**Sound:** a single low hit on the price tag; silence; a hit on "higher".
-
-> *Accuracy note:* "the first bill" is the WIdO analysis of insurer spending across all same-price ("Hybrid-DRG") operations, not hernias alone. Chapter 3 says this on screen and in narration.
+**Sound:** a low hit on the tag; three quick ticks as three chairs light up and dim; a hit on "heading".
 
 ---
 
-## Chapter 1 · The night Germany pays for
-**0:35 – 1:45** · *Card: "Why does Germany keep people overnight?"*
+## Chapter 1 · The squeeze
+**0:40 – 2:00** · *Card: "Why is Germany looking for savings at all?"*
 
 **Visual:**
-- Bar race: day-case share of groin hernia repairs. England about 79%, Sweden about 80%, Denmark "almost all", Germany 14%.
-- A bed icon multiplies across a map of Europe: Germany 759 beds per 100,000 people against an EU average of 507.
+- A grid of 100 people: 20 lit, then 25.
+- Two lines on a chart: health spending climbing faster than contribution income.
+- A wage slip with a 42% slice.
+- A growth chart: a flat line from 2023 to 2025, a small bump, then flattening again.
+- A factory with a fading gas pipe and a cargo ship from China.
 
 **Narration:**
-> A groin hernia is a weak spot in the wall of the body. Germany repairs around a quarter of a million every year.
+> Start with the bigger picture. Germany spends more than five hundred billion euros a year on health — about one euro in every eight it earns.
 >
-> In England, about four in five go home the same day. In Sweden, the same. Denmark's surgeons now say almost all should.
+> One German in five is sixty-seven or over. By 2035 it will be one in four: more patients, fewer people paying in.
 >
-> In Germany, the share has been closer to one in seven — and for years it was falling, not rising.
+> Contributions for health, pensions, care and unemployment already take about forty-two percent of a typical salary. In the first half of 2026, the public insurers' spending grew seven percent; their income, four. Without action, the government projected a gap of tens of billions a year by 2030 — and in July it passed a law to close it.
 >
-> Part of the reason was simple: the payment rules made the overnight stay the natural choice. And Germany has the beds. Only Bulgaria has more per person in the European Union.
+> Meanwhile the economy that pays the bills has stalled. Three years of almost no growth. Energy-hungry industry down nearly a fifth since 2021. Chinese factories now competing with German ones.
 >
-> A night in hospital is not free. Someone pays for it. The question reformers asked was: does the patient actually need it?
+> This isn't a collapse. Germany is still rich, and growth is expected to pick up a little. But the institutes expect it to fade again by 2028. The money will be tight for a long time — and every euro in health will be argued over.
 
 **On screen:**
-- *Day-case share: England 79% (2014–22) · Sweden ~80% · Germany 14% (2019, down from 20% in 2013)*
-- *Hospital beds per 100,000 people (2024): Germany 759 · EU 507*
+- *Health spending €538bn, 12.4% of GDP (2024)*
+- *Aged 67+: ~20% (2024) → ~25% (2035)*
+- *Social contributions ≈42% of salary (2026)*
+- *Insurers H1 2026: spending +7.1%, income +4.1%*
+- *Projected gap without action: €19bn (2027) → €44bn (2030); stabilisation law, July 2026*
+- *GDP: −0.8% (2023), 0.0% (2024), +0.2% (2025); forecast +1.3% (2026), +1.1% (2027), +0.4% (2028)*
+- *Energy-intensive output −18% vs 2021*
 
 ---
 
-## Chapter 2 · One price
-**1:45 – 3:00** · *Card: "What did Germany change?"*
+## Chapter 2 · The night Germany pays for
+**2:00 – 2:55** · *Card: "Why does Germany keep people overnight?"*
+
+**Visual:** A bar race of day-case shares (England ~79%, Sweden ~80%, Denmark "almost all", Germany 14%). Bed icons multiply across a map of Europe.
+
+**Narration:**
+> A groin hernia is a weak spot in the wall of the body. Germany repairs around a quarter of a million a year.
+>
+> In England and Sweden, about four in five patients go home the same day. In Germany, closer to one in seven — and for years that share was falling.
+>
+> The payment rules made the overnight stay the natural choice, and Germany has the beds: only Bulgaria has more per person in the European Union.
+>
+> For most patients, the evidence says that night isn't needed. A Swiss study of carefully selected patients found no difference in complications or quality of life — though one in twenty-five had to be admitted after all.
+
+**On screen:**
+- *Day-case share: England 79% · Sweden ~80% · Germany 14% (2019, from 20% in 2013)*
+- *Beds per 100,000 people: Germany 759 · EU 507 (2024)*
+- *HerStAmb 2023: 237 selected patients; 4% admitted after all*
+
+---
+
+## Chapter 3 · The payer's seat
+**2:55 – 4:15** · *Card: "What did Germany change — and did it save money?"*
+
+**Visual:** The payer's chair lights up. The price tag splits over a recovery chair and a bed, and is stamped SAME PRICE. Then a receipt prints and its total rolls to +€360m.
+
+**Narration:**
+> From the payer's seat, the logic was simple. From 2024, for a growing list of operations, one fixed price — the same whether the patient goes home or stays a night. For a simple, one-sided hernia repair in 2026: two thousand and eighty-two euros. Harder cases get more. The sickest stay outside the system.
+>
+> The price isn't set by insurers alone. Insurers, hospitals and office-based doctors negotiate it; for 2026 they couldn't agree, and an arbitration committee decided.
+>
+> Then came the first bill. The insurers' own research institute found that across these operations, spending in 2025 was about three hundred and sixty million euros higher, after inflation.
+>
+> Why? The price blended the old hospital rate with the old outpatient rate — so operations once done cheaply in a doctor's practice now earned more. And the number of cases rose by seventeen percent.
+>
+> So the reform that was meant to use money better has, so far, cost the payers more.
+
+**On screen:**
+- *G24Q (simple one-sided repair) €2,082.60 · complex and bilateral variants up to €3,639.27 (2026)*
+- *Prices: joint self-administration; 2026 decided by arbitration (11 Nov 2025)*
+- *WIdO (AOK research institute), 10 Sep 2026: ~€360m more in 2025 across all same-price ("Hybrid-DRG") services; cases +17%; ~€640m more projected for 2026. One insurer's analysis.*
+
+---
+
+## Chapter 4 · The hospital's seat
+**4:15 – 5:35** · *Card: "Why are hospitals unhappy?"*
 
 **Visual:**
-- The price tag splits into two identical tags, one over a recovery chair and one over a bed.
-- A "stamp" comes down: SAME PRICE.
-- Three logos sit around a table (insurers, hospitals, doctors' practices), and a gavel for the arbitration committee.
+- The hospital chair lights up.
+- A sorting machine sends simple cases out of the door; complex ones drop back inside.
+- The night hospital, with an "added money" arrow that turns out to be a "moved money" arrow.
+- A zoom to Saarbrücken: a stylised Klinikum, with the city's €15.4m support shown as a lifebuoy.
 
 **Narration:**
-> From 2024, for a growing list of operations, Germany introduced one fixed price — the same whether the patient goes home that evening or stays a night.
+> From the hospital's seat, the problem is who is left. One price suits the simplest patients — young, healthy, one side, first time — and they are the easiest to treat elsewhere. Industry voices say some outpatient centres pick exactly those. The hard cases — repeats, large hernias, the frail, the emergencies — still need a hospital.
 >
-> For a simple, one-sided groin repair in 2026, that price is two thousand and eighty-two euros. More complex repairs have higher prices. The sickest patients stay outside the system entirely.
+> And a hospital must stay ready for what it can't plan: the emergency team, intensive care, the night shift. A new readiness payment arrives fully by 2030 — but it is mostly existing money, moved from per-case fees into a fixed budget. Not new money.
 >
-> The prices aren't set by insurers alone. Insurers, hospitals and office-based doctors negotiate them — and when they couldn't agree for 2026, an arbitration committee decided.
->
-> The logic is hard to argue with. A Swiss study of carefully selected patients found no difference in complications or quality of life between going home and staying in. International guidelines recommend day surgery for most groin repairs — as long as aftercare is organised.
->
-> Stop paying for nights that aren't needed. What could go wrong?
+> Two in three German hospitals surveyed were losing money in 2024. In Saarbrücken, the city is setting aside fifteen million euros this year to support its hospital — a certified hernia centre that also does the complex repairs the simple price was never built for.
 
 **On screen:**
-- *2026: G24Q (simple one-sided repair) €2,082.60 · complex and bilateral variants up to €3,639.27*
-- *Swiss HerStAmb study (2023): 237 patients, selected, observational; 4% had to be admitted after all*
-- *HerniaSurge guideline: day surgery "for the majority … provided aftercare is organized"*
-
-**Sound:** the stamp is a hard hit. On "What could go wrong?", a rising swell into a hard cut.
+- *Registries: outpatient hernia patients are younger and healthier*
+- *Readiness payment: ~60% of operating payments reallocated; budget-neutral 2026–27; full from 2030*
+- *DKI survey (376 general hospitals, 100+ beds): 66% made a loss in 2024*
+- *City of Saarbrücken 2026 budget: €15.4m hospital support (the whole hospital, not hernia care)*
 
 ---
 
-## Chapter 3 · The first bill
-**3:00 – 4:05** · *Card: "Why did spending go up?"*
+## Chapter 5 · The surgeon's seat
+**5:35 – 6:45** · *Card: "Why are surgeons unhappy?"*
+
+**Visual:** The surgeon's chair lights up. Two clocks (70 and 94 minutes). Two pie charts (72% and 34% keyhole). A Denmark inset where the keyhole share and the same-day share sit together.
+
+**Narration:**
+> From the surgeon's seat, most agree: many patients can go home the same day. The worry is what the price leaves out.
+>
+> The recommended repair for a one-sided hernia is keyhole surgery with a mesh — less pain, less chronic pain — but it costs more on the day. In Germany, almost three quarters of inpatient repairs were done that way in 2019; only a third of outpatient ones. In Denmark, keyhole surgery and same-day discharge go together. A badly set price could pull them apart.
+>
+> And surgeons learn by operating. In a Frankfurt study, supervised residents took ninety-four minutes for a keyhole repair; experienced surgeons, seventy — with no extra complications. Those twenty-four minutes are how the next generation is trained. The price has no line for them. The German Hernia Society warned of exactly this in 2024.
+
+**On screen:**
+- *HerniaSurge 2023: laparo-endoscopic repair recommended for primary one-sided hernia, given expertise*
+- *Herniamed 2019: keyhole share 72% inpatient vs 34% outpatient (the patient groups differ)*
+- *Oehler et al. 2025: 94 vs 70 min; morbidity not increased under supervision*
+- *DHG statement, April 2024*
+
+---
+
+## Chapter 6 · Germany in 2035
+**6:45 – 8:00** · *Card: "Where does this lead?"*
+
+**Visual:** Three clocks on the wall, ticking at different speeds:
+- **The rules:** a fast second hand, labelled 2024 → 2026 → 2030.
+- **The buildings:** a slow hour hand. The Saarbrücken campus blueprint, a hard hat, "planners tendered 2026".
+- **The people:** a calendar. The age grid at 1 in 4 by 2035; surgeons in training.
+
+They converge on 2035 as two diverging road signs: "managed" and "drifting".
+
+**Narration:**
+> Look ahead ten years and three clocks are running at different speeds.
+>
+> The rules move fast: new prices every year, readiness payments by 2030, a fund of up to fifty billion euros for restructuring until 2035.
+>
+> Buildings move slowly. Saarbrücken's new campus, with its outpatient centre, is still being planned; the building money has been earmarked, not yet confirmed. Saarland's own planners expect a thousand or more fewer beds to be needed by 2035 than in its 2023 plan.
+>
+> And people move slowest of all. By 2035, one German in four will be sixty-seven or over — and the surgeons who will operate on them are being trained now, or not.
+>
+> If those clocks are managed together, Germany ends up with fewer, better-used beds, more safe same-day surgery, and hospitals that can still take the hard cases. If they're not, the simple work drifts away, the hard work stays underfunded, and the question becomes not what we pay, but who is left to do it.
+
+**On screen:**
+- *Transformation fund: up to €50bn, 2026–2035 (federal up to €29bn; states and operators co-fund ≥30%, then ≥50%)*
+- *Saarland planning report (aktiva, 2025): ~1,010–1,660 fewer beds by 2035 than the 2023 plan*
+- *Gesundheitscampus Winterberg: €85m earmarked (Nov 2024); planners tendered (June 2026)*
+- *These are projections and plans, not forecasts of closures.*
+
+---
+
+## Chapter 7 · What would work
+**8:00 – 9:20** · *Card: "So — is Germany right?"*
 
 **Visual:**
-- A receipt prints line by line; the total rolls up to +€360m.
-- Two forces push the total: a "price" arrow and a "volume" arrow.
-- A counter: cases +17%; cases in doctors' practices +65%.
+- The price tag on the table tears into four pieces (hard cases, training, technique, readiness) and reassembles with four new lines added.
+- The patient's chair is finally filled: a composite patient.
+- The tag becomes a scorecard in front of them.
 
 **Narration:**
-> In September 2026, the research institute of Germany's largest insurer group published the first big look at the bill.
+> So, is Germany right?
 >
-> Across these same-price operations, it found insurers spent about three hundred and sixty million euros more in 2025, after inflation — not less.
+> On the direction: yes. Paying for nights patients don't need made little sense, and countries that moved earlier haven't gone back.
 >
-> Two things drove it. First, the price: it was set by blending the old hospital rate with the old outpatient rate. Operations that used to be done cheaply in a doctor's practice now earned the higher, blended price.
+> On the price: not yet. One number can't see the hard cases, the next surgeon, the better technique, or the lights that stay on at night. Each side at the table is right about something.
 >
-> Second, volume: cases rose by seventeen percent. In office-based practices, they rose by two thirds.
+> For a hospital like Saarbrücken's, the evidence points to a careful middle path: start small with a selected day pathway in the theatres it already has; keep keyhole repair where it fits; budget for training openly; protect the complex work; and measure everything before building bigger.
 >
-> This is one study, by one side of the negotiating table, and it can't prove what caused every euro. But it does undercut the simplest promise: that the reform would save money on its own.
-
-**On screen:**
-- *WIdO (AOK research institute), 10 Sep 2026: ~€360m higher inflation-adjusted insurer spending in 2025 across Hybrid-DRG services; cases +17%; practice-based cases +65%; ~€640m more projected for 2026*
-- *An insurer's analysis. It covers all Hybrid-DRG services, not hernias alone.*
-
----
-
-## Chapter 4 · What the price can't see
-**4:05 – 6:00** · *Card: "What doesn't one price pay for?"*
-
-The turn. The price tag is pulled apart into four torn pieces. Each piece gets its own mini-segment of about 25 seconds.
-
-### 4a · The hard cases
-
-**Visual:** A sorting machine sends simple cases out of the door; complex ones (repeat repairs, large hernias, frail patients, emergencies) drop back into the hospital.
-
-> One price works best for the simplest patients — younger, healthier, one side, first time. They are exactly the patients outpatient centres are best placed to take. Industry voices say openly that some centres pick the easy cases. The hard ones — the repeats, the large hernias, the frail, the emergencies — still need a hospital. So hospitals keep the costliest mix, with less of the routine work that used to help pay for it.
-
-**On screen:** *Registry data: outpatient hernia patients are younger and healthier; frail patients and patients with several conditions are treated as inpatients far more often.*
-
-### 4b · The next surgeon
-
-**Visual:** Two clocks side by side: 70 minutes and 94 minutes.
-
-> Surgeons learn by operating. In a Frankfurt study, laparoscopic repairs took ninety-four minutes when residents operated under supervision, against seventy for attending surgeons — with no extra complications. Those twenty-four minutes are how the next generation is trained. The fixed price has no line for them. The German Hernia Society warned of exactly this in 2024.
-
-**On screen:** *Frankfurt university hospital, 2025: TAPP repair 94 min (residents) vs 70 min (attendings); morbidity not increased under supervision · DHG statement, April 2024*
-
-### 4c · The better technique
-
-**Visual:** Two pie charts: inpatient repairs 72% keyhole, outpatient 34%. The keyhole slice glows.
-
-> The guideline's preferred repair for a one-sided hernia is keyhole surgery with a mesh — less pain afterwards, less chronic pain. It costs more on the day. In Germany, almost three quarters of inpatient repairs were done that way in 2019 — but only about a third of outpatient ones. In Denmark, keyhole surgery and same-day discharge go together. A badly set price could pull them apart.
-
-**On screen:** *HerniaSurge 2023: laparo-endoscopic repair recommended for primary unilateral hernia, given expertise · Herniamed 2019: laparo-endoscopic share 72% inpatient vs 34% outpatient (the patient groups differ)*
-
-### 4d · The lights that stay on
-
-**Visual:** The night hospital (the one image kept from the old film). An "added money" arrow turns out to be a "moved money" arrow.
-
-> And then there is readiness — the emergency team, the intensive care beds, the night shift. A new readiness payment is coming, fully in effect by 2030. But it is mostly existing money, moved from per-case payments into a fixed budget. It changes how hospitals are paid. It doesn't add much. Two in three German hospitals surveyed were already losing money in 2024.
-
-**On screen:** *Readiness payment: about 60% of operating payments reallocated from case fees; budget-neutral 2026–27, phased in 2028–29, full from 2030 · DKI survey of 376 general hospitals (100+ beds): 66% made a loss in 2024*
-
----
-
-## Chapter 5 · One hospital's choice
-**6:00 – 7:15** · *Card: "What should a hospital do?"*
-
-**Visual:**
-- A map zooms to Saarbrücken; the real hospital is shown as a stylised building.
-- Its assets light up one by one: certified hernia centre, existing outpatient theatre, complex abdominal-wall surgery.
-- A blueprint of the planned campus, stamped NOT YET FUNDED.
-- A "choose a path" fork with three options.
-
-**Narration:**
-> Take Klinikum Saarbrücken. It is a certified hernia centre. It already has an outpatient operating unit inside its main theatres. Last year it reported repairing a hernia so large it took weeks of preparation. Its planned new campus, with a big outpatient centre, is still being designed — the building money not yet confirmed.
->
-> What does the evidence suggest a hospital like this should do?
->
-> Not refuse the change: most simple repairs can safely go home. Not chase volume either. Start small, with a carefully selected day pathway in the theatres it already has. Keep keyhole mesh repair as the standard where it fits. Budget for training openly, as a real cost. Protect the complex work only a hospital can do. And measure everything — costs, complications, pain, unplanned admissions — before building bigger.
-
-**On screen:**
-- *DHG-certified hernia centre (Siegel Qualitätsgesicherte Hernienchirurgie) · existing outpatient OP unit in the central theatres*
-- *Gesundheitscampus Winterberg: €85m in state funds earmarked (Nov 2024); planners being tendered (June 2026); no building funding notice found*
-- *This is analysis, not the hospital's plan.*
-
----
-
-## Chapter 6 · Fixing the price
-**7:15 – 8:05** · *Card: "Is the policy right?"*
-
-**Visual:** The torn price tag reassembles with four new lines added (hard cases, training, technique, readiness) and becomes a scorecard. Callback to the opening frame: bed, door, tag.
-
-**Narration:**
-> So — is Germany right?
->
-> On the direction, the evidence says yes. Paying for nights patients don't need made little sense, and countries that moved earlier haven't looked back.
->
-> On the price, not yet. One number can't see the hard cases, the next surgeon, the better technique, or the lights that stay on at night.
->
-> A fairer system would pay for those openly — and judge the reform not by how fast beds empty, but by what happens to patients: how many come back, how much pain they have, which operation they got, and whether there's still a surgeon to do it in ten years.
+> And for the system: pay for those things openly — and judge the reform not by how fast beds empty, but by the person in this chair. Did they come back? How much pain did they have? Did they get the right operation? And will there still be a surgeon to do it in ten years?
 >
 > One price was a good idea. It just has to be the right one.
 
-**On screen (scorecard):** *Unplanned returns · Pain and recovery · Keyhole where it fits · Surgeons trained · Access to the hard cases*
+**On screen (scorecard):** *Unplanned returns · Pain and recovery · Keyhole where it fits · Surgeons trained · Access to the hard cases · Accounts that balance*
+
+*The recommendations are analysis, not the hospital's plan.*
 
 ---
 
 ## End card
-**8:05 – 8:20**
+**9:20 – 9:35**
 
-*Facts as of 3 October 2026. Sources: Herniamed / Köckerling et al. · NHS HES / Joyner et al. · Swedish Hernia Register · Danish consensus 2025 · HerniaSurge 2018 and 2023 · HerStAmb (Ziga et al. 2023) · Oehler et al. 2025 · DHG 2024 · WIdO / AOK Sep 2026 · KBV / GKV-Spitzenverband (Hybrid-DRG 2026) · Eurostat · DKI · BMG / BAS · Klinikum Saarbrücken · Saarland ministry. Narration: AI voice.*
+*Facts as of 3 October 2026. Sources: Destatis · BMG · Joint Economic Forecast (autumn 2026) · Herniamed / Köckerling et al. · NHS HES / Joyner et al. · Swedish Hernia Register · Danish consensus 2025 · HerniaSurge 2018 and 2023 · HerStAmb 2023 · Oehler et al. 2025 · DHG 2024 · WIdO / AOK 2026 · KBV / GKV-Spitzenverband · Eurostat · DKI · BAS · Saarland ministry · Klinikum Saarbrücken · City of Saarbrücken. Narration: AI voice.*
 
 ---
 
 ## Production notes
 
-- **Words:** about 955 in total, so 8 minutes is achievable at 135 words per minute with pauses. Re-time once the narration is generated.
-- **Fairness:** every chapter gives someone their due. Patients (1–2), insurers and reformers (2–3), surgeons (4), hospital management (5), policy-makers (6). There are no villains. The outpatient-centre point is attributed as commentary, not proven fact.
-- **Attribution:** WIdO is an insurer's institute, the DKI is the hospitals' institute, and the DHG is the surgeons' society. The film says so each time.
-- **Say on screen once:** "Hybrid-DRG" is the German term for these same-price operations.
+- **Length:** about 1,150 words in total. At 130 words per minute plus pauses that comes to about 9½ minutes, so the film stays under 10. If the recorded voice runs long, trim chapter 1 first; it's the densest.
+- **Fairness:** each side gets its strongest case and its weakness.
+  - **The payer:** the logic is sound, but costs rose.
+  - **The hospital:** it keeps the hard cases, but it does have plans and help coming.
+  - **The surgeon:** right about technique and training, and agrees most patients can go home.
+- **Attribution:** WIdO is the insurers' institute, the DKI is the hospitals' institute, and the DHG is the surgeons' society. The film says so each time.
+- **Economy:** describe it as weak growth and tight money, not decline. Forecasts and projections are labelled as such.
+- **Real organisations:** the Klinikum appears only through its published facts. The recommendations are labelled as analysis. Ask the hospital for comment before publishing.
 
 ## Fact-check ledger (checked 3 Oct 2026)
 
 | Claim | Source |
 |---|---|
-| Germany day-case share 20.2% (2013) → 14.3% (2019); laparo-endoscopic 71.9% inpatient vs 34.3% outpatient (2019) | Köckerling et al., Hernia 2022 (PMID 34532811) |
-| England 79.1% day case (2014–22); day case associated with lower 30-day readmission | Joyner et al., Hernia 2023 (PMID 37851291) |
-| Sweden ~80% day surgery | Swedish Hernia Register review (PMC10831639) |
-| Denmark: "almost all groin hernias should be repaired in an outpatient setting"; TAPP is the standard | Kirk et al., J Abdom Wall Surg 2025 |
-| ~250,000 repairs/year in Germany | BDC |
-| Beds 759 vs EU 507 (2024) | Eurostat, 13 Jul 2026 |
-| Hybrid-DRG from 2024 (ordinance); 2025 by agreement; 2026 by arbitration (11 Nov 2025), 69 DRGs / 904 OPS codes | GKV-Spitzenverband; KBV 13 Nov 2025 |
-| G24Q €2,082.60; G24M €3,639.27; exclusions | KBV 2026 tariff; Hybrid-DRG catalogue 2026 |
-| HerStAmb: 237 patients; no significant difference; 4% crossover | Ziga et al., Langenbecks Arch Surg 2023 (PMID 36622458) |
-| HerniaSurge day-surgery and laparo-endoscopic recommendations | Hernia 2018; BJS Open 2023 |
-| WIdO: ~€360m (2025), +17% cases, +65% practice-based, ~€640m (2026) | AOK/WIdO press release, 10 Sep 2026 |
-| Trainee 94 vs 70 min, no extra morbidity | Oehler et al., Innov Surg Sci 2025 (PMID 42769636) |
-| DHG warning on material costs, time pressure, training | BDC, 22 Apr 2024 |
-| Outpatient centres choose simpler cases (commentary) | kma-online, 12 Jun 2024 |
-| Readiness payment ≈60%, reallocated, budget-neutral 2026–27, full from 2030 | AOK; KHAG |
-| DKI: 66% losses 2024, n=376, 100+ beds | DKI Krankenhaus-Barometer, Dec 2025 |
-| Klinikum Saarbrücken: DHG certified; outpatient OP unit; complex hernia Mar 2025; €85m earmarked; planners tendered June 2026 | Klinikum Saarbrücken press releases; Saarland ministry |
+| Health spending €538.2bn, 12.4% of GDP (2024) | Destatis, 2 Apr 2026 |
+| 67+ ~20% (2024) → one in four by 2035 | Destatis 16th population projection, 11 Dec 2025 |
+| Contributions ≈42.3% (2026) | Haufe / TK 2026 rates |
+| Insurers H1 2026 spending +7.1%, contribution income +4.1% | BMG, Sep 2026 |
+| Gap without action €19bn (2027) → €44bn (2030); BStabG passed 10 Jul 2026 | BMG FAQ; BGBl. I 2026 Nr. 228 |
+| GDP −0.8 / 0.0 / +0.2 (2023–25); forecast +1.3 / +1.1 / +0.4 (2026–28) | Destatis Aug 2026; Gemeinschaftsdiagnose 24 Sep 2026 |
+| Energy-intensive output −17.8% vs 2021 | Destatis, Feb 2026 |
+| Exports to China −9.7% (2025); China competing in medium- and high-tech goods | Destatis Feb 2026; Bundesbank Jul 2025 |
+| Day-case shares: Germany 20.2% → 14.3%; England 79.1%; Sweden ~80%; Denmark "almost all" | Köckerling 2022; Joyner 2023; Swedish register; Kirk 2025 |
+| ~250,000 repairs/year | BDC |
+| Beds 759 vs EU 507 | Eurostat, 13 Jul 2026 |
+| HerStAmb: 237 patients, no significant difference, 4% crossover | Ziga et al. 2023 |
+| Hybrid-DRG since 2024; 2026 by arbitration; G24Q €2,082.60; up to €3,639.27 | KBV; GKV-SV; 2026 catalogue |
+| WIdO ~€360m (2025), +17% cases, ~€640m (2026) | AOK/WIdO, 10 Sep 2026 |
+| Outpatient patients younger and healthier; cherry-picking (commentary) | Herniamed; kma-online 2024 |
+| Readiness payment ≈60%, reallocated, full from 2030 | AOK; KHAG |
+| DKI 66% losses (2024), n=376 | DKI Barometer, Dec 2025 |
+| City support €15.4m (2026) | City of Saarbrücken budget |
+| Keyhole share 71.9% vs 34.3% (2019) | Köckerling 2022 |
+| HerniaSurge 2023 recommendation | BJS Open 2023 |
+| 94 vs 70 min | Oehler et al. 2025 |
+| DHG warning | BDC, 22 Apr 2024 |
+| Transformation fund ≤€50bn; federal ≤€29bn; co-funding ≥30% / ≥50% | BAS; KHTFV |
+| aktiva: 1,010–1,660 fewer beds by 2035 vs 2023 plan | Ärzteblatt, 4 Apr 2025 |
+| Winterberg €85m earmarked; planners tendered June 2026 | Saarland ministry; Klinikum press, 25 Jun 2026 |
