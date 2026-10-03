@@ -4,7 +4,7 @@
 
 - **Format:** observational documentary. Calm, curious narrator, detached but never vague.
 - **Audience:** general public. No prior knowledge of German healthcare assumed.
-- **Length:** about 8½ minutes, 9 scenes plus an end card. A 5-minute cut is planned below.
+- **Length:** about 8¾ minutes, 9 scenes plus an end card. A 5-minute cut is planned below.
 - **Narration:** about 900 words at a slow pace (about 110 words per minute) with pauses.
 
 ---
@@ -18,6 +18,8 @@
 - Many of these operations can be done safely as day surgery if the patient is chosen carefully and has proper aftercare.
 - An empty bed does not save money by itself. Staff, buildings and night cover still cost money until the hospital actually changes them.
 - Changing a hospital costs money first. Any savings come later, and only if the change is real.
+- German hospitals are under broad financial strain. In 2024, two in three lost money, and only about one in seven expected a positive result for 2025 (DKI Krankenhaus-Barometer). Insolvencies are real but fewer than headlines suggest: 34 sites in 2023, 30 in 2024 and 26 in 2025, out of about 1,840 hospitals. Most insolvent hospitals restructure and keep operating; six insolvent clinics closed in 2025. The total number of hospitals has fallen gradually, from 2,221 in 2002 to 1,841 in 2024, through closures and mergers. Some of this shrinking is intended: the national hospital reform aims to concentrate care in fewer, better-equipped sites.
+- The readiness problem has been recognised in law. The hospital reform (KHVVG, amended by the KHAG in force since April 2026) adds payments for keeping capacity ready and a transformation fund of up to €50bn for 2026–2035. But those payments are budget-neutral in 2026–2027, phase in during 2028–2029, and only take full effect from 2030. The price rule is already here; the readiness money comes later.
 - Pressure passes downward. Each level of the system (government, insurers, the states, the hospital) has sound reasons to push costs to the next. The hospital ends up holding the costs it cannot pass on: its building, its night shift and its emergency readiness. Some of the remaining work moves into patients' homes.
 - Germany's growth model is weakening, and the trend points downward. The model that made it rich relied on cheap Russian gas, strong demand from China, an open American market, and a currency shared with weaker neighbours that kept its exports cheaper than a German currency alone would have. The cheap gas is gone. China is now a competitor in cars, machinery and chemicals. US tariffs have risen. Energy-intensive industry has shrunk.
 - That is a weakening, not a collapse. Germany is still rich, with low public debt and relatively low unemployment, and it has started borrowing to invest. How far the decline goes depends on how well it adapts.
@@ -146,7 +148,7 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 ---
 
 ## Scene 6 · The part that cannot sleep
-**04:55 – 05:40**
+**04:55 – 06:00**
 
 **Picture:** Back to the night hospital. The planned-surgery floor dims. The emergency band stays lit. Small streams of money from routine operations flow into that band and keep it glowing.
 
@@ -157,16 +159,22 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 >
 > For years, routine operations have helped carry that weight. If they move to cheaper settings, or elsewhere entirely, the cost of readiness does not move with them. It stays here, shared among fewer cases.
 >
-> This hospital's city already sets aside millions of euros a year to support it. That tells us the pressure is real. It does not tell us that hernia surgery is the cause.
+> Across Germany, two hospitals in three now lose money. Most do not close — some restructure, some merge, a few shut their doors. The country is meant to have fewer, stronger hospitals. The danger is that the shrinking happens by accident rather than by plan.
+>
+> Lawmakers have seen the problem. A new payment, just for staying ready, is written into law. But it arrives in full only in 2030. The price for the hernia is already here.
+>
+> This hospital's own city sets aside millions of euros a year to support it. That tells us the pressure is real. It does not tell us that hernia surgery is the cause.
 
 **On screen:**
 - *City of Saarbrücken 2026 budget: €15.4m in hospital support*
 - *This is the hospital as a whole, not the hernia service.*
+- *2024: 66% of German hospitals made a loss (DKI). Insolvent sites: 34 (2023) → 30 (2024) → 26 (2025), most of them restructured rather than closed.*
+- *Readiness payments are in law but phase in from 2028 and take full effect in 2030.*
 
 ---
 
 ## Scene 7 · Changing shape costs money first
-**05:40 – 06:30**
+**06:00 – 06:50**
 
 **Picture:** The hospital's published campus plan as an overlay: an outpatient operating centre and day-treatment rooms. A simple line graph dips below zero and then, on one branch only, rises above it. The other branch stays flat.
 
@@ -186,7 +194,7 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 ---
 
 ## Scene 8 · Beyond the door
-**06:30 – 07:25**
+**06:50 – 07:45**
 
 **Picture:** The composite patient goes home. A line follows them: a lift from a relative, written instructions, a phone number, a follow-up visit, and a dotted route back to the hospital. A second patient lives alone, and their line has gaps.
 
@@ -206,7 +214,7 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 ---
 
 ## Scene 9 · What will tell us
-**07:25 – 08:10**
+**07:45 – 08:30**
 
 **Picture:** Night again. The planned-surgery floor is dark and the emergency band stays lit. Slowly, a light comes on in a small new wing.
 
@@ -222,7 +230,7 @@ For suitable patients the reform's logic is sound. The trouble is how the pressu
 ---
 
 ## End card
-**08:10 – 08:25**
+**08:30 – 08:45**
 
 **On screen:**
 
@@ -243,12 +251,12 @@ The same story and ending in about 5 minutes, which suits a social feed. Nothing
 | 2 · A common repair | 0:50 | 0:35 | Drop the sentence about the patch and small cuts. |
 | 3 · One price, two paths | 0:50 | 0:35 | Keep the price, the intent and "a medical judgement". |
 | 4 · The weight passes down | 1:35 | 0:50 | Keep the ageing line, "does not create the gap, but makes it wider", and the chain from government to hospital. Drop the list of pensions and defence. |
-| 5 + 6 · Empty bed + the part that cannot sleep | 1:45 | 0:55 | Merge: the empty bed saves little cash, and readiness costs stay. Keep the €300 / €60 illustration; the €15.4m moves to on-screen text. |
+| 5 + 6 · Empty bed + the part that cannot sleep | 2:05 | 1:05 | Merge: the empty bed saves little cash, and readiness costs stay. Keep the €300 / €60 illustration, "two hospitals in three now lose money" and "it arrives in full only in 2030". The €15.4m moves to on-screen text. |
 | 7 · Changing shape costs money first | 0:50 | 0:35 | Keep "what the hospital can actually change". |
 | 8 · Beyond the door | 0:55 | 0:35 | Keep "It was the care" and "It arrives in a kitchen, a spare room, a daughter's evening." |
 | 9 · What will tell us | 0:45 | 0:40 | Keep "No one in the chain chose this outcome." |
 | End card | 0:15 | 0:10 | Unchanged. |
-| **Total** | **8:25** | **~5:25** | Trim scene 2 to 0:25 and scene 1 to 0:25 if it must land at 5:10. |
+| **Total** | **8:45** | **~5:35** | Trim scene 2 to 0:25 and scene 1 to 0:25 if it must land at 5:10. |
 
 ---
 
@@ -271,4 +279,5 @@ The same story and ending in about 5 minutes, which suits a social feed. Nothing
 - [ ] Scene 4: the claim that the insurers' gap comes mainly from spending growth rather than the economy. Cite BMG or GKV-Spitzenverband analysis.
 - [ ] Scene 4: the decline of energy-intensive industry since 2022 and China's shift from customer to competitor. The Bundesbank analysis (original source 8) covers China; add a Destatis production index for energy-intensive industry.
 - [ ] The ~42% contribution total: 18.6 + 14.6 + 2.9 (average additional rate) + 3.6 + 2.6 = 42.3%, from the 2026 rates in the companion explainer. Long-term care varies with child status.
+- [ ] Scene 6: DKI Krankenhaus-Barometer, December 2025 (66% losses in 2024; 14% expect a positive 2025 result). DKG insolvency counts for 2023–2025 (via Ärzteblatt). Destatis hospital counts for 2002 and 2024. KHAG in force 15 April 2026, with its readiness-payment timetable. Note that the DKG and DKI represent hospitals, so attribute their figures.
 - [ ] All other figures come from the original storyboard's source ledger (sources 1–15). Re-check each link on the day the film is published.
