@@ -11,10 +11,11 @@
 <body>
 <canvas id="c"></canvas>
 <script>
-// The Hospital That Must Change Shape · Scene 1 "The habitat" (00:00–00:25)
+// The Hospital That Must Change Shape · Scene 1 "The habitat" (00:00–00:31)
+// Narration: ../narration/scene-01.voice.wav, placed at VOICE_AT seconds (render with --audio, see CLAUDE.md).
 // Storyboard: ../storyboards/hospital-change-shape-5m50.md
 // Scene contract (see ../CLAUDE.md): window.VIDEO + a pure window.seek(t).
-window.VIDEO = { width: 1920, height: 1080, fps: 30, duration: 25 };
+window.VIDEO = { width: 1920, height: 1080, fps: 30, duration: 31 };
 
 const { width: W, height: H } = window.VIDEO;
 const canvas = document.getElementById('c');
@@ -285,7 +286,7 @@ function drawScene(t) {
   // Dusk progresses from 4s to 17s.
   const night = prog(t, 4, 17);
   // Slow push-in toward the hospital, with parallax per layer.
-  const push = prog(t, 3.5, 25);
+  const push = prog(t, 3.5, window.VIDEO.duration);
   const zoom = lerp(1.0, 1.16, push);
   const fx = 1300, fy = 560; // focus point
   const layer = (depth, fn) => {
@@ -345,7 +346,7 @@ function drawOpeningCard(t) {
 }
 
 function drawLowerThird(t) {
-  const a = window4(t, 13.5, 14.6, 19.6, 20.6);
+  const a = window4(t, 15.8, 16.8, 23.2, 24.2);
   if (a <= 0.01) return;
   const x = 120, y = H - 210;
   ctx.globalAlpha = a;
@@ -362,13 +363,15 @@ function drawLowerThird(t) {
   ctx.globalAlpha = 1;
 }
 
-// Narration timing guide (burned in for review; disable with ?captions=0).
+// Captions follow the recorded narration: segment times from ../narration/scene-01.timing.json,
+// offset by VOICE_AT (when the voice starts in this scene). Disable with ?captions=0.
+const VOICE_AT = 5.0;
 const NARRATION = [
-  [5.2, 8.4, 'At night, most of this hospital sleeps.'],
-  [9.0, 12.4, 'One part never does — the part that waits.'],
-  [13.4, 18.6, 'Here, in a quiet corner of Germany, a hospital is being asked to change its shape.'],
-  [19.4, 22.6, 'It begins with a very small operation.'],
-];
+  [0, 3.35, 'At night, most of this hospital sleeps.'],
+  [4.35, 9.35, 'One part never does — the part that waits.'],
+  [11.35, 19.2, 'Here, in a quiet corner of Germany, a hospital is being asked to change its shape.'],
+  [20.2, 24.1, 'It begins with a very small operation.'],
+].map(([a, b, text]) => [a + VOICE_AT - 0.15, b + VOICE_AT + 0.35, text]);
 function drawCaptions(t) {
   if (!SHOW_CAPTIONS || window.__CAPTIONS__ === false) return;
   for (const [a, b, text] of NARRATION) {
@@ -396,7 +399,7 @@ window.seek = (t) => {
   drawCaptions(t);
   drawOpeningCard(t);
   // Gentle dip at the end, ready for the dissolve into scene 2.
-  const out = prog(t, 23.8, 25);
+  const out = prog(t, 29.8, 31);
   if (out > 0) {
     ctx.fillStyle = `rgba(6,18,26,${out * 0.6})`;
     ctx.fillRect(0, 0, W, H);
