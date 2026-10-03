@@ -4,8 +4,8 @@
 
 - **Format:** observational documentary. Calm, curious narrator, detached but never vague.
 - **Audience:** general public. No prior knowledge of German healthcare assumed.
-- **Length:** about 7½ minutes, 9 scenes plus an end card.
-- **Narration:** about 820 words at a slow pace (about 110 words per minute) with pauses.
+- **Length:** about 8 minutes, 9 scenes plus an end card. A 5-minute cut is planned below.
+- **Narration:** about 900 words at a slow pace (about 110 words per minute) with pauses.
 
 ---
 
@@ -18,6 +18,9 @@
 - Many of these operations can be done safely as day surgery if the patient is chosen carefully and has proper aftercare.
 - An empty bed does not save money by itself. Staff, buildings and night cover still cost money until the hospital actually changes them.
 - Changing a hospital costs money first. Any savings come later, and only if the change is real.
+- Pressure passes downward. Each level of the system (government, insurers, the states, the hospital) has sound reasons to push costs to the next. The hospital ends up holding the costs it cannot pass on: its building, its night shift and its emergency readiness. Some of the remaining work moves into patients' homes.
+- The weak economy tightens the squeeze, but it is not the root. The insurers' gap comes mainly from spending growing faster than income: wages, prices, new treatments and ageing. A strong economy would face it too, only more slowly.
+- The day-surgery reform did not come from the economic slump. Germany has long kept patients in hospital more than comparable countries, and the same-price rule was legislated before the downturn was clear.
 
 **What we don't know**
 
@@ -26,7 +29,7 @@
 
 **The conclusion**
 
-For suitable patients the reform's logic is sound. The risk lies in the gap: the rules change in a year, but a hospital's staff, beds and buildings take years to change, and the hospital has to stay ready for emergencies throughout. Whether the reform works will show up in the patients who come back, and in whether they can still find care when they need it, not in how fast the beds empty.
+For suitable patients the reform's logic is sound. The trouble is how the pressure travels: each level passes cost to the next, and it collects with whoever cannot pass it on. That is the hospital, and below it the patient's home. The rules change in a year, but a hospital's staff, beds and buildings take years to change, and it has to stay ready for emergencies throughout. Whether the reform works will show up in the patients who come back, and in whether they can still find care when they need it, not in how fast the beds empty.
 
 ---
 
@@ -92,29 +95,32 @@ For suitable patients the reform's logic is sound. The risk lies in the gap: the
 
 ---
 
-## Scene 4 · Why now
-**02:20 – 03:30**
+## Scene 4 · The weight passes down
+**02:20 – 03:40**
 
-**Picture:** Zoom out from the hospital to the country. A grid of 100 dots: 20 light up, then 25. A line of nurses and doctors gently thins. Three separate ledgers sit side by side, labelled *Health*, *Pensions* and *Defence & infrastructure*, never stacked into one total.
+**Picture:** Zoom out from the hospital to the country. A grid of 100 dots: 20 light up, then 25. Then a vertical chain of five levels appears: *Government → Insurers → States → Hospital → Home*. A weight moves down the chain, and each level passes part of it to the next. At the hospital level, the weight settles on three objects that cannot move: a building, a night rota and an emergency light.
 
 **Narration:**
-> The change does not come from nowhere.
+> The change has deep roots.
 >
-> Germany is growing older. Today one person in five is sixty-seven or over. By the middle of the next decade, it will be one in four. Older patients need more care — and the nurses and surgeons who give that care are retiring too.
+> Germany is growing older. Today one person in five is sixty-seven or over; by the middle of the next decade, one in four. Spending on care grows faster than the money paid in — wages, prices, new treatments and age all push it up. A weaker economy slows the money coming in. It does not create the gap. But it makes it wider.
 >
-> Health spending already exceeds five hundred billion euros a year. Without reform, the public health insurers warn their gap could reach tens of billions a year by 2030. And the same economy must also pay for pensions, defence and roads.
+> And pressure, in a system like this, rarely stays where it begins.
 >
-> So every night in a bed that a patient did not need is now a question someone will ask.
+> The government must also pay for pensions, defence and debt — so it limits what it adds. The insurers, facing a gap, set fixed prices. The regions, short of money, delay new buildings. Each decision is reasonable. Each one passes a little weight downward.
+>
+> And near the bottom of the chain is a hospital that cannot pass on its night shift, its emergency team, or its walls.
 
 **On screen:**
 - *Aged 67+: ~20% (2024) → ~25% (2035 projection)*
 - *Total health spending: €538bn (2024)*
 - *Projected insurer funding gap without reform: €19bn (2027) → €44bn (2030). Government estimate, not a recorded deficit.*
+- *The day-surgery reform predates the economic slump. Its aim is clinical as well as financial.*
 
 ---
 
 ## Scene 5 · The empty bed
-**03:30 – 04:30**
+**03:40 – 04:40**
 
 **Picture:** One empty bed casts two shadows. One is long, labelled *capacity freed*. The other is short, labelled *cash saved*. Bars appear: €300 and €60.
 
@@ -134,7 +140,7 @@ For suitable patients the reform's logic is sound. The risk lies in the gap: the
 ---
 
 ## Scene 6 · The part that cannot sleep
-**04:30 – 05:15**
+**04:40 – 05:25**
 
 **Picture:** Back to the night hospital. The planned-surgery floor dims. The emergency band stays lit. Small streams of money from routine operations flow into that band and keep it glowing.
 
@@ -154,7 +160,7 @@ For suitable patients the reform's logic is sound. The risk lies in the gap: the
 ---
 
 ## Scene 7 · Changing shape costs money first
-**05:15 – 06:05**
+**05:25 – 06:15**
 
 **Picture:** The hospital's published campus plan as an overlay: an outpatient operating centre and day-treatment rooms. A simple line graph dips below zero and then, on one branch only, rises above it. The other branch stays flat.
 
@@ -174,7 +180,7 @@ For suitable patients the reform's logic is sound. The risk lies in the gap: the
 ---
 
 ## Scene 8 · Beyond the door
-**06:05 – 06:50**
+**06:15 – 07:10**
 
 **Picture:** The composite patient goes home. A line follows them: a lift from a relative, written instructions, a phone number, a follow-up visit, and a dotted route back to the hospital. A second patient lives alone, and their line has gaps.
 
@@ -185,6 +191,8 @@ For suitable patients the reform's logic is sound. The risk lies in the gap: the
 >
 > For many people this is easy. For some — living alone, far away, or frail — it is not. For them, the night in hospital was never a habit. It was the care.
 >
+> This is the last step of the chain. Work that left the ward does not vanish. It arrives in a kitchen, a spare room, a daughter's evening.
+>
 > A good system sends home those who are ready. And keeps a bed for those who are not.
 
 **On screen:** *Safe day surgery depends on careful selection and aftercare, not on price alone.*
@@ -192,7 +200,7 @@ For suitable patients the reform's logic is sound. The risk lies in the gap: the
 ---
 
 ## Scene 9 · What will tell us
-**06:50 – 07:30**
+**07:10 – 07:55**
 
 **Picture:** Night again. The planned-surgery floor is dark and the emergency band stays lit. Slowly, a light comes on in a small new wing.
 
@@ -201,14 +209,14 @@ For suitable patients the reform's logic is sound. The risk lies in the gap: the
 >
 > But its body changes slowly. The rotas. The wards. The lights that must stay on for an emergency that has not yet arrived.
 >
-> Between the speed of the rule and the pace of the building lies the real test.
+> Between the speed of the rule and the pace of the building lies the real test. No one in the chain chose this outcome. Each simply passed on what it could not carry.
 >
 > Whether this becomes a hospital that adapts — or one that merely shrinks — will not be told by the empty bed. It will be told by the patient who recovers well at home. And by whether someone is still here, awake, when they need to come back.
 
 ---
 
 ## End card
-**07:30 – 07:45**
+**07:55 – 08:10**
 
 **On screen:**
 
@@ -228,22 +236,23 @@ The same story and ending in about 5 minutes, which suits a social feed. Nothing
 | 1 · Hospital at night | 0:40 | 0:30 | Drop "The heart that stops at three in the morning." |
 | 2 · A common repair | 0:50 | 0:35 | Drop the sentence about the patch and small cuts. |
 | 3 · One price, two paths | 0:50 | 0:35 | Keep the price, the intent and "a medical judgement". |
-| 4 · Why now | 1:10 | 0:40 | Ageing and the funding gap only. Pensions and defence move to on-screen text. |
+| 4 · The weight passes down | 1:20 | 0:45 | Keep the ageing line, "does not create the gap, but makes it wider", and the chain from government to hospital. Drop the list of pensions and defence. |
 | 5 + 6 · Empty bed + the part that cannot sleep | 1:45 | 0:55 | Merge: the empty bed saves little cash, and readiness costs stay. Keep the €300 / €60 illustration; the €15.4m moves to on-screen text. |
 | 7 · Changing shape costs money first | 0:50 | 0:35 | Keep "what the hospital can actually change". |
-| 8 · Beyond the door | 0:45 | 0:30 | Keep "For them, the night in hospital was never a habit. It was the care." |
-| 9 · What will tell us | 0:40 | 0:35 | Unchanged apart from pacing. |
+| 8 · Beyond the door | 0:55 | 0:35 | Keep "It was the care" and "It arrives in a kitchen, a spare room, a daughter's evening." |
+| 9 · What will tell us | 0:45 | 0:40 | Keep "No one in the chain chose this outcome." |
 | End card | 0:15 | 0:10 | Unchanged. |
-| **Total** | **7:45** | **~5:05** | |
+| **Total** | **8:10** | **~5:20** | Trim scene 2 to 0:25 if it must land at 5:10. |
 
 ---
 
 ## Changes from the previous draft
 
-- **Shorter.** 16 scenes and 12 minutes became 9 scenes and about 7½ minutes. The manufacturing, export and pension material is now one line in scene 4.
+- **Shorter.** 16 scenes and 12 minutes became 9 scenes and about 8 minutes. The manufacturing, export and pension material is now one line in scene 4.
 - **Plainer language.** "Hybrid-DRG", "PCCL", "allocation" and "G24Q" are gone from the narration. The rate stays as an on-screen example.
 - **Caveats moved on screen.** The narrator states what is known plainly. The limits sit in the on-screen labels.
 - **Generic cost example.** The cost illustrations no longer sit on the real hospital.
+- **Incentive structure.** The film's backbone is now pressure passing down the chain. The economy is shown as a tightening squeeze, not the root cause; that is the corrected version of the "failing economy pushed onto a hospital" framing.
 - **A new conclusion.** The ending pays off the title: the rules change fast and the building changes slowly, and the outcome shows in patients, not empty beds.
 - **Detailed figures moved out of the film.** The full cost model and the checklist for hospital managers belong in a companion explainer.
 
@@ -251,4 +260,7 @@ The same story and ending in about 5 minutes, which suits a social feed. Nothing
 
 - [ ] Scene 2: "In Germany, for a long time, many stayed the night." This is widely reported (German day-surgery rates have been low compared with other European countries) but needs a citation.
 - [ ] Scene 4: confirm the €19bn → €44bn figures still match the latest BMG publication. That page was a draft reform FAQ.
+- [ ] Scene 4: the states (Länder) underfund hospital buildings and equipment. This is widely reported, including by the German Hospital Federation (DKG), but needs a citation.
+- [ ] Scene 4: the date the same-price rule (§115f SGB V) was legislated, to support "predates the economic slump".
+- [ ] Scene 4: the claim that the insurers' gap comes mainly from spending growth rather than the economy. Cite BMG or GKV-Spitzenverband analysis.
 - [ ] All other figures come from the original storyboard's source ledger (sources 1–15). Re-check each link on the day the film is published.
