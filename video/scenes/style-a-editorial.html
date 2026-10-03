@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Style A · Editorial kinetic</title>
+<link rel="stylesheet" href="lib/motion.css">
+<style>
+  #stage { background: #f2ede4; color: #111; font-family: var(--sans); }
+  #grain { opacity: 0.05; }
+  #finish { background: none; }
+  .k { position: absolute; font-family: var(--sans); font-weight: 700; letter-spacing: -0.045em; line-height: 0.92; }
+  .xl { font-size: 230px; } .lg { font-size: 150px; } .md { font-size: 64px; letter-spacing: -0.02em; font-weight: 600; }
+  .eyebrow { position: absolute; font-family: var(--sans); font-weight: 600; font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: #ff5a1f; }
+  .orange { color: #ff5a1f; }
+  .mask { overflow: hidden; display: inline-block; vertical-align: top; padding-bottom: 0.08em; }
+  .mask > span { display: inline-block; }
+  .dot { position: absolute; border-radius: 50%; background: #ff5a1f; }
+  .rule { position: absolute; height: 3px; background: #111; transform-origin: 0 50%; }
+  .chip { position: absolute; font-family: var(--sans); font-weight: 600; font-size: 34px; padding: 12px 22px; border-radius: 999px; background: #111; color: #f2ede4; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="camera" id="cam">
+    <div class="eyebrow" id="eb" style="left:140px; top:150px">Germany · 2026 · hernia repair</div>
+    <div class="k xl" id="t1" style="left:132px; top:230px"><span class="mask"><span>One</span></span> <span class="mask"><span>operation.</span></span></div>
+    <div class="dot" id="dot" style="left:960px; top:540px; width:0; height:0"></div>
+    <div class="k xl" id="price" style="left:50%; top:50%; transform:translate(-50%,-50%); color:#f2ede4; visibility:hidden">€2,082.60</div>
+    <div class="dot" id="d1" style="left:380px; top:330px; width:420px; height:420px; visibility:hidden"></div>
+    <div class="dot" id="d2" style="left:1120px; top:330px; width:420px; height:420px; background:#111; visibility:hidden"></div>
+    <div class="k md" id="l1" style="left:380px; top:790px; width:420px; text-align:center; visibility:hidden">Home today</div>
+    <div class="k md" id="l2" style="left:1120px; top:790px; width:420px; text-align:center; visibility:hidden">One night</div>
+    <div class="chip" id="c1" style="left:452px; top:500px; visibility:hidden">€2,082.60</div>
+    <div class="chip" id="c2" style="left:1192px; top:500px; background:#ff5a1f; visibility:hidden">€2,082.60</div>
+    <div class="k lg" id="same" style="left:50%; top:130px; transform:translateX(-50%); white-space:nowrap; visibility:hidden">Same <span class="orange">price.</span></div>
+  </div>
+  <div class="rule" id="r1" style="left:140px; top:560px; width:1640px; transform:scaleX(0)"></div>
+  <div class="k lg" id="e1" style="left:140px; top:380px; visibility:hidden"><span class="mask"><span>The rule changes fast.</span></span></div>
+  <div class="k lg orange" id="e2" style="left:140px; top:600px; visibility:hidden"><span class="mask"><span>Hospitals don't.</span></span></div>
+</div>
+<script src="../node_modules/gsap/dist/gsap.min.js"></script>
+<script src="../node_modules/gsap/dist/SplitText.min.js"></script>
+<script src="../node_modules/gsap/dist/MorphSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/DrawSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/CustomEase.min.js"></script>
+<script src="lib/motion.js"></script>
+<script>
+M.scene({
+  duration: 10.5, fadeIn: 0.01, fadeOut: 0.4,
+  build(tl) {
+    const up = (sel, at) => { tl.from(M.$$(sel + ' .mask > span'), { yPercent: 105, duration: 0.7, ease: 'expo.out', stagger: 0.08 }, at); M.cue(at, 'tick', 0.8); };
+    M.typeIn(tl, '#eb', 0.15, { by: 'chars', stagger: 0.012, y: 0, blur: 0, cue: null });
+    up('#t1', 0.3);
+    // orange dot swallows the frame and becomes the price
+    tl.to('#dot', { width: 2600, height: 2600, left: 960 - 1300, top: 540 - 1300, duration: 0.9, ease: 'expo.inOut' }, 1.6);
+    M.cue(1.6, 'whoosh', 1);
+    tl.set(['#t1', '#eb'], { autoAlpha: 0 }, 2.3);
+    tl.set('#price', { autoAlpha: 1 }, 2.35);
+    tl.from('#price', { scale: 1.4, filter: 'blur(20px)', duration: 0.6, ease: 'expo.out' }, 2.35);
+    M.countUp(tl, '#price', 0, 2082.6, 2.35, { dur: 0.9, fmt: (v) => '€' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) });
+    M.cue(3.25, 'hit', 1);
+    // the field collapses into two circles: two paths
+    tl.to('#price', { autoAlpha: 0, scale: 0.6, duration: 0.3, ease: 'power2.in' }, 3.9);
+    tl.to('#dot', { width: 420, height: 420, left: 380, top: 330, duration: 0.8, ease: 'expo.inOut' }, 3.9);
+    tl.set('#d1', { autoAlpha: 1 }, 4.7).set('#dot', { autoAlpha: 0 }, 4.7);
+    tl.set('#d2', { autoAlpha: 1, scale: 0 }, 4.5).to('#d2', { scale: 1, duration: 0.7, ease: 'back.out(1.7)' }, 4.5);
+    M.cue(3.9, 'whoosh', 0.8); M.cue(4.6, 'pop', 1);
+    M.fadeIn(tl, ['#l1', '#l2'], 4.8, { y: 30, dur: 0.6 });
+    M.pop(tl, ['#c1', '#c2'], 5.5, { stagger: 0.12 });
+    tl.set('#same', { autoAlpha: 1 }, 6.0);
+    tl.from('#same', { y: -80, autoAlpha: 0, duration: 0.6, ease: 'expo.out' }, 6.0);
+    M.cue(6.0, 'hit', 0.7);
+    M.camera(tl, '#cam', 5.0, { scale: 1.04 }, { dur: 2.5, ease: 'none' });
+    // hard cut to the thesis
+    M.cut(tl, '#cam', [], 7.4);
+    tl.to('#r1', { scaleX: 1, duration: 0.8, ease: 'expo.inOut' }, 7.45);
+    tl.set(['#e1', '#e2'], { autoAlpha: 1 }, 7.45);
+    up('#e1', 7.6); up('#e2', 8.4);
+    M.cue(8.4, 'hit', 0.6);
+  },
+});
+</script>
+</body>
+</html>

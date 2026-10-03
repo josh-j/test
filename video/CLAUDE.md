@@ -35,3 +35,26 @@ headless Chromium (Playwright) and encodes them with ffmpeg.
 ## Preview
 
 `npm run preview` serves `scenes/` on port 8080 for a browser preview.
+
+## Motion toolkit (GSAP, Three.js, sound design)
+
+For anything beyond simple canvas drawing, build scenes on `scenes/lib/motion.js` + `motion.css`
+(see `scenes/style-*.html` for four complete examples):
+
+- **One paused GSAP timeline per scene.** `M.scene({ duration, build(tl) {...} })`; place tweens at
+  absolute times (`tl.to(el, {...}, 3.2)`). `seek(t)` jumps the timeline, so frames stay pure in t.
+- **Helpers:** `M.typeIn` (word/char kinetic type), `M.countUp`, `M.camera` (move a `.camera`
+  wrapper), `M.reveal` (clip-path circle/wipe), `M.draw` (SVG stroke draw-on), `M.morph` (SVG shape
+  morph), `M.pop`, `M.cut`. House eases: `settle` (fast in, soft out) and `glide` (camera moves).
+- **3D:** import `../node_modules/three/build/three.module.js` in a module script, tween Three.js
+  objects with GSAP, and render in `afterSeek(t)`. Use `preserveDrawingBuffer: true`.
+- **Stop-motion:** `stepFps: 12` quantises animation time ("on twos").
+- **Sound design:** `M.cue(t, 'whoosh'|'hit'|'tick'|'pop'|'swell', gain)`; the renderer writes
+  `<out>.cues.json`, and `music/sfx.py` turns it into a synced effects track.
+- **Narration:** pass `key: 'scene-0X'` to get clean subtitles from `lib/timings.js`.
+- **Review loop:** `node render.mjs scene.html --preview` (half-res, 15 fps, fast), then
+  `tools/filmstrip.sh out/x.preview.mp4 strip.png` and look at the strip before a full render.
+
+Style rules learned the hard way: keep the frame moving (camera drift, staggered builds, transitions
+that carry shapes into the next beat), use few words in big type, put sources in small text, and
+put a sound cue on every cut.

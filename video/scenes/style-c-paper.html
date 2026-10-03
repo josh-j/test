@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Style C · Paper collage</title>
+<link rel="stylesheet" href="lib/motion.css">
+<style>
+  #stage { background: #d9c7a7; color: #2b241d; }
+  #paperbg { position: absolute; inset: 0; }
+  #finish { background: radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(60,35,10,0.35) 100%); }
+  #grain { opacity: 0.09; }
+  .cut { position: absolute; filter: url(#torn) drop-shadow(6px 8px 0 rgba(60,40,20,0.28)); }
+  .strip { position: absolute; padding: 14px 28px 18px; background: #f6efdf; font-family: var(--serif); font-size: 64px;
+           filter: url(#torn) drop-shadow(5px 6px 0 rgba(60,40,20,0.25)); white-space: nowrap; }
+  .hand { position: absolute; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 54px; color: #b23a2b; }
+  .stamp { position: absolute; font-family: var(--sans); font-weight: 700; font-size: 58px; letter-spacing: 0.06em;
+           color: #b23a2b; border: 6px solid #b23a2b; padding: 6px 22px; border-radius: 10px; opacity: 0.85; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="paperbg" width="1920" height="1080">
+    <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="4"/><feColorMatrix values="0 0 0 0 0.85  0 0 0 0 0.78  0 0 0 0 0.65  0 0 0 0.35 0"/></filter>
+    <filter id="torn" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" seed="2"/><feDisplacementMap in="SourceGraphic" scale="9"/></filter>
+    <rect width="1920" height="1080" fill="#d9c7a7"/><rect width="1920" height="1080" filter="url(#paper)"/>
+  </svg>
+  <div class="camera" id="cam">
+    <div class="strip" id="s1" style="left:150px; top:120px; transform:rotate(-2deg)">One operation.</div>
+    <div class="strip" id="s2" style="left:230px; top:230px; transform:rotate(1.5deg); background:#f4c36a">One price: €2,082.60</div>
+
+    <!-- hospital cut-out -->
+    <svg class="cut" id="hosp" style="left:180px; top:440px" width="560" height="460">
+      <rect x="20" y="40" width="380" height="400" fill="#efe6d4"/>
+      <rect x="400" y="160" width="140" height="280" fill="#e2d5bd"/>
+      <rect x="170" y="10" width="80" height="40" fill="#c4473a"/>
+      <g fill="#6f8a93">
+        <rect x="50" y="80" width="60" height="50"/><rect x="130" y="80" width="60" height="50"/><rect x="210" y="80" width="60" height="50"/><rect x="290" y="80" width="60" height="50"/>
+        <rect x="50" y="160" width="60" height="50"/><rect x="130" y="160" width="60" height="50"/><rect x="210" y="160" width="60" height="50"/><rect x="290" y="160" width="60" height="50"/>
+        <rect x="50" y="240" width="60" height="50"/><rect x="130" y="240" width="60" height="50"/><rect x="210" y="240" width="60" height="50"/><rect x="290" y="240" width="60" height="50"/>
+      </g>
+      <g fill="#f4c36a" id="band"><rect x="50" y="320" width="60" height="50"/><rect x="130" y="320" width="60" height="50"/><rect x="210" y="320" width="60" height="50"/><rect x="290" y="320" width="60" height="50"/></g>
+    </svg>
+    <!-- house cut-out -->
+    <svg class="cut" id="house" style="left:1300px; top:560px" width="420" height="360">
+      <polygon points="20,150 210,20 400,150" fill="#c4473a"/>
+      <rect x="50" y="150" width="320" height="200" fill="#f3e3c3"/>
+      <rect x="90" y="190" width="80" height="70" fill="#6f8a93" id="hwin"/><rect x="250" y="190" width="80" height="70" fill="#6f8a93"/>
+      <rect x="180" y="250" width="60" height="100" fill="#7a5b44"/>
+    </svg>
+    <svg class="abs" id="arrow" style="left:0; top:0" width="1920" height="1080">
+      <path id="arrowPath" d="M760 760 C 950 640, 1110 640, 1290 720" fill="none" stroke="#b23a2b" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 0"/>
+      <path id="arrowHead" d="M1262 690 L1296 722 L1252 738" fill="none" stroke="#b23a2b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="hand" id="hd1" style="left:860px; top:560px">home the same day?</div>
+    <div class="stamp" id="stamp" style="left:1260px; top:260px; transform:rotate(-8deg)">SAME PRICE</div>
+  </div>
+  <div class="strip" id="e1" style="left:50%; top:380px; transform:translateX(-50%) rotate(-1.5deg); font-size:84px">The rule changes fast.</div>
+  <div class="strip" id="e2" style="left:50%; top:540px; transform:translateX(-50%) rotate(1deg); font-size:84px; background:#f4c36a">Hospitals change slowly.</div>
+</div>
+<script src="../node_modules/gsap/dist/gsap.min.js"></script>
+<script src="../node_modules/gsap/dist/SplitText.min.js"></script>
+<script src="../node_modules/gsap/dist/MorphSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/DrawSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/CustomEase.min.js"></script>
+<script src="lib/motion.js"></script>
+<script>
+// Stop-motion: animation steps 12 times a second, and every cut-out "boils" slightly per step.
+const boil = ['#hosp', '#house', '#s1', '#s2', '#stamp', '#e1', '#e2'];
+const base = {};
+M.scene({
+  duration: 10.5, stepFps: 12, fadeIn: 0.3,
+  afterSeek(ta) {
+    const step = Math.round(ta * 12);
+    boil.forEach((sel, i) => {
+      const el = document.querySelector(sel);
+      base[sel] ??= getComputedStyle(el).transform;
+      const j = ((step * 7 + i * 13) % 5) - 2;
+      el.style.translate = `${j * 0.8}px ${((step * 3 + i * 5) % 5 - 2) * 0.8}px`;
+      el.style.rotate = `${j * 0.15}deg`;
+    });
+  },
+  build(tl) {
+    const slap = (sel, at, from = { y: -900, rotation: -12 }) => {
+      tl.from(sel, { ...from, duration: 0.5, ease: 'back.out(1.2)' }, at);
+      M.cue(at + 0.35, 'tick', 1.4);
+    };
+    gsap.set(['#e1', '#e2'], { autoAlpha: 0 });
+    slap('#s1', 0.3);
+    slap('#s2', 1.1, { x: -1200, rotation: 8 });
+    slap('#hosp', 2.0, { y: 900, rotation: 6 });
+    slap('#house', 2.7, { x: 1000, rotation: -10 });
+    M.draw(tl, '#arrowPath', 3.6, { dur: 1.0 });
+    M.draw(tl, '#arrowHead', 4.5, { dur: 0.3 });
+    M.cue(3.6, 'whoosh', 0.4);
+    M.typeIn(tl, '#hd1', 4.4, { by: 'chars', stagger: 0.03, y: 0, blur: 0, cue: null });
+    tl.from('#stamp', { scale: 2.6, autoAlpha: 0, duration: 0.25, ease: 'power4.in' }, 6.0);
+    M.cue(6.25, 'hit', 1);
+    M.camera(tl, '#cam', 6.4, { scale: 1.06, rotation: -1 }, { dur: 1.2 });
+    // night: top windows go dark, the band stays lit
+    tl.to('#hosp g:not(#band) rect', { fill: '#2f3a3f', duration: 0.1, stagger: { each: 0.08, from: 'start' } }, 6.8);
+    tl.to('#hwin', { fill: '#f4c36a', duration: 0.1 }, 7.4);
+    // sweep the collage off and slap the thesis on
+    tl.to('#cam', { x: -2200, rotation: -6, duration: 0.5, ease: 'power3.in' }, 8.0);
+    M.cue(8.0, 'whoosh', 1);
+    tl.set(['#e1', '#e2'], { autoAlpha: 1 }, 8.4);
+    slap('#e1', 8.4, { y: -900, rotation: -8 });
+    slap('#e2', 9.0, { y: 900, rotation: 8 });
+  },
+});
+</script>
+</body>
+</html>
