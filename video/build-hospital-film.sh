@@ -67,4 +67,14 @@ ffmpeg -y -loglevel error -i out/hospital/hospital-change-shape.mp4 -i narration
    [bed][key]sidechaincompress=threshold=0.015:ratio=5:attack=120:release=1400[ducked];\
    [voice][ducked]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[mix]" \
   -map 0:v -map "[mix]" -c:v copy -c:a aac -b:a 192k -movflags +faststart out/hospital/hospital-change-shape-music.mp4
-echo "film: out/hospital/hospital-change-shape-music.mp4 (${dur}s, with ambient bed); narration only: out/hospital/hospital-change-shape.mp4"
+# Loudness: two-pass EBU R128 normalisation to -16 LUFS (true peak -1.5 dBFS) for online playback.
+normalise() {
+  local f=$1 m
+  m=$(ffmpeg -hide_banner -i "$f.mp4" -af loudnorm=I=-16:TP=-1.5:LRA=11:print_format=json -vn -f null - 2>&1 | sed -n '/^{/,/^}/p')
+  read -r mi mtp mlra mth off < <(echo "$m" | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['input_i'],d['input_tp'],d['input_lra'],d['input_thresh'],d['target_offset'])")
+  ffmpeg -y -loglevel error -i "$f.mp4" -af "loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=$mi:measured_TP=$mtp:measured_LRA=$mlra:measured_thresh=$mth:offset=$off:linear=true" \
+    -ar 48000 -c:v copy -c:a aac -b:a 192k -movflags +faststart "$f-final.mp4"
+}
+normalise out/hospital/hospital-change-shape
+normalise out/hospital/hospital-change-shape-music
+echo "film: out/hospital/hospital-change-shape-music-final.mp4 (${dur}s, ambient bed); narration only: out/hospital/hospital-change-shape-final.mp4"
