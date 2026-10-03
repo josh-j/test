@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>End card · How to judge the change</title>
+<style>html, body { margin: 0; background: #0b1a20; overflow: hidden; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="lib/timings.js"></script>
+<script src="lib/hospital-common.js"></script>
+<script>
+// The Hospital That Must Change Shape · End card (no narration)
+const { W, C, prog, background, text } = HC;
+
+const MEASURES = ['Unplanned returns', 'Access to surgery nearby', 'Staff who stay', 'Accounts that balance without hidden cuts'];
+
+HC.scene({
+  key: null,
+  duration: 12,
+  fadeIn: 1.0,
+  fadeOut: 1.5,
+  draw(t) {
+    background(0.0);
+    text('How to judge the change', W / 2, 260, { size: 64, align: 'center', alpha: prog(t, 0.6, 1.8) });
+    MEASURES.forEach((m, i) => {
+      const a = prog(t, 1.6 + i * 0.6, 2.4 + i * 0.6);
+      text(m, W / 2, 380 + i * 74, { size: 40, align: 'center', color: C.amberSoft, alpha: a });
+    });
+    const s = prog(t, 4.5, 5.5);
+    text('The Hospital That Must Change Shape', W / 2, 760, { size: 34, italic: true, align: 'center', alpha: s });
+    text('Facts as of 3 October 2026. Cost examples are illustrations, not hospital accounts.', W / 2, 820, { size: 24, italic: true, align: 'center', color: C.inkDim, alpha: s });
+    text('Sources: Destatis · BMG · Eurostat · OECD/European Observatory · DKG/DKI · Herniamed · HerniaSurge · 2026 Hybrid-DRG tariff · Saarland health ministry · Klinikum Saarbrücken · City of Saarbrücken', W / 2, 860, { size: 20, italic: true, align: 'center', color: C.inkFaint, alpha: s });
+    text('Narration: AI voice (OpenAI). Animation rendered in code.', W / 2, 900, { size: 22, italic: true, align: 'center', color: C.inkDim, alpha: s });
+  },
+});
+</script>
+</body>
+</html>

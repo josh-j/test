@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Scene 4 · The weight passes down</title>
+<style>html, body { margin: 0; background: #0b1a20; overflow: hidden; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="lib/timings.js"></script>
+<script src="lib/hospital-common.js"></script>
+<script>
+// The Hospital That Must Change Shape · Scene 4 "The weight passes down"
+const { W, H, ctx, C, prog, window4, lerp, rgba, mix, background, text, source, roundRect, hospital, person } = HC;
+
+// 100 people: 20 aged 67+ today, 25 by 2035.
+function ageing(t, a, k) {
+  if (a <= 0.01) return;
+  const t0 = k.at(0);
+  text('Germany is growing older', 120, 200, { size: 60, alpha: a });
+  const share = prog(t, t0 + 4.5, t0 + 6.5) > 0 ? lerp(20, 25, prog(t, t0 + 4.5, t0 + 6.5)) : 20;
+  const lit = Math.round(share);
+  for (let i = 0; i < 100; i++) {
+    const c = i % 10, r = Math.floor(i / 10);
+    const x = 200 + c * 56, y = 330 + r * 56;
+    const appear = prog(t, t0 + 0.3 + i * 0.008, t0 + 0.8 + i * 0.008);
+    ctx.fillStyle = i < lit ? rgba(C.amber, a * appear) : rgba('#7fa596', 0.45 * a * appear);
+    ctx.beginPath(); ctx.arc(x, y, 19, 0, Math.PI * 2); ctx.fill();
+  }
+  text(`${lit} in 100`, 860, 470, { size: 96, color: C.amberSoft, alpha: a * prog(t, t0 + 1, t0 + 2) });
+  text('aged 67 or over', 860, 520, { size: 32, italic: true, color: C.inkDim, alpha: a * prog(t, t0 + 1, t0 + 2) });
+  text(share < 24.5 ? '2024' : '2035 (projection)', 860, 380, { size: 38, color: C.ink, alpha: a * prog(t, t0 + 1, t0 + 2) });
+  const w = prog(t, t0 + 8.5, t0 + 9.5);
+  text('Fewer workers pay in.', 860, 650, { size: 38, alpha: a * w });
+  text('More patients need care.', 860, 706, { size: 38, alpha: a * prog(t, t0 + 10, t0 + 11) });
+  source('Destatis, 16th coordinated population projection (11 Dec 2025)', a);
+}
+
+// The economy losing power: a pipeline fades, a ship arrives from the east.
+function economy(t, a, k) {
+  if (a <= 0.01) return;
+  const t1 = k.at(1);
+  text('The engine that paid the bills', 120, 200, { size: 60, alpha: a });
+  const gy = 720;
+  ctx.save(); ctx.globalAlpha = a;
+  ctx.fillStyle = '#132a31'; ctx.fillRect(0, gy, W, H - gy); // ground
+  // factory
+  ctx.fillStyle = '#20393f';
+  ctx.fillRect(260, gy - 220, 520, 220);
+  for (let i = 0; i < 4; i++) {
+    ctx.beginPath(); ctx.moveTo(260 + i * 130, gy - 220); ctx.lineTo(260 + i * 130 + 130, gy - 290); ctx.lineTo(260 + i * 130 + 130, gy - 220); ctx.closePath(); ctx.fill();
+  }
+  ctx.fillRect(700, gy - 420, 46, 200); // chimney
+  ctx.restore();
+  // the gas pipeline fades away
+  const pipe = 1 - prog(t, t1 + 4, t1 + 6.5);
+  ctx.save(); ctx.globalAlpha = a * pipe; ctx.fillStyle = '#5d7a80';
+  ctx.fillRect(780, gy - 70, 1140, 28); ctx.restore();
+  text('Russian pipeline gas: stopped in 2022', 1180, gy - 100, { size: 28, italic: true, color: C.inkDim, alpha: a * prog(t, t1 + 2, t1 + 3) });
+  // ship from the east
+  const sx = lerp(W + 300, 1300, prog(t, t1 + 6.5, t1 + 10.5));
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#3c5a60';
+  ctx.beginPath(); ctx.moveTo(sx, gy + 140); ctx.lineTo(sx + 420, gy + 140); ctx.lineTo(sx + 380, gy + 200); ctx.lineTo(sx + 30, gy + 200); ctx.closePath(); ctx.fill();
+  const box = ['#a25d52', '#8fb8c9', '#f4b860', '#7fa596'];
+  for (let i = 0; i < 6; i++) { ctx.fillStyle = box[i % 4]; ctx.fillRect(sx + 50 + i * 55, gy + 96, 50, 44); }
+  ctx.restore();
+  text('Chinese factories now compete with German ones', 1180, gy + 60, { size: 28, italic: true, color: C.inkDim, alpha: a * prog(t, t1 + 9, t1 + 10) });
+  text('Energy-intensive output: −18% since 2021', 260, gy + 90, { size: 30, color: C.amberSoft, alpha: a * prog(t, t1 + 5, t1 + 6) });
+  source('Destatis (Feb 2026) · Bundesbank Monthly Report, July 2025', a);
+}
+
+// The chain: a weight drifts down through five levels.
+const LEVELS = ['Government', 'Insurers', 'The regions', 'Hospital', 'Home'];
+function chain(t, a, k) {
+  if (a <= 0.01) return;
+  const t2 = k.at(2);
+  const x = 700, w = 520, h = 96, gap = 46, y0 = 150;
+  // which level the weight has reached
+  const steps = [t2 + 3.0, t2 + 5.2, t2 + 7.4];
+  let pos = 0;
+  steps.forEach((s, i) => { pos = Math.max(pos, i + prog(t, s, s + 1.1)); });
+  LEVELS.forEach((name, i) => {
+    const y = y0 + i * (h + gap);
+    const la = a * prog(t, t2 - 0.6 + i * 0.25, t2 + 0.2 + i * 0.25);
+    const here = 1 - Math.min(1, Math.abs(pos - i));
+    ctx.save(); ctx.globalAlpha = la;
+    ctx.fillStyle = mix('#1a3239', '#3b4f4a', here);
+    roundRect(x, y, w, h, 12); ctx.fill();
+    ctx.strokeStyle = rgba(C.amber, 0.25 + 0.6 * here); ctx.lineWidth = 2; ctx.stroke();
+    ctx.restore();
+    text(name, x + w / 2, y + 62, { size: 40, align: 'center', alpha: la, color: name === 'Hospital' ? C.amberSoft : C.ink });
+    if (i < LEVELS.length - 1) {
+      ctx.save(); ctx.globalAlpha = la * 0.5; ctx.strokeStyle = C.inkDim; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x + w / 2, y + h + 6); ctx.lineTo(x + w / 2, y + h + gap - 6); ctx.stroke(); ctx.restore();
+    }
+  });
+  // the weight
+  const wy = y0 + Math.min(pos, 3) * (h + gap) + h / 2;
+  const wa = a * prog(t, t2 + 1.5, t2 + 2.5);
+  ctx.save(); ctx.globalAlpha = wa; ctx.fillStyle = C.amber;
+  ctx.beginPath(); ctx.moveTo(x - 120, wy - 34); ctx.lineTo(x - 50, wy - 34); ctx.lineTo(x - 30, wy + 34); ctx.lineTo(x - 140, wy + 34); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = C.tealDeep; ctx.font = '600 22px Georgia, serif'; ctx.textAlign = 'center'; ctx.fillText('COST', x - 85, wy + 9);
+  ctx.restore();
+  const notes = ['limits what it adds', 'fix their prices', 'delay new buildings'];
+  // the weight stops at the hospital: it cannot pass it on
+  notes.forEach((n, i) => {
+    text(n, x + w + 40, y0 + i * (h + gap) + 60, { size: 30, italic: true, color: C.inkDim, alpha: a * prog(t, steps[i] - 0.5, steps[i] + 0.5) });
+  });
+  text('Each decision is reasonable.', x + w + 40, y0 + 3 * (h + gap) + 60, { size: 30, italic: true, color: C.amberSoft, alpha: a * prog(t, t2 + 10.5, t2 + 11.5) });
+}
+
+// At the bottom: what the hospital cannot pass on.
+function bottom(t, a, k) {
+  if (a <= 0.01) return;
+  const t3 = k.at(3);
+  text('What a hospital cannot pass on', W / 2, 200, { size: 56, align: 'center', alpha: a });
+  const items = [
+    { at: t3 + 3.0, label: 'its night shift' },
+    { at: t3 + 4.2, label: 'its emergency team' },
+    { at: t3 + 5.6, label: 'its walls' },
+  ];
+  items.forEach((it, i) => {
+    const ia = a * prog(t, it.at, it.at + 0.8);
+    const cx = 420 + i * 540, cy = 560;
+    ctx.save(); ctx.globalAlpha = ia;
+    if (i === 0) { // night rota: a calendar grid with moon marks
+      ctx.fillStyle = '#20393f'; roundRect(cx - 150, cy - 150, 300, 260, 12); ctx.fill();
+      for (let r = 0; r < 4; r++) for (let c = 0; c < 5; c++) {
+        ctx.fillStyle = (r + c) % 3 === 0 ? C.amberSoft : 'rgba(239,230,214,0.18)';
+        ctx.beginPath(); ctx.arc(cx - 110 + c * 55, cy - 90 + r * 55, 12, 0, Math.PI * 2); ctx.fill();
+      }
+    } else if (i === 1) { // emergency light
+      const g = ctx.createRadialGradient(cx, cy - 30, 10, cx, cy - 30, 200);
+      g.addColorStop(0, rgba(C.amber, 0.5)); g.addColorStop(1, rgba(C.amber, 0));
+      ctx.fillStyle = g; ctx.fillRect(cx - 220, cy - 250, 440, 440);
+      ctx.fillStyle = C.amber; roundRect(cx - 60, cy - 90, 120, 120, 18); ctx.fill();
+      ctx.fillStyle = C.tealDeep; ctx.fillRect(cx - 12, cy - 70, 24, 80); ctx.fillRect(cx - 40, cy - 42, 80, 24);
+    } else { // the building
+      ctx.restore();
+      hospital(cx - 180, cy + 110, 360, 6, 2, { cols: 9, alpha: ia });
+      ctx.save();
+    }
+    ctx.restore();
+    text(it.label, cx, cy + 190, { size: 34, align: 'center', alpha: ia });
+  });
+}
+
+HC.scene({
+  key: 'scene-04',
+  duration: 52.5,
+  draw(t, k) {
+    background(0.08);
+    ageing(t, k.seg(t, 0, 1.0, 0.3), k);
+    economy(t, k.seg(t, 1, 0.4, 0.3), k);
+    chain(t, k.seg(t, 2, 0.6, 0.4), k);
+    bottom(t, window4(t, k.at(3) - 0.5, k.at(3) + 0.5, 99, 100), k);
+  },
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Scene 7 · Beyond the door</title>
+<style>html, body { margin: 0; background: #0b1a20; overflow: hidden; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="lib/timings.js"></script>
+<script src="lib/hospital-common.js"></script>
+<script>
+// The Hospital That Must Change Shape · Scene 7 "Beyond the door"
+const { W, H, ctx, C, prog, window4, lerp, rgba, mix, background, text, para, source, bed, person, house, hospital, roundRect } = HC;
+
+const GROUND = 760;
+function land() {
+  ctx.fillStyle = '#10272c';
+  ctx.beginPath(); ctx.moveTo(0, GROUND);
+  for (let x = 0; x <= W; x += 40) ctx.lineTo(x, GROUND - 20 * Math.sin(x / 300) - 10 * Math.sin(x / 90));
+  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
+}
+function car(x, y, s, a) {
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#5d7a80';
+  roundRect(x, y - 40 * s, 170 * s, 40 * s, 10 * s); ctx.fill();
+  roundRect(x + 35 * s, y - 72 * s, 95 * s, 36 * s, 10 * s); ctx.fill();
+  ctx.fillStyle = C.tealDeep;
+  ctx.beginPath(); ctx.arc(x + 38 * s, y, 16 * s, 0, Math.PI * 2); ctx.arc(x + 132 * s, y, 16 * s, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = C.amberSoft; ctx.fillRect(x + 162 * s, y - 30 * s, 10 * s, 10 * s); // headlight
+  ctx.restore();
+}
+
+// Going home: the car carries the patient from the hospital to a lit house.
+function goingHome(t, a, k) {
+  if (a <= 0.01) return;
+  const t0 = k.at(0);
+  land();
+  hospital(140, GROUND - 6, 300, 6, 2, { cols: 8, alpha: a });
+  house(1360, GROUND, 1.3, '#2a4247', '#1d3238', prog(t, t0 + 4, t0 + 6), a);
+  const drive = prog(t, t0 + 1, t0 + 5);
+  car(lerp(470, 1180, drive), GROUND + 4, 1.0, a * window4(t, t0 + 0.6, t0 + 1.2, t0 + 5.5, t0 + 6.2));
+  // the phone by the bed
+  const ph = prog(t, t0 + 6.5, t0 + 7.5);
+  ctx.save(); ctx.globalAlpha = a * ph; ctx.fillStyle = C.ink; roundRect(1480, 360, 70, 130, 12); ctx.fill();
+  ctx.fillStyle = C.tealDeep; roundRect(1488, 372, 54, 96, 6); ctx.fill(); ctx.restore();
+  text('someone to drive · someone there tonight · a number to call', W / 2, 250, { size: 32, italic: true, align: 'center', color: C.inkDim, alpha: a * prog(t, t0 + 3, t0 + 4) });
+}
+
+// A second home: someone alone, far away; the line back to the hospital is fainter.
+function alone(t, a, k) {
+  if (a <= 0.01) return;
+  const t1 = k.at(1);
+  land();
+  hospital(140, GROUND - 6, 300, 6, 2, { cols: 8, alpha: a });
+  house(1420, GROUND - 30, 0.9, '#22383d', '#172a2f', 0.6, a);
+  person(1520, GROUND - 60, 0.7, C.inkDim, a * prog(t, t1 + 1, t1 + 2));
+  ctx.save(); ctx.globalAlpha = a * 0.35 * prog(t, t1 + 2, t1 + 3); ctx.strokeStyle = C.inkDim; ctx.lineWidth = 3;
+  ctx.setLineDash([6, 18]); ctx.beginPath(); ctx.moveTo(460, GROUND - 120); ctx.quadraticCurveTo(940, GROUND - 330, 1400, GROUND - 120); ctx.stroke(); ctx.restore();
+  text('living alone · far away · frail', W / 2, 250, { size: 32, italic: true, align: 'center', color: C.inkDim, alpha: a * prog(t, t1 + 1.5, t1 + 2.5) });
+  text('For them, the night in hospital was the care.', W / 2, 320, { size: 36, italic: true, align: 'center', color: C.amberSoft, alpha: a * prog(t, k.at(2) - 0.2, k.at(2) + 0.8) });
+}
+
+// Where the work goes: a kitchen, a spare room, a daughter's evening.
+function where(t, a, k) {
+  if (a <= 0.01) return;
+  const t3 = k.at(3);
+  text('Work that leaves the ward arrives…', W / 2, 190, { size: 50, align: 'center', alpha: a });
+  const v = [
+    { at: t3 + 3.3, label: 'in a kitchen', draw: (cx, cy, al) => {
+      ctx.save(); ctx.globalAlpha = al; ctx.fillStyle = '#3c5a60'; ctx.fillRect(cx - 150, cy + 20, 300, 20);
+      ctx.fillRect(cx - 130, cy + 40, 14, 90); ctx.fillRect(cx + 116, cy + 40, 14, 90);
+      ctx.fillStyle = C.ink; roundRect(cx - 30, cy - 50, 70, 70, 14); ctx.fill(); ctx.fillRect(cx + 38, cy - 34, 26, 10);
+      ctx.strokeStyle = rgba(C.ink, 0.5); ctx.lineWidth = 3;
+      for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.moveTo(cx - 10 + i * 16, cy - 64); ctx.quadraticCurveTo(cx + i * 16, cy - 90 - 8 * Math.sin(t * 2 + i), cx - 10 + i * 16, cy - 115); ctx.stroke(); }
+      ctx.restore();
+    } },
+    { at: t3 + 4.8, label: 'a spare room', draw: (cx, cy, al) => bed(cx - 110, cy + 30, 1.0, C.inkDim, al) },
+    { at: t3 + 6.0, label: "a daughter's evening", draw: (cx, cy, al) => {
+      person(cx - 40, cy + 110, 1.2, C.green, al);
+      ctx.save(); ctx.globalAlpha = al; ctx.strokeStyle = C.inkDim; ctx.lineWidth = 6;
+      ctx.beginPath(); ctx.arc(cx + 80, cy - 20, 54, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx + 80, cy - 20); ctx.lineTo(cx + 80, cy - 56); ctx.moveTo(cx + 80, cy - 20); ctx.lineTo(cx + 108, cy - 4); ctx.stroke(); ctx.restore();
+    } },
+  ];
+  v.forEach((it, i) => {
+    const ia = a * prog(t, it.at, it.at + 0.8);
+    const cx = 400 + i * 560, cy = 520;
+    it.draw(cx, cy, ia);
+    text(it.label, cx, cy + 220, { size: 34, align: 'center', color: C.amberSoft, alpha: ia });
+  });
+  text('"Day surgery is recommended for the majority of groin hernia repair provided aftercare is organized."', W / 2, 860, { size: 26, italic: true, align: 'center', color: C.inkDim, alpha: a * prog(t, t3 + 1, t3 + 2) });
+  source('HerniaSurge international guideline, Hernia 2018', a);
+}
+
+HC.scene({
+  key: 'scene-07',
+  duration: 35.5,
+  draw(t, k) {
+    background(0.0);
+    goingHome(t, k.seg(t, 0, 1.0, 0.4), k);
+    alone(t, window4(t, k.at(1) - 0.6, k.at(1) + 0.4, k.at(3) - 0.4, k.at(3) + 0.6), k);
+    where(t, window4(t, k.at(3) - 0.5, k.at(3) + 0.5, 99, 100), k);
+  },
+});
+</script>
+</body>
+</html>

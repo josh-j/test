@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Scene 5 · The empty bed</title>
+<style>html, body { margin: 0; background: #0b1a20; overflow: hidden; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="lib/timings.js"></script>
+<script src="lib/hospital-common.js"></script>
+<script>
+// The Hospital That Must Change Shape · Scene 5 "The empty bed, and the part that cannot sleep"
+const { W, H, ctx, C, prog, window4, lerp, rgba, mix, background, text, source, illustrationTag, bed, person, hospital, roundRect, priceTag } = HC;
+
+// One empty bed, two shadows: capacity freed vs cash saved.
+function emptyBed(t, a, k) {
+  if (a <= 0.01) return;
+  const t0 = k.at(0);
+  const leave = prog(t, t0 + 0.5, t0 + 2.5);
+  // the patient walks out of frame
+  person(lerp(560, -120, leave), 640, 1.3, C.inkDim, a * (1 - leave));
+  bed(380, 600, 1.9, C.ink, a);
+  // two shadows on the floor
+  const s1 = prog(t, t0 + 4, t0 + 6), s2 = prog(t, t0 + 8.5, t0 + 10.5);
+  ctx.save(); ctx.globalAlpha = a * 0.55;
+  ctx.fillStyle = C.blue; ctx.beginPath(); ctx.ellipse(500, 760, 380 * s1, 26, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = C.green; ctx.beginPath(); ctx.ellipse(500, 812, 76 * s2, 18, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+  // the numbers
+  const x = 1120;
+  text('One night, on paper', x, 330, { size: 34, italic: true, color: C.inkDim, alpha: a * s1 });
+  text('€300', x, 420, { size: 92, color: C.blue, alpha: a * s1 });
+  text('of nursing, food and cleaning allocated to the bed', x, 470, { size: 28, italic: true, color: C.inkDim, alpha: a * s1 });
+  text('Cash actually saved this month', x, 590, { size: 34, italic: true, color: C.inkDim, alpha: a * s2 });
+  text('€60', x, 680, { size: 92, color: C.green, alpha: a * s2 });
+  text('the nurse is still on the rota', x, 730, { size: 28, italic: true, color: C.inkDim, alpha: a * s2 });
+  illustrationTag(x, 250, a * s1);
+}
+
+// The night hospital: routine operations feed the band that never sleeps.
+function readiness(t, a, k) {
+  if (a <= 0.01) return;
+  const t1 = k.at(1);
+  const bx = 660, by = 760, bw = 600;
+  // streams from routine operations flowing into the lit band, thinning
+  const thin = prog(t, t1 + 4, t1 + 8);
+  for (let i = 0; i < 9; i++) {
+    const x0 = 160 + i * 190, ph = ((t * 0.25 + i * 0.37) % 1);
+    ctx.save(); ctx.globalAlpha = a * (1 - thin * (i % 3 === 0 ? 0.3 : 0.85)) * 0.75;
+    ctx.strokeStyle = C.amberSoft; ctx.lineWidth = 3; ctx.setLineDash([10, 16]); ctx.lineDashOffset = -ph * 52;
+    ctx.beginPath(); ctx.moveTo(x0, 260); ctx.quadraticCurveTo(x0, 600, bx + bw / 2, by - 40); ctx.stroke();
+    ctx.restore();
+  }
+  hospital(bx, by, bw, 7, 2, { cols: 15, alpha: a });
+  const g = ctx.createRadialGradient(bx + bw / 2, by - 50, 10, bx + bw / 2, by - 50, 460);
+  g.addColorStop(0, rgba(C.amber, 0.22 * a * (0.8 + 0.2 * Math.sin(t * 0.9)))); g.addColorStop(1, rgba(C.amber, 0));
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  text('routine operations', 160, 230, { size: 30, italic: true, color: C.inkDim, alpha: a });
+  text('emergency care · intensive care · the night team', bx + bw / 2, by + 60, { size: 30, italic: true, align: 'center', color: C.amberSoft, alpha: a * prog(t, t1 + 1, t1 + 2) });
+}
+
+// Two hospitals in three losing money; the readiness payment arrives later than the price.
+function timing(t, a, k) {
+  if (a <= 0.01) return;
+  const t2 = k.at(2);
+  // 3 hospital icons, 2 in red ink
+  for (let i = 0; i < 3; i++) {
+    const ia = a * prog(t, t2 + 0.3 + i * 0.3, t2 + 1.1 + i * 0.3);
+    hospital(240 + i * 250, 470, 200, 5, 0, { cols: 6, alpha: ia });
+    ctx.save(); ctx.globalAlpha = ia * prog(t, t2 + 2, t2 + 3);
+    ctx.fillStyle = i < 2 ? C.rose : C.green;
+    roundRect(240 + i * 250 + 60, 490, 80, 40, 8); ctx.fill(); ctx.restore();
+    text(i < 2 ? 'loss' : 'surplus or even', 240 + i * 250 + 100, 570, { size: 24, italic: true, align: 'center', color: i < 2 ? C.rose : C.green, alpha: ia * prog(t, t2 + 2, t2 + 3) });
+  }
+  text('2 in 3 German hospitals made a loss (2024)', 240, 690, { size: 34, alpha: a * prog(t, t2 + 2.5, t2 + 3.5) });
+  // timeline
+  const tx = 1060, tw = 720, ty = 470;
+  const yr = (y) => tx + (y - 2026) / 4 * tw;
+  const ta = a * prog(t, t2 + 4, t2 + 5);
+  ctx.save(); ctx.globalAlpha = ta; ctx.strokeStyle = C.inkDim; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(tx + tw, ty); ctx.stroke();
+  for (let y = 2026; y <= 2030; y++) {
+    ctx.beginPath(); ctx.moveTo(yr(y), ty - 10); ctx.lineTo(yr(y), ty + 10); ctx.stroke();
+  }
+  // phase-in band 2028–2030
+  ctx.fillStyle = rgba(C.green, 0.25 + 0.35 * prog(t, t2 + 6, t2 + 7.5));
+  ctx.fillRect(yr(2028), ty - 60, (yr(2030) - yr(2028)) * prog(t, t2 + 6, t2 + 7.5), 36);
+  ctx.restore();
+  for (let y = 2026; y <= 2030; y++) text(String(y), yr(y), ty + 52, { size: 26, align: 'center', color: C.inkDim, alpha: ta });
+  text('readiness payment: phased in, full from 2030', yr(2028), ty - 80, { size: 26, italic: true, color: C.green, alpha: a * prog(t, t2 + 6.5, t2 + 7.5) });
+  // the new price is already here, at 2026
+  const now = prog(t, k.at(3) - 0.3, k.at(3) + 0.7);
+  priceTag(yr(2026) + 150, ty - 130, 'the new price', a * now, 0.8);
+  text('already here (2026)', yr(2026) - 70, ty + 110, { size: 28, color: C.amberSoft, alpha: a * now });
+  source('DKI Krankenhaus-Barometer, Dec 2025 (a hospital-sector institute) · KHAG, in force 15 Apr 2026', a);
+}
+
+HC.scene({
+  key: 'scene-05',
+  duration: 47.5,
+  draw(t, k) {
+    background(0.05);
+    emptyBed(t, k.seg(t, 0, 1.0, 0.3), k);
+    readiness(t, k.seg(t, 1, 0.4, 0.3), k);
+    timing(t, window4(t, k.at(2) - 0.5, k.at(2) + 0.5, 99, 100), k);
+  },
+});
+</script>
+</body>
+</html>
