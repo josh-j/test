@@ -9,7 +9,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 OUT=out/ptb2; mkdir -p "$OUT"
 SUFFIX=${PREVIEW:+.preview}
-RFLAGS=${PREVIEW:+--preview --fps 12}; LOQ=${PREVIEW:+&lo=1}
+RFLAGS=${PREVIEW:+--preview --fps 12}; RFLAGS=${RFLAGS:---fps ${FPS:-24}}; LOQ=${PREVIEW:+&lo=1}
 node narration/build-timings.mjs > /dev/null
 
 voice_at() { case $1 in 1) echo 2.2;; 9) echo -;; *) echo 2.0;; esac; }
