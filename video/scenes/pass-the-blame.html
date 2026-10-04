@@ -116,10 +116,15 @@ const setShot = (name) => Object.assign(W.rig, W.SHOTS[name]);
 function mk(k) {
   return {
     ...k,
+    // Time a phrase is spoken: searched across all segments (the index is only a hint).
     w(i, phrase) {
-      const s = k.segs[i]; const idx = s.text.indexOf(phrase);
-      const f = idx < 0 ? 0 : idx / s.text.length;
-      return k.at(i) + (k.end(i) - k.at(i)) * f;
+      const order = [i, ...k.segs.map((_, j) => j).filter((j) => j !== i)];
+      for (const j of order) {
+        const s = k.segs[j]; const idx = s.text.indexOf(phrase);
+        if (idx >= 0) return k.at(j) + (k.end(j) - k.at(j)) * idx / s.text.length;
+      }
+      console.warn('phrase not found:', phrase);
+      return k.at(i);
     },
   };
 }
@@ -189,8 +194,8 @@ const CHAPTERS = {
       document.getElementById('ageV').textContent = turnOn.n > 24.5 ? '1 in 4 · 2035' : '1 in 5 · 2024';
     } }, k.w(0, 'by 2035') - 0.2);
     card('cSpend', 96, 650, 'Health spending', '€538bn', 'a year (2024), 12.4% of GDP', 'Destatis');
-    show(tl, '#cSpend', k.w(0, 'Health already'), k.at(1) + 0.3);
-    tl.to('#cAge', { autoAlpha: 0, duration: 0.5 }, k.at(1));
+    show(tl, '#cSpend', k.w(0, 'Health already'), k.w(0, 'Contributions') + 0.3);
+    tl.to('#cAge', { autoAlpha: 0, duration: 0.5 }, k.w(0, 'Contributions'));
     // contributions + insurers' squeeze
     card('cContrib', 96, 250, 'Contributions', '≈42%', 'of a typical salary: health, pensions, care, unemployment', '2026 rates', '', 400);
     show(tl, '#cContrib', k.w(1, 'Contributions'));
@@ -201,10 +206,10 @@ const CHAPTERS = {
     show(tl, '#cGap', k.w(1, 'This year'));
     tl.from('#cGap .bar', { scaleX: 0, duration: 1, stagger: 0.2 }, k.w(1, 'This year') + 0.3);
     gauge(tl, k.w(1, 'Without action'), 0.45, 0.62, 1.5);
-    tl.to(['#cContrib', '#cGap'], { autoAlpha: 0, duration: 0.5 }, k.at(2) - 0.2);
+    tl.to(['#cContrib', '#cGap'], { autoAlpha: 0, duration: 0.5 }, k.w(0, 'And the economy') - 0.2);
     // economy: factory dims
-    shot(tl, 'factory', k.at(2) - 0.5, 2.6);
-    tl.to(W.state, { factory: 0.35, duration: 2.5 }, k.at(2) + 1);
+    shot(tl, 'factory', k.w(0, 'And the economy') - 0.5, 2.6);
+    tl.to(W.state, { factory: 0.35, duration: 2.5 }, k.w(0, 'energy-hungry'));
     html(`<div class="card" id="cGdp" style="left:1260px; top:300px; width:520px"><div class="k">German GDP growth</div>
       <svg width="460" height="150" viewBox="0 0 460 150" style="margin-top:12px">
         <line x1="0" y1="80" x2="460" y2="80" stroke="rgba(160,225,230,0.25)" stroke-dasharray="4 6"/>
@@ -216,11 +221,11 @@ const CHAPTERS = {
     M.draw(tl, '#gdpLine', k.w(2, 'three years') + 0.3, { dur: 2.2 });
     card('cEnergy', 1260, 700, 'Energy-intensive industry', '−18%', 'output since 2021', 'Destatis', 'coral', 360);
     show(tl, '#cEnergy', k.w(2, 'energy-hungry'));
-    tl.to(['#cGdp', '#cEnergy'], { autoAlpha: 0, duration: 0.5 }, k.at(3) - 0.2);
-    shot(tl, 'wide', k.at(3) - 0.3, 3);
-    gauge(tl, k.at(4), 0.62, 0.75, 2);
+    tl.to(['#cGdp', '#cEnergy'], { autoAlpha: 0, duration: 0.5 }, k.w(0, 'Not a collapse') - 0.2);
+    shot(tl, 'wide', k.w(0, 'Not a collapse') - 0.3, 3);
+    gauge(tl, k.w(0, 'when money is tight'), 0.62, 0.75, 2);
     card('cTight', 1300, 300, 'Outlook', 'Tight money', 'weaker growth + an ageing population, for years', '', '', 440);
-    show(tl, '#cTight', k.at(3) + 0.5);
+    show(tl, '#cTight', k.w(0, 'Not a collapse') + 0.5);
   } },
 
   // 2 · One operation, one price

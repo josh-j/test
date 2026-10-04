@@ -153,11 +153,14 @@ export function createWorld(canvas, { width = 1920, height = 1080 } = {}) {
   }
 
   // ---------- money pipes (flowing stripes) ----------
+  // Soft flowing light: a dim glow with bright pulses that fade in and out (no hard stripes).
   function stripeTexture(hex) {
-    const c = document.createElement('canvas'); c.width = 64; c.height = 4;
+    const c = document.createElement('canvas'); c.width = 128; c.height = 4;
     const x = c.getContext('2d');
-    x.fillStyle = '#000'; x.fillRect(0, 0, 64, 4);
-    x.fillStyle = hex; x.fillRect(0, 0, 36, 4);
+    const g = x.createLinearGradient(0, 0, 128, 0);
+    g.addColorStop(0, 'rgba(255,255,255,0.28)'); g.addColorStop(0.35, 'rgba(255,255,255,1)');
+    g.addColorStop(0.55, 'rgba(255,255,255,1)'); g.addColorStop(1, 'rgba(255,255,255,0.28)');
+    x.fillStyle = g; x.fillRect(0, 0, 128, 4);
     const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace;
     return t;
   }
@@ -165,18 +168,19 @@ export function createWorld(canvas, { width = 1920, height = 1080 } = {}) {
   function pipe(name, color, pts, radius = 0.14) {
     const curve = new THREE.CatmullRomCurve3(pts.map(([x, y, z]) => new THREE.Vector3(x, y, z)));
     const geo = new THREE.TubeGeometry(curve, 160, radius, 10, false);
-    const tex = stripeTexture(color); tex.repeat.set(curve.getLength() / 0.9, 1);
-    const m = new THREE.MeshStandardMaterial({ color: 0x1a2630, emissive: new THREE.Color(color), emissiveMap: tex, emissiveIntensity: 1.6, roughness: 0.4, transparent: true, opacity: 1 });
+    const tex = stripeTexture(color); tex.repeat.set(curve.getLength() / 1.6, 1);
+    const m = new THREE.MeshStandardMaterial({ color: new THREE.Color(color).multiplyScalar(0.35), emissive: new THREE.Color(color), emissiveMap: tex,
+      emissiveIntensity: 1.1, roughness: 0.3, transparent: true, opacity: 0.88 });
     const o = new THREE.Mesh(geo, m); scene.add(o);
     const total = geo.index.count;
     pipes[name] = { mesh: o, tex, total, curve };
     return o;
   }
   // amber: treatment money from insurers to hospital and practice
-  pipe('treatHosp', '#f6b55b', [[8, 1.2, -6], [5, 2.6, -1], [-1, 3.2, 2.5], [-5, 3.2, 4.8]]);
-  pipe('treatPractice', '#f6b55b', [[8, 1.0, -6], [6.5, 1.8, -1], [4.2, 1.6, 2.6]]);
+  pipe('treatHosp', '#f6b55b', [[8, 1.2, -6], [5, 2.6, -1], [-1, 3.2, 2.5], [-5, 3.2, 4.8]], 0.11);
+  pipe('treatPractice', '#f6b55b', [[8, 1.0, -6], [6.5, 1.8, -1], [4.2, 1.6, 2.6]], 0.11);
   // blue: building money from the state capital to the hospital
-  pipe('build', '#8cc3dd', [[-1, 1.2, -9], [-4, 2.4, -4], [-6.4, 3.0, 1.2], [-6.6, 3.0, 4.4]]);
+  pipe('build', '#8cc3dd', [[-1, 1.2, -9], [-4, 2.4, -4], [-6.4, 3.0, 1.2], [-6.6, 3.0, 4.4]], 0.11);
   // teal: the joined-up "whole journey" pipe that appears at the very end
   pipe('whole', '#7fe0cf', [[-8, 2.0, -6], [-4.5, 3.6, -2], [-1, 3.8, 1.8], [4, 2.4, 3.2], [9, 1.6, 6]], 0.18);
 
@@ -263,7 +267,7 @@ export function createWorld(canvas, { width = 1920, height = 1080 } = {}) {
     pipes.treatHosp.tex.offset.x = pipes.treatPractice.tex.offset.x = -t * 0.6 * state.treatFlow;
     pipes.build.tex.offset.x = -t * 0.35;
     pipes.whole.tex.offset.x = -t * 0.5;
-    pipes.build.mesh.material.emissiveIntensity = 1.6 * state.buildFill;
+    pipes.build.mesh.material.emissiveIntensity = 1.1 * state.buildFill;
     for (const dl of decisions) { dl.mesh.material.opacity = 0.55 * state.decisions; dl.mesh.visible = state.decisions > 0.01; }
     // gavel
     B.gavel.rotation.z = -Math.sin(Math.min(1, state.gavel) * Math.PI) * 0.9;
@@ -303,12 +307,12 @@ export function createWorld(canvas, { width = 1920, height = 1080 } = {}) {
     high: { angle: 1.0, tilt: 0.95, dist: 64, tx: 0, ty: 0, tz: 0 },
     berlin: { angle: 1.25, tilt: 0.42, dist: 22, tx: -8, ty: 1.5, tz: -6 },
     state: { angle: 1.35, tilt: 0.42, dist: 22, tx: -1, ty: 2, tz: -9 },
-    insurers: { angle: 1.0, tilt: 0.4, dist: 22, tx: 8, ty: 2.5, tz: -6 },
+    insurers: { angle: 0.95, tilt: 0.52, dist: 24, tx: 8, ty: 2.5, tz: -6 },
     hospital: { angle: 1.45, tilt: 0.36, dist: 22, tx: -5, ty: 3, tz: 5 },
     theatre: { angle: 1.5, tilt: 0.22, dist: 12, tx: -6, ty: 3, tz: 5.5 },
     practice: { angle: 1.2, tilt: 0.4, dist: 20, tx: 3, ty: 1, tz: 3 },
     home: { angle: 1.0, tilt: 0.34, dist: 18, tx: 8.5, ty: 1, tz: 6 },
-    table: { angle: 1.2, tilt: 0.55, dist: 18, tx: 2, ty: 1, tz: -2 },
+    table: { angle: 1.15, tilt: 0.75, dist: 20, tx: 2, ty: 1, tz: -2 },
     factory: { angle: 1.75, tilt: 0.35, dist: 18, tx: -12, ty: 1.5, tz: 1 },
     road: { angle: 1.3, tilt: 0.5, dist: 30, tx: 1.5, ty: 1, tz: 4.5 },
     capitals: { angle: 1.35, tilt: 0.55, dist: 32, tx: -4.5, ty: 2, tz: -7.5 },
