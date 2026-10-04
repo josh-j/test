@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Motion test · One price, two paths</title>
+<link rel="stylesheet" href="lib/motion.css">
+<style>
+  .card { position: absolute; top: 470px; width: 640px; height: 420px; border-radius: 28px;
+          background: rgba(243,236,223,0.05); border: 1.5px solid rgba(243,236,223,0.14); overflow: hidden; }
+  #cardDay { left: 240px; } #cardNight { left: 1040px; }
+  .card .cap { position: absolute; left: 40px; bottom: 34px; }
+  .card svg { position: absolute; left: 0; top: 0; }
+  .same { position: absolute; right: 32px; top: 30px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="camera" id="cam">
+    <div class="abs label" id="kicker" style="left:240px; top:150px; visibility:hidden">Germany · 2026 · groin hernia repair</div>
+    <div class="abs headline" id="h1" style="left:240px; top:205px; visibility:hidden">One operation.</div>
+    <div class="abs headline amber" id="h2" style="left:240px; top:310px; visibility:hidden">One price.</div>
+    <div class="abs figure" id="price" style="left:1040px; top:180px; visibility:hidden">€0</div>
+
+    <svg class="abs" width="1920" height="1080" style="left:0; top:0">
+      <path id="branch" d="M1330 400 C1330 440 560 420 560 470 M1330 400 C1330 440 1360 420 1360 470"
+            fill="none" stroke="#f6b55b" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+
+    <div class="card" id="cardDay" style="visibility:hidden">
+      <svg width="640" height="420">
+        <circle id="sun" cx="500" cy="120" r="54" fill="#f9d49a"/>
+        <path d="M120 300 h220 v26 h-220z M310 230 h30 v96 h-30z M80 300 h50 v18 h-50z" fill="#f3ecdf" opacity="0.85"/>
+      </svg>
+      <div class="cap title">Home the same day</div>
+      <div class="same tag">€2,082.60</div>
+    </div>
+    <div class="card" id="cardNight" style="visibility:hidden">
+      <svg width="640" height="420">
+        <path id="moon" d="M520 70 a58 58 0 1 0 0 116 a44 44 0 1 1 0 -116z" fill="#8cc3dd"/>
+        <path d="M90 290 h300 v34 h-300z M80 230 h16 v120 h-16z M384 270 h16 v80 h-16z M110 268 h70 v22 h-70z" fill="#f3ecdf" opacity="0.85"/>
+      </svg>
+      <div class="cap title">One night in hospital</div>
+      <div class="same tag">€2,082.60</div>
+    </div>
+
+    <div class="abs title" id="nights" style="left:1080px; top:930px; width:600px; visibility:hidden">The extra night is no longer paid for.</div>
+  </div>
+
+  <div class="abs center display" id="end1" style="width:1600px; text-align:center; top:46%; visibility:hidden">The rule changes fast.</div>
+  <div class="abs center display amber" id="end2" style="width:1600px; text-align:center; top:62%; visibility:hidden">Hospitals change slowly.</div>
+</div>
+
+<script src="../node_modules/gsap/dist/gsap.min.js"></script>
+<script src="../node_modules/gsap/dist/SplitText.min.js"></script>
+<script src="../node_modules/gsap/dist/MorphSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/DrawSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/CustomEase.min.js"></script>
+<script src="lib/motion.js"></script>
+<script>
+M.scene({
+  duration: 15,
+  build(tl) {
+    // 1 · statement: kinetic type
+    M.typeIn(tl, '#kicker', 0.4, { by: 'chars', stagger: 0.015, y: 20, blur: 4 });
+    M.typeIn(tl, '#h1', 0.9, { stagger: 0.09 });
+    M.typeIn(tl, '#h2', 1.9, { stagger: 0.09 });
+    // 2 · the price counts up with a hit
+    gsap.set('#price', { autoAlpha: 1 });
+    tl.from('#price', { autoAlpha: 0, scale: 0.8, duration: 0.8, ease: 'back.out(1.6)' }, 2.6);
+    M.countUp(tl, '#price', 0, 2082.6, 2.6, { dur: 1.4, fmt: (v) => '€' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) });
+    M.cue(4.0, 'hit', 0.9);
+    // 3 · camera eases back; the price branches into two paths
+    M.camera(tl, '#cam', 4.6, { scale: 0.92, y: -30 }, { dur: 2.2, cue: 'swell' });
+    tl.to('#price', { scale: 0.42, x: 60, y: 40, transformOrigin: '0% 0%', duration: 1.2, ease: 'glide' }, 4.6);
+    tl.to(['#h1', '#h2', '#kicker'], { autoAlpha: 0.25, duration: 1 }, 4.6);
+    M.draw(tl, '#branch', 5.0, { dur: 1.0 });
+    M.reveal(tl, '#cardDay', 5.6, { x: '50%', y: '0%' });
+    M.reveal(tl, '#cardNight', 5.9, { x: '50%', y: '0%', cue: null });
+    M.pop(tl, '.same', 7.0);
+    // 4 · push into the night card; the moon morphs into a "no" stroke
+    M.camera(tl, '#cam', 8.4, { scale: 1.35, x: -560, y: -260 }, { dur: 1.6, cue: 'whoosh' });
+    tl.to('#cardDay', { autoAlpha: 0.2, duration: 0.8 }, 8.4);
+    M.morph(tl, '#moon', 'M470 80 L570 180 L585 165 L485 65z', 9.6, { dur: 0.9 });
+    tl.to('#moon', { fill: '#e48d78', duration: 0.9 }, 9.6);
+    M.typeIn(tl, '#nights', 9.9, { stagger: 0.07, y: 40 });
+    // 5 · cut to the thesis
+    tl.to('#cam', { autoAlpha: 0, filter: 'blur(14px)', scale: 1.5, duration: 0.6, ease: 'power2.in' }, 12.0);
+    M.typeIn(tl, '#end1', 12.5, { stagger: 0.08, y: 50 });
+    M.cue(12.5, 'hit', 0.7);
+    M.typeIn(tl, '#end2', 13.3, { stagger: 0.08, y: 50 });
+  },
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Style B · 3D diorama</title>
+<link rel="stylesheet" href="lib/motion.css">
+<style>
+  #stage { background: linear-gradient(#f4d9b8, #e9b98f); }
+  #gl { position: absolute; inset: 0; }
+  .ov { position: absolute; font-family: var(--serif); color: #2a2320; }
+  .big { font-weight: 400; font-size: 92px; letter-spacing: -0.02em; }
+  .pin { position: absolute; transform: translate(-50%, -100%); font-family: var(--sans); font-weight: 600; font-size: 30px;
+         background: #2a2320; color: #fbe7c6; padding: 8px 16px; border-radius: 999px; white-space: nowrap; }
+  .pin.light { background: #fbe7c6; color: #2a2320; }
+  #finish { background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(40,20,10,0.35) 100%); }
+  .night .ov { color: #fbe7c6; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1920" height="1080"></canvas>
+  <div class="ov big" id="t1" style="left:120px; top:820px; visibility:hidden">One operation. One price.</div>
+  <div class="pin" id="pinPrice" style="visibility:hidden">€2,082.60</div>
+  <div class="pin light" id="pinHome" style="visibility:hidden">Home today</div>
+  <div class="pin light" id="pinNight" style="visibility:hidden">One night</div>
+  <div class="ov big" id="t2" style="left:120px; top:820px; visibility:hidden">Same price.</div>
+  <div class="ov big" id="t3" style="left:120px; top:820px; color:#fbe7c6; visibility:hidden">The rule changes fast.<br><span style="color:#f6b55b">Hospitals change slowly.</span></div>
+</div>
+<script src="../node_modules/gsap/dist/gsap.min.js"></script>
+<script src="../node_modules/gsap/dist/SplitText.min.js"></script>
+<script src="../node_modules/gsap/dist/MorphSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/DrawSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/CustomEase.min.js"></script>
+<script src="lib/motion.js"></script>
+<script type="module">
+import * as THREE from '../node_modules/three/build/three.module.js';
+
+const W = 1920, H = 1080;
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('gl'), antialias: true, preserveDrawingBuffer: true, alpha: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H, false);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+const scene = new THREE.Scene();
+const cam = new THREE.OrthographicCamera(-16, 16, 9, -9, 0.1, 200);
+const rig = { angle: 0.75, height: 14, zoom: 0.8, x: 0, z: 0 };
+
+// Lights: warm sun + soft sky; tweened toward night later.
+const hemi = new THREE.HemisphereLight(0xfff1dc, 0x7a6a5a, 1.2);
+const sun = new THREE.DirectionalLight(0xffd9a8, 2.6);
+sun.position.set(12, 20, 8);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -20, right: 20, top: 20, bottom: -20 });
+scene.add(hemi, sun);
+const mat = (c, o = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.85, ...o });
+const add = (geo, m, x, y, z, cast = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = cast; o.receiveShadow = true; scene.add(o); return o; };
+
+// Island, road, trees
+add(new THREE.CylinderGeometry(13, 12, 1.6, 48), mat(0x8fb487), 0, -0.8, 0, false);
+add(new THREE.CylinderGeometry(12, 9, 4, 48), mat(0x8a6a50), 0, -3.6, 0, false);
+const road = add(new THREE.BoxGeometry(14, 0.06, 1.4), mat(0xd9c9ae), 1, 0.03, 1.5, false);
+road.rotation.y = -0.18;
+const rng = (() => { let s = 7; return () => ((s = (s * 16807) % 2147483647) / 2147483647); })();
+for (let i = 0; i < 26; i++) {
+  const a = rng() * Math.PI * 2, r = 7 + rng() * 4.5;
+  const x = Math.cos(a) * r, z = Math.sin(a) * r;
+  if (Math.abs(z - 1.5) < 2 && x > -6 && x < 8) continue;
+  const s = 0.7 + rng() * 0.6;
+  add(new THREE.ConeGeometry(0.8 * s, 2.2 * s, 7), mat(0x4f7d58), x, 1.1 * s + 0.3, z);
+  add(new THREE.CylinderGeometry(0.12, 0.12, 0.6, 6), mat(0x6b4f3a), x, 0.3, z);
+}
+
+// Hospital with a window texture whose floors can be lit independently.
+const winCanvas = document.createElement('canvas'); winCanvas.width = 512; winCanvas.height = 512;
+const wctx = winCanvas.getContext('2d');
+const winTex = new THREE.CanvasTexture(winCanvas); winTex.colorSpace = THREE.SRGBColorSpace;
+// Separate emissive map: black walls, only lit windows glow.
+const emCanvas = document.createElement('canvas'); emCanvas.width = 512; emCanvas.height = 512;
+const ectx = emCanvas.getContext('2d');
+const emTex = new THREE.CanvasTexture(emCanvas); emTex.colorSpace = THREE.SRGBColorSpace;
+const floors = 6;
+const litState = { top: 1, glow: 0 };
+function paintWindows() {
+  wctx.fillStyle = '#e9e2d6'; wctx.fillRect(0, 0, 512, 512);
+  ectx.fillStyle = '#000'; ectx.fillRect(0, 0, 512, 512);
+  for (let f = 0; f < floors; f++) for (let c = 0; c < 8; c++) {
+    const lit = f < 2 ? 1 : (f / floors < litState.top ? 1 : 0);
+    const x = 28 + c * 60, y = 512 - (f + 1) * 82 + 14;
+    wctx.fillStyle = lit && litState.glow > 0.05 ? '#f6b55b' : '#5d7480';
+    wctx.fillRect(x, y, 40, 54);
+    if (lit) { ectx.fillStyle = '#f6b55b'; ectx.fillRect(x, y, 40, 54); }
+  }
+  winTex.needsUpdate = true; emTex.needsUpdate = true;
+}
+const hospMat = [mat(0xe9e2d6), mat(0xe9e2d6), mat(0xd8d0c2), mat(0xd8d0c2), new THREE.MeshStandardMaterial({ map: winTex, roughness: 0.6, emissiveMap: emTex, emissive: 0x000000 }), mat(0xe9e2d6)];
+const hosp = add(new THREE.BoxGeometry(6, 6, 3.4), hospMat, -5, 3, -1.5);
+add(new THREE.BoxGeometry(1.4, 0.6, 1.4), mat(0xd9534f), -5, 6.3, -1.5); // red cross block on roof
+// House
+const house = new THREE.Group(); scene.add(house); house.position.set(7, 0, 2.6);
+const hb = new THREE.Mesh(new THREE.BoxGeometry(2.6, 1.8, 2.2), mat(0xf3e3c3)); hb.position.y = 0.9; hb.castShadow = hb.receiveShadow = true; house.add(hb);
+const roof = new THREE.Mesh(new THREE.ConeGeometry(2.2, 1.3, 4), mat(0xb5553f)); roof.position.y = 2.45; roof.rotation.y = Math.PI / 4; roof.castShadow = true; house.add(roof);
+const houseWin = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.6), new THREE.MeshStandardMaterial({ color: 0x5d7480, emissive: 0xf6b55b, emissiveIntensity: 0 }));
+houseWin.position.set(0, 1.0, 1.11); house.add(houseWin);
+
+// Price coins
+const coinGeo = new THREE.CylinderGeometry(0.9, 0.9, 0.22, 40);
+const coinMat = new THREE.MeshStandardMaterial({ color: 0xf6b55b, metalness: 0.6, roughness: 0.3, emissive: 0x6b3a00, emissiveIntensity: 0.4 });
+const coinA = add(new THREE.Mesh(coinGeo, coinMat).geometry, coinMat, -5, 7.4, -1.5);
+const coinB = add(coinGeo, coinMat, -5, 7.4, -1.5);
+coinA.rotation.x = coinB.rotation.x = Math.PI / 2;
+coinA.scale.setScalar(0.001); coinB.scale.setScalar(0.001);
+
+const sky = { day: 1 };
+const project = (obj, el, dy = 1.4) => {
+  const v = obj.getWorldPosition(new THREE.Vector3()); v.y += dy; v.project(cam);
+  el.style.left = `${(v.x * 0.5 + 0.5) * W}px`; el.style.top = `${(-v.y * 0.5 + 0.5) * H}px`;
+};
+
+function render(t) {
+  const r = 30;
+  cam.position.set(rig.x + Math.cos(rig.angle) * r, rig.height, rig.z + Math.sin(rig.angle) * r);
+  cam.lookAt(rig.x, 1.5, rig.z);
+  cam.zoom = rig.zoom; cam.updateProjectionMatrix();
+  coinA.rotation.z = t * 2.2; coinB.rotation.z = t * 2.2 + 1;
+  // day → night
+  const d = sky.day;
+  hemi.intensity = 0.25 + 0.95 * d; sun.intensity = 0.15 + 2.45 * d;
+  sun.color.setRGB(1, 0.75 + 0.1 * d, 0.55 + 0.2 * d);
+  document.getElementById('stage').style.background = `linear-gradient(rgb(${30 + 214 * d},${40 + 177 * d},${60 + 124 * d}), rgb(${20 + 213 * d},${28 + 157 * d},${45 + 98 * d}))`;
+  hospMat[4].emissive.setRGB(litState.glow * 1.4, litState.glow * 1.4, litState.glow * 1.4);
+  paintWindows();
+  houseWin.material.emissiveIntensity = (1 - d) * 1.6;
+  renderer.render(scene, cam);
+  project(coinA, document.getElementById('pinPrice'));
+  project(coinA, document.getElementById('pinNight'), 1.6);
+  project(coinB, document.getElementById('pinHome'), 1.6);
+}
+
+M.scene({
+  duration: 11, fadeIn: 0.5,
+  afterSeek: (t) => render(t),
+  build(tl) {
+    // establishing: camera swings round and settles
+    tl.fromTo(rig, { angle: 1.6, height: 22, zoom: 0.55 }, { angle: 0.75, height: 14, zoom: 0.85, duration: 3, ease: 'glide' }, 0);
+    M.cue(0.2, 'swell', 0.8);
+    M.typeIn(tl, '#t1', 1.2, { stagger: 0.07 });
+    // a coin rises from the hospital: the price
+    tl.to([coinA.scale, coinB.scale], { x: 1, y: 1, z: 1, duration: 0.6, ease: 'back.out(2)' }, 2.6);
+    M.pop(tl, '#pinPrice', 2.9);
+    // two paths: one coin travels the road home, the other stays by the ward
+    M.typeOut(tl, '#t1', 4.0);
+    tl.to('#pinPrice', { autoAlpha: 0, duration: 0.3 }, 4.0);
+    tl.to(coinB.position, { x: 7, z: 2.6, duration: 2.0, ease: 'power2.inOut' }, 4.2);
+    tl.to(coinB.position, { keyframes: { y: [7.4, 5.5, 4.2, 4.2] }, duration: 2.0, ease: 'none' }, 4.2);
+    tl.to(coinA.position, { y: 4.6, x: -5, z: 0.4, duration: 1.2 }, 4.4);
+    M.cue(4.2, 'whoosh', 0.8);
+    tl.to(rig, { angle: 0.95, zoom: 1.0, x: 1, duration: 3, ease: 'glide' }, 4.0);
+    M.pop(tl, ['#pinHome', '#pinNight'], 6.2, { stagger: 0.15 });
+    M.typeIn(tl, '#t2', 6.8, { stagger: 0.08 });
+    M.cue(6.8, 'hit', 0.6);
+    // night falls: most floors go dark, the emergency band stays lit
+    M.typeOut(tl, '#t2', 8.1);
+    tl.to(['#pinHome', '#pinNight'], { autoAlpha: 0, duration: 0.3 }, 8.1);
+    tl.to(sky, { day: 0, duration: 1.4, ease: 'power2.inOut' }, 8.1);
+    tl.to(litState, { glow: 1, duration: 1.0 }, 8.3);
+    tl.to(litState, { top: 0.34, duration: 1.0, ease: 'steps(4)' }, 8.8);
+    tl.to(rig, { angle: 0.6, zoom: 0.92, x: -1.5, duration: 2.6, ease: 'glide' }, 8.1);
+    M.typeIn(tl, '#t3', 9.2, { stagger: 0.06 });
+    M.cue(9.2, 'hit', 0.5);
+  },
+});
+</script>
+</body>
+</html>

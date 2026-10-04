@@ -1,0 +1,31 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 18,
+      "text": "Follow the decisions upward. Berlin writes the rules: the single price, the readiness payment, a fund of up to fifty billion euros to help hospitals restructure. It argues there are too many beds and too much care done too rarely to be done well."
+    },
+    {
+      "start": 19,
+      "end": 30.35,
+      "text": "The states plan the hospitals and are meant to pay for the buildings. Several pushed back on Berlin's reform as an intrusion into their planning."
+    },
+    {
+      "start": 31.35,
+      "end": 41.35,
+      "text": "Berlin points to the states. The states point to Berlin. Both point to the negotiators. The negotiators point to the law."
+    },
+    {
+      "start": 42.55,
+      "end": 64.8,
+      "text": "Step back and you see why. The money for buildings and the money for treatment come through different pipes. Rules come from one capital, planning from another, prices from a table where no side can decide alone. No one owns a patient's whole journey \u2014 from the doctor's practice, to the operating theatre, to the bed at home."
+    },
+    {
+      "start": 66.0,
+      "end": 71.3,
+      "text": "In a machine like this, blame never has to land anywhere."
+    }
+  ]
+}

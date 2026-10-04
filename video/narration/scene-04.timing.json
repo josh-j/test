@@ -1,0 +1,26 @@
+{
+  "voice": "ballad",
+  "model": "gpt-4o-mini-tts",
+  "segments": [
+    {
+      "start": 0,
+      "end": 13.95,
+      "text": "The pressure runs deeper. One German in five is sixty-seven or over; by twenty thirty-five, it will be one in four. Fewer workers pay in. More patients need care."
+    },
+    {
+      "start": 14.95,
+      "end": 26.65,
+      "text": "And the economy that paid the bills is losing power — the cheap Russian gas is gone, and Chinese factories now compete with German ones."
+    },
+    {
+      "start": 27.65,
+      "end": 40.15,
+      "text": "So the weight passes down. Government limits what it adds. Insurers fix their prices. The regions delay new buildings. Each decision is reasonable."
+    },
+    {
+      "start": 41.15,
+      "end": 49.45,
+      "text": "And near the bottom sits a hospital that cannot pass on its night shift, its emergency team, or its walls."
+    }
+  ]
+}

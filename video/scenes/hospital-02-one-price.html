@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Scene 2 · One price, two paths</title>
+<style>html, body { margin: 0; background: #0b1a20; overflow: hidden; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="lib/timings.js"></script>
+<script src="lib/hospital-common.js"></script>
+<script>
+// The Hospital That Must Change Shape · Scene 2 "One price, two paths"
+// Storyboard: ../storyboards/hospital-change-shape-5m50.md
+const { W, H, ctx, C, prog, window4, lerp, mix, rgba, background, text, para, source, bed, chair, person, priceTag, bars } = HC;
+
+// The body wall: layered tissue bands with a small bulge pushing through a weak point.
+function anatomy(t, a) {
+  if (a <= 0.01) return;
+  ctx.save();
+  ctx.globalAlpha = a;
+  const cx = W / 2, cy = 560;
+  const bulge = 26 + 10 * Math.sin(t * 1.2);
+  const layers = [
+    { y: -90, c: '#c98f7a', w: 46 },  // skin-tone outer layer
+    { y: -30, c: '#a25d52', w: 58 },  // muscle
+    { y: 34, c: '#7d4741', w: 40 },   // deeper muscle
+  ];
+  for (const [i, L] of layers.entries()) {
+    ctx.fillStyle = L.c;
+    ctx.beginPath();
+    ctx.moveTo(cx - 620, cy + L.y);
+    // a gap in the deeper layers marks the weak point
+    if (i > 0) {
+      ctx.bezierCurveTo(cx - 300, cy + L.y - 10, cx - 140, cy + L.y + 6, cx - 60, cy + L.y);
+      ctx.lineTo(cx - 60, cy + L.y + L.w);
+      ctx.bezierCurveTo(cx - 140, cy + L.y + L.w + 6, cx - 300, cy + L.y + L.w - 10, cx - 620, cy + L.y + L.w);
+      ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(cx + 60, cy + L.y);
+      ctx.bezierCurveTo(cx + 140, cy + L.y + 6, cx + 300, cy + L.y - 10, cx + 620, cy + L.y);
+      ctx.lineTo(cx + 620, cy + L.y + L.w);
+      ctx.bezierCurveTo(cx + 300, cy + L.y + L.w - 10, cx + 140, cy + L.y + L.w + 6, cx + 60, cy + L.y + L.w);
+      ctx.closePath(); ctx.fill();
+    } else {
+      // outer layer bows outward over the bulge
+      ctx.bezierCurveTo(cx - 200, cy + L.y, cx - 120, cy + L.y - bulge * 2.2, cx, cy + L.y - bulge * 2.4);
+      ctx.bezierCurveTo(cx + 120, cy + L.y - bulge * 2.2, cx + 200, cy + L.y, cx + 620, cy + L.y);
+      ctx.lineTo(cx + 620, cy + L.y + L.w);
+      ctx.bezierCurveTo(cx + 200, cy + L.y + L.w, cx + 120, cy + L.y + L.w - bulge * 2.0, cx, cy + L.y + L.w - bulge * 2.2);
+      ctx.bezierCurveTo(cx - 120, cy + L.y + L.w - bulge * 2.0, cx - 200, cy + L.y + L.w, cx - 620, cy + L.y + L.w);
+      ctx.closePath(); ctx.fill();
+    }
+  }
+  // the bulge: soft tissue pushing up through the gap
+  ctx.fillStyle = '#e3b3a0';
+  ctx.beginPath();
+  ctx.ellipse(cx, cy - 10 - bulge * 0.9, 58, 44 + bulge * 0.6, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+  // label with a pointer
+  const la = a * prog(t, 2.5, 3.5);
+  ctx.save(); ctx.globalAlpha = la; ctx.strokeStyle = C.inkDim; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(cx + 80, cy - 90 - bulge); ctx.lineTo(cx + 300, cy - 260); ctx.lineTo(cx + 380, cy - 260); ctx.stroke();
+  ctx.restore();
+  text('a weak point in the wall of the body', cx + 395, cy - 252, { size: 30, italic: true, color: C.inkDim, alpha: la });
+  text('Groin hernia', 120, 200, { size: 64, alpha: a });
+  text('about 250,000 repairs a year in Germany', 120, 252, { size: 30, italic: true, color: C.inkDim, alpha: a * prog(t, 3, 4) });
+}
+
+function comparison(t, a, k) {
+  if (a <= 0.01) return;
+  const p = prog(t, k.at(1) - 0.2, k.at(1) + 4);
+  text('Groin hernia repairs done as day cases', 120, 200, { size: 54, alpha: a });
+  ctx.save(); ctx.globalAlpha = a;
+  bars([
+    { label: 'Scandinavia and English-speaking countries', value: 80, display: 'over 80', color: C.green },
+    { label: 'Germany (2019)', value: 14, display: '~14', color: C.amber },
+  ], 120, 420, 1300, 100, p, { rowH: 190, size: 38, unit: '%' });
+  ctx.restore();
+  source('Köckerling et al., Herniamed registry analysis, Die Chirurgie 2023', a);
+}
+
+// Two rooms side by side; a single price label settles across both.
+function rooms(t, a, k) {
+  if (a <= 0.01) return;
+  const day = { x: 170, y: 300, w: 760, h: 520 }, night = { x: 990, y: 300, w: 760, h: 520 };
+  ctx.save(); ctx.globalAlpha = a;
+  for (const [r, isNight] of [[day, false], [night, true]]) {
+    ctx.fillStyle = isNight ? '#132a31' : '#2a4247';
+    ctx.fillRect(r.x, r.y, r.w, r.h);
+    // window
+    const wx = r.x + r.w - 230, wy = r.y + 60;
+    const sky = ctx.createLinearGradient(0, wy, 0, wy + 170);
+    sky.addColorStop(0, isNight ? '#06121a' : '#7d9aa3');
+    sky.addColorStop(1, isNight ? '#123039' : '#e3c79c');
+    ctx.fillStyle = sky; ctx.fillRect(wx, wy, 170, 170);
+    ctx.strokeStyle = 'rgba(239,230,214,0.35)'; ctx.lineWidth = 6; ctx.strokeRect(wx, wy, 170, 170);
+    if (isNight) { ctx.fillStyle = C.amberSoft; ctx.beginPath(); ctx.arc(wx + 120, wy + 50, 18, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = 'rgba(0,0,0,0.18)'; ctx.fillRect(r.x, r.y + r.h - 70, r.w, 70); // floor
+  }
+  ctx.restore();
+  chair(day.x + 240, day.y + 390, 1.4, C.inkDim, a);
+  bed(night.x + 120, night.y + 380, 1.6, C.inkDim, a);
+  text('Home the same day', day.x + 30, day.y + 54, { size: 34, alpha: a });
+  text('One night in hospital', night.x + 30, night.y + 54, { size: 34, alpha: a });
+
+  // The price label drops in and settles across both rooms.
+  const drop = prog(t, k.at(2) + 4.5, k.at(2) + 6.5);
+  priceTag(W / 2, lerp(60, 228, drop), '€2,082.60', a * drop, 1.15);
+  text('Same price for a simple repair, whichever path (2026)', W / 2, 892, { size: 30, italic: true, color: C.inkDim, align: 'center', alpha: a * prog(t, k.at(2) + 6.5, k.at(2) + 7.5) });
+  text('Complex cases are excluded.', W / 2, 932, { size: 26, italic: true, color: C.inkFaint, align: 'center', alpha: a * prog(t, k.at(2) + 7, k.at(2) + 8) });
+  source('Hybrid-DRG G24Q, 2026 tariff (DKG, GKV-Spitzenverband, KBV)', a * drop);
+
+  // Para 4: the doctor decides; the price stops paying for the unneeded night.
+  const d = prog(t, k.at(3), k.at(3) + 1.5);
+  if (d > 0.01) {
+    person(day.x + 120, day.y + 450, 1.2, C.green, a * d);
+    text('fit to go home?', day.x + 60, day.y + 300, { size: 30, italic: true, color: C.green, alpha: a * d });
+    const fade = prog(t, k.at(3) + 4.5, k.at(3) + 7);
+    ctx.save(); ctx.globalAlpha = a * fade * 0.6; ctx.fillStyle = C.tealDeep; ctx.fillRect(night.x, night.y, night.w, night.h); ctx.restore();
+    text('nights not needed: no longer paid for', night.x + night.w / 2, night.y + night.h / 2, { size: 34, italic: true, align: 'center', color: C.amberSoft, alpha: a * fade });
+  }
+}
+
+HC.scene({
+  key: 'scene-02',
+  duration: 43.5,
+  draw(t, k) {
+    background(0.15);
+    anatomy(t, k.seg(t, 0, 1.0, 0.3));
+    comparison(t, k.seg(t, 1, 0.3, 0.3), k);
+    rooms(t, window4(t, k.at(2) - 0.5, k.at(2) + 0.5, 99, 100), k);
+  },
+});
+</script>
+</body>
+</html>

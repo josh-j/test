@@ -1,0 +1,422 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Scene 1 · The habitat</title>
+<style>
+  html, body { margin: 0; background: #0b1a20; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+// The Hospital That Must Change Shape · Scene 1 "The habitat" (00:00–00:31)
+// Narration: ../narration/scene-01.voice.wav, placed at VOICE_AT seconds (render with --audio, see CLAUDE.md).
+// Storyboard: ../storyboards/hospital-change-shape-5m50.md
+// Scene contract (see ../CLAUDE.md): window.VIDEO + a pure window.seek(t).
+window.VIDEO = { width: 1920, height: 1080, fps: 30, duration: 31 };
+
+const { width: W, height: H } = window.VIDEO;
+const canvas = document.getElementById('c');
+canvas.width = W;
+canvas.height = H;
+const ctx = canvas.getContext('2d');
+
+const SERIF = 'Georgia, "Bitstream Charter", "Liberation Serif", serif';
+const SHOW_CAPTIONS = new URLSearchParams(location.search).get('captions') !== '0';
+
+// ---------- helpers ----------
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const smooth = (p) => p * p * (3 - 2 * p);
+// Eased progress of t through [start, end].
+const prog = (t, start, end) => smooth(clamp((t - start) / (end - start)));
+// Fade in over [a, b], hold, fade out over [c, d].
+const window4 = (t, a, b, c, d) => prog(t, a, b) * (1 - prog(t, c, d));
+
+function mulberry32(seed) {
+  return () => {
+    seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
+    let r = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
+    return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const mix = (c1, c2, p) => {
+  const a = hex(c1), b = hex(c2);
+  return `rgb(${a.map((v, i) => Math.round(lerp(v, b[i], p))).join(',')})`;
+};
+
+// ---------- palette (dusk → night) ----------
+const SKY_DUSK = ['#2c4a57', '#7d8f8c', '#e3b98a', '#f2cf9c'];
+const SKY_NIGHT = ['#06121a', '#0b2029', '#14323a', '#1d3c40'];
+const AMBER = '#f4b860';
+const AMBER_SOFT = '#f7cf8e';
+
+// ---------- static, seeded geometry (built once, so seek(t) stays pure) ----------
+const rand = mulberry32(20261003);
+
+const stars = Array.from({ length: 140 }, () => ({
+  x: rand() * W, y: rand() * H * 0.5, r: 0.6 + rand() * 1.4,
+  phase: rand() * Math.PI * 2, at: 11 + rand() * 7,
+}));
+
+// Ridge profiles: arrays of y-offsets sampled across the width.
+function ridge(n, roughness, seedShift) {
+  const r = mulberry32(seedShift);
+  const pts = [];
+  let v = 0;
+  for (let i = 0; i <= n; i++) {
+    v = v * 0.82 + (r() - 0.5) * roughness;
+    pts.push(v);
+  }
+  return pts;
+}
+const farRidge = ridge(60, 26, 11);
+const treeRidge = ridge(220, 18, 23);
+const foreRidge = ridge(140, 30, 37);
+
+// City lights in the valley: they come ON as the hospital goes OFF.
+const city = [];
+while (city.length < 230) {
+  const x = rand() * 1000, y = H * 0.67 + rand() * H * 0.25;
+  const d = (x - 1300) / 900;
+  if (y > H * 0.64 + d * d * 260 - 14) continue; // town in the valley, in front of the far ridge and behind the hill
+  city.push({ x, y, w: 2 + rand() * 4, on: 6 + rand() * 12, warm: rand() < 0.75 });
+}
+
+// Hospital: main block + lower wing. Windows switch off floor by floor, top down.
+const HOSP = { x: 1020, y: 452, w: 520, floors: 7, floorH: 34, cols: 16 };
+const WING = { x: 1540, y: 554, w: 230, floors: 4, floorH: 34, cols: 6 };
+const KEEP_LIT_FLOORS = 2; // bottom floors: emergency care, intensive care, night team
+const windows = [];
+for (const b of [HOSP, WING]) {
+  const isWing = b === WING;
+  for (let f = 0; f < b.floors; f++) {
+    for (let c = 0; c < b.cols; c++) {
+      const fromTop = b.floors - 1 - f; // 0 = top floor
+      const keep = f < KEEP_LIT_FLOORS;
+      // Top floors go dark first; small per-window jitter so it feels alive.
+      const off = keep ? Infinity : 7 + (fromTop / (b.floors - KEEP_LIT_FLOORS)) * 8 + rand() * 1.6 + (isWing ? 1.2 : 0);
+      const startsLit = keep || rand() < 0.86;
+      windows.push({ b, f, c, keep, off, startsLit, flicker: rand() * Math.PI * 2 });
+    }
+  }
+}
+
+// Paper grain, generated once.
+const grain = document.createElement('canvas');
+grain.width = 512; grain.height = 512;
+{
+  const g = grain.getContext('2d');
+  const img = g.createImageData(512, 512);
+  const r = mulberry32(99);
+  for (let i = 0; i < img.data.length; i += 4) {
+    const v = 128 + (r() - 0.5) * 70;
+    img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+    img.data[i + 3] = 255;
+  }
+  g.putImageData(img, 0, 0);
+}
+let grainPattern = null;
+
+// ---------- drawing ----------
+function drawSky(night) {
+  const g = ctx.createLinearGradient(0, 0, 0, H * 0.78);
+  for (let i = 0; i < 4; i++) g.addColorStop(i / 3, mix(SKY_DUSK[i], SKY_NIGHT[i], night));
+  ctx.fillStyle = g;
+  ctx.fillRect(-W, -H, W * 3, H * 3);
+
+  // Low sun glow sinking behind the far ridge.
+  const glow = (1 - night) * 0.9;
+  if (glow > 0.01) {
+    const gx = W * 0.28, gy = H * 0.64 + night * 60;
+    const rg = ctx.createRadialGradient(gx, gy, 0, gx, gy, 520);
+    rg.addColorStop(0, `rgba(255,214,160,${0.55 * glow})`);
+    rg.addColorStop(1, 'rgba(255,214,160,0)');
+    ctx.fillStyle = rg;
+    ctx.fillRect(-W, -H, W * 3, H * 3);
+  }
+}
+
+function drawStars(t) {
+  for (const s of stars) {
+    const a = prog(t, s.at, s.at + 3) * (0.55 + 0.45 * Math.sin(t * 1.3 + s.phase));
+    if (a <= 0.01) continue;
+    ctx.fillStyle = `rgba(235,240,230,${a * 0.8})`;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function drawRidge(pts, baseY, amp, color, crown) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(-200, H + 200);
+  const n = pts.length - 1;
+  const P = pts.map((v, i) => [-200 + (i / n) * (W + 400), baseY + v * amp]);
+  ctx.lineTo(P[0][0], P[0][1]);
+  // Smooth curve through the midpoints: soft, painterly ridgelines.
+  for (let i = 1; i < n; i++) {
+    const mx = (P[i][0] + P[i + 1][0]) / 2, my = (P[i][1] + P[i + 1][1]) / 2;
+    ctx.quadraticCurveTo(P[i][0], P[i][1], mx, my);
+  }
+  ctx.lineTo(W + 200, H + 200);
+  ctx.closePath();
+  ctx.fill();
+  // Rounded tree crowns along the ridge.
+  if (crown) {
+    for (let i = 0; i <= n; i++) {
+      const r = crown * (0.6 + 0.4 * Math.abs(Math.sin(i * 2.3)));
+      ctx.beginPath();
+      ctx.arc(P[i][0], P[i][1] + r * 0.4, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}
+
+// The hill the hospital sits on: a broad dome with tree texture.
+const hillY = (x) => { const d = (x - 1300) / 900; return H * 0.64 + d * d * 260; };
+function drawHill(night) {
+  const base = mix('#3f5a4f', '#10272a', night);
+  ctx.fillStyle = base;
+  ctx.beginPath();
+  ctx.moveTo(-200, H);
+  for (let x = -200; x <= W + 200; x += 12) ctx.lineTo(x, hillY(x) + 6);
+  ctx.lineTo(W + 200, H);
+  ctx.closePath();
+  ctx.fill();
+  // Woodland canopy: overlapping rounded crowns following the hill.
+  for (let i = 0; i < treeRidge.length; i++) {
+    const x = -200 + (i / (treeRidge.length - 1)) * (W + 400);
+    if (x > HOSP.x - 30 && x < WING.x + WING.w + 30) continue; // clearing for the building
+    const r = 11 + Math.abs(treeRidge[i]) * 0.5;
+    ctx.beginPath();
+    ctx.arc(x, hillY(x) + 4 - Math.abs(treeRidge[i]) * 0.3, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+// Plinth, path and trees in front of the base: the building sits *in* the landscape.
+function drawGrounding(night) {
+  const baseY = HOSP.y + HOSP.floors * HOSP.floorH + 18;
+  ctx.fillStyle = mix('#7b8578', '#152a2d', night);
+  ctx.fillRect(HOSP.x - 40, baseY - 2, WING.x + WING.w - HOSP.x + 80, 14);
+  ctx.fillStyle = mix('#2f4a40', '#0b1d20', night);
+  const r = mulberry32(7);
+  for (let x = HOSP.x - 70; x < WING.x + WING.w + 70; x += 14 + r() * 26) {
+    const rad = 9 + r() * 24;
+    ctx.beginPath();
+    ctx.arc(x, baseY + 10 + rad * 0.5 + r() * 10, rad, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function drawCity(t, night) {
+  for (const l of city) {
+    const a = prog(t, l.on, l.on + 1.5) * night;
+    if (a <= 0.01) continue;
+    ctx.fillStyle = l.warm ? `rgba(247,207,142,${a * 0.85})` : `rgba(190,220,230,${a * 0.6})`;
+    ctx.fillRect(l.x, l.y, l.w, l.w * 0.8);
+  }
+}
+
+function drawBuilding(b, night) {
+  const h = b.floors * b.floorH + 18;
+  const top = b.y + (7 - b.floors) * 0; // buildings stand on their own baselines
+  const wall = mix('#c9c3b4', '#1c2f33', night);
+  const edge = mix('#a59f90', '#14262a', night);
+  ctx.fillStyle = wall;
+  ctx.fillRect(b.x, top, b.w, h);
+  ctx.fillStyle = edge;
+  ctx.fillRect(b.x, top, b.w, 10); // roof line
+  ctx.fillRect(b.x + b.w - 6, top, 6, h); // shadow side
+}
+
+function windowRect(w) {
+  const b = w.b;
+  const pad = 14, gap = 8;
+  const cw = (b.w - pad * 2 - gap * (b.cols - 1)) / b.cols;
+  const x = b.x + pad + w.c * (cw + gap);
+  const rowFromTop = b.floors - 1 - w.f;
+  const y = b.y + 16 + rowFromTop * b.floorH;
+  return [x, y, cw, b.floorH - 12];
+}
+
+function drawWindows(t, night) {
+  const breathe = 0.5 + 0.5 * Math.sin(t * 0.9); // the lit band "breathes"
+  for (const w of windows) {
+    const [x, y, ww, wh] = windowRect(w);
+    let lit = w.startsLit ? 1 : 0;
+    if (!w.keep && w.startsLit) lit = 1 - prog(t, w.off, w.off + 0.35);
+    // Daylight: windows read as reflective glass; light only "glows" as dusk deepens.
+    const glass = mix('#8fa5a6', '#0d1d21', night);
+    ctx.fillStyle = glass;
+    ctx.fillRect(x, y, ww, wh);
+    if (lit > 0.01) {
+      const glowStrength = lerp(0.35, 1, night) * lit;
+      const flick = w.keep ? 0.9 + 0.1 * Math.sin(t * 2.1 + w.flicker) : 1;
+      ctx.fillStyle = `rgba(244,184,96,${glowStrength * flick})`;
+      ctx.fillRect(x, y, ww, wh);
+      if (w.keep) {
+        ctx.fillStyle = `rgba(247,207,142,${0.25 * glowStrength * (0.6 + 0.4 * breathe)})`;
+        ctx.fillRect(x - 3, y - 3, ww + 6, wh + 6);
+      }
+    }
+  }
+}
+
+// Soft halo around the band that stays awake.
+function drawBandHalo(t, night) {
+  const a = prog(t, 9, 16) * (0.55 + 0.15 * Math.sin(t * 0.9));
+  if (a <= 0.01) return;
+  const y = HOSP.y + 16 + (HOSP.floors - KEEP_LIT_FLOORS) * HOSP.floorH + HOSP.floorH * 0.6;
+  const g = ctx.createRadialGradient(1280, y, 20, 1280, y, 520);
+  g.addColorStop(0, `rgba(244,184,96,${0.22 * a * night})`);
+  g.addColorStop(1, 'rgba(244,184,96,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(-W, -H, W * 3, H * 3);
+}
+
+function drawScene(t) {
+  // Dusk progresses from 4s to 17s.
+  const night = prog(t, 4, 17);
+  // Slow push-in toward the hospital, with parallax per layer.
+  const push = prog(t, 3.5, window.VIDEO.duration);
+  const zoom = lerp(1.0, 1.16, push);
+  const fx = 1300, fy = 560; // focus point
+  const layer = (depth, fn) => {
+    ctx.save();
+    const z = 1 + (zoom - 1) * depth;
+    ctx.translate(fx, fy);
+    ctx.scale(z, z);
+    ctx.translate(-fx, -fy + (1 - depth) * push * 20);
+    fn();
+    ctx.restore();
+  };
+
+  layer(0.15, () => { drawSky(night); drawStars(t); });
+  layer(0.35, () => drawRidge(farRidge, H * 0.62, 2.2, mix('#6f8784', '#0e242a', night), 0));
+  layer(0.75, () => {
+    drawCity(t, night);
+    drawHill(night);
+    drawBandHalo(t, night);
+    drawBuilding(WING, night);
+    drawBuilding(HOSP, night);
+    drawWindows(t, night);
+    drawGrounding(night);
+  });
+  layer(1.0, () => drawRidge(foreRidge, H * 0.95, 2.2, mix('#22362f', '#050d10', night), 26));
+}
+
+function drawGrainAndVignette() {
+  if (!grainPattern) grainPattern = ctx.createPattern(grain, 'repeat');
+  ctx.save();
+  ctx.globalAlpha = 0.07;
+  ctx.globalCompositeOperation = 'overlay';
+  ctx.fillStyle = grainPattern;
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+
+  const v = ctx.createRadialGradient(W / 2, H / 2, H * 0.35, W / 2, H / 2, H * 0.95);
+  v.addColorStop(0, 'rgba(0,0,0,0)');
+  v.addColorStop(1, 'rgba(0,0,0,0.45)');
+  ctx.fillStyle = v;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawOpeningCard(t) {
+  const a = 1 - prog(t, 3.6, 5.0);
+  if (a <= 0.01) return;
+  ctx.fillStyle = `rgba(11,26,32,${a})`;
+  ctx.fillRect(0, 0, W, H);
+  const ta = window4(t, 0.4, 1.4, 3.2, 4.2);
+  ctx.globalAlpha = ta;
+  ctx.fillStyle = '#efe6d6';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = `italic 400 54px ${SERIF}`;
+  ctx.fillText('What happens when a hospital is paid the same —', W / 2, H / 2 - 38);
+  ctx.fillText('whether you stay the night or go home?', W / 2, H / 2 + 38);
+  ctx.globalAlpha = 1;
+}
+
+function drawLowerThird(t) {
+  const a = window4(t, 15.8, 16.8, 23.2, 24.2);
+  if (a <= 0.01) return;
+  const x = 120, y = H - 210;
+  ctx.globalAlpha = a;
+  ctx.fillStyle = 'rgba(244,184,96,0.9)';
+  ctx.fillRect(x, y - 30, lerp(0, 56, a), 2);
+  ctx.fillStyle = '#efe6d6';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.font = `400 38px ${SERIF}`;
+  ctx.fillText('Klinikum Saarbrücken', x, y + 14);
+  ctx.font = `italic 400 26px ${SERIF}`;
+  ctx.fillStyle = 'rgba(239,230,214,0.75)';
+  ctx.fillText('Saarland, Germany', x, y + 52);
+  ctx.globalAlpha = 1;
+}
+
+// Captions follow the recorded narration: segment times from ../narration/scene-01.timing.json,
+// offset by VOICE_AT (when the voice starts in this scene). Disable with ?captions=0.
+const VOICE_AT = 5.0;
+const NARRATION = [
+  [0, 3.35, 'At night, most of this hospital sleeps.'],
+  [4.35, 9.35, 'One part never does — the part that waits.'],
+  [11.35, 19.2, 'Here, in a quiet corner of Germany, a hospital is being asked to change its shape.'],
+  [20.2, 24.1, 'It begins with a very small operation.'],
+].map(([a, b, text]) => [a + VOICE_AT - 0.15, b + VOICE_AT + 0.35, text]);
+function drawCaptions(t) {
+  if (!SHOW_CAPTIONS || window.__CAPTIONS__ === false) return;
+  for (const [a, b, text] of NARRATION) {
+    const al = window4(t, a, a + 0.4, b - 0.3, b);
+    if (al <= 0.01) continue;
+    ctx.globalAlpha = al;
+    ctx.font = `400 34px ${SERIF}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const m = ctx.measureText(text).width;
+    ctx.fillStyle = 'rgba(5,12,15,0.55)';
+    ctx.fillRect(W / 2 - m / 2 - 22, H - 92, m + 44, 54);
+    ctx.fillStyle = '#efe6d6';
+    ctx.fillText(text, W / 2, H - 65);
+    ctx.globalAlpha = 1;
+  }
+}
+
+window.seek = (t) => {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  drawScene(t);
+  drawGrainAndVignette();
+  drawLowerThird(t);
+  drawCaptions(t);
+  drawOpeningCard(t);
+  // Gentle dip at the end, ready for the dissolve into scene 2.
+  const out = prog(t, 29.8, 31);
+  if (out > 0) {
+    ctx.fillStyle = `rgba(6,18,26,${out * 0.6})`;
+    ctx.fillRect(0, 0, W, H);
+  }
+};
+
+// Realtime preview when opened in a normal browser; the renderer sets __RENDER__.
+if (!window.__RENDER__) {
+  const start = performance.now();
+  const loop = () => {
+    window.seek(((performance.now() - start) / 1000) % window.VIDEO.duration);
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+} else {
+  window.seek(0);
+}
+</script>
+</body>
+</html>

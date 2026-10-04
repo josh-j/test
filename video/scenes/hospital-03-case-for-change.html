@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Scene 3 · The case for change</title>
+<style>html, body { margin: 0; background: #0b1a20; overflow: hidden; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="lib/timings.js"></script>
+<script src="lib/hospital-common.js"></script>
+<script>
+// The Hospital That Must Change Shape · Scene 3 "The case for change" (the insurers' view)
+const { W, H, ctx, C, prog, window4, rgba, background, text, source, bed, bars, roundRect } = HC;
+
+function evidence(t, a, k) {
+  if (a <= 0.01) return;
+  const t0 = k.at(0);
+  text("The insurers' view", 120, 200, { size: 60, alpha: a });
+  text('Hospital beds per 100,000 people (2024)', 120, 300, { size: 32, italic: true, color: C.inkDim, alpha: a * prog(t, t0 + 1, t0 + 2) });
+  ctx.save(); ctx.globalAlpha = a;
+  bars([
+    { label: 'Bulgaria', value: 870, color: C.blue },
+    { label: 'Germany', value: 759, color: C.amber },
+    { label: 'EU average', value: 507, color: C.sage },
+  ], 120, 420, 900, 900, prog(t, t0 + 1.5, t0 + 6), { rowH: 120, size: 34 });
+  ctx.restore();
+
+  // Spending and life expectancy cards on the right.
+  const cards = [
+    { at: t0 + 7.5, big: 'Highest', small: 'health spending per person in the EU (2023)' },
+    { at: t0 + 12.5, big: '81.5 years', small: 'life expectancy (2024), about the EU average' },
+  ];
+  cards.forEach((c, i) => {
+    const ca = a * prog(t, c.at, c.at + 1);
+    if (ca <= 0.01) return;
+    const x = 1240, y = 380 + i * 250;
+    ctx.save(); ctx.globalAlpha = ca;
+    ctx.fillStyle = 'rgba(239,230,214,0.06)'; roundRect(x, y, 560, 200, 14); ctx.fill();
+    ctx.restore();
+    text(c.big, x + 36, y + 92, { size: 62, color: C.amberSoft, alpha: ca });
+    text(c.small, x + 36, y + 150, { size: 26, italic: true, color: C.inkDim, alpha: ca });
+  });
+  source('Eurostat (13 Jul 2026) · OECD/European Observatory, Germany Country Health Profile 2025', a);
+}
+
+// A ward of beds; some quietly fade to outlines: fewer beds, by design.
+function shrinking(t, a, k) {
+  if (a <= 0.01) return;
+  const t1 = k.at(1);
+  const cols = 6, rows = 3;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const i = r * cols + c;
+      const goes = [1, 4, 8, 11, 13, 16].includes(i);
+      const fade = goes ? prog(t, t1 + 1 + (i % 6) * 0.35, t1 + 2.2 + (i % 6) * 0.35) : 0;
+      const x = 260 + c * 240, y = 330 + r * 190;
+      bed(x, y, 0.75, fade > 0.5 ? C.inkFaint : C.inkDim, a * (1 - fade * 0.75));
+    }
+  }
+  text('Some shrinking is not the illness.', W / 2, 800, { size: 40, italic: true, align: 'center', alpha: a * prog(t, t1 + 2.5, t1 + 3.5) });
+  const cure = prog(t, k.at(2) - 0.2, k.at(2) + 0.8);
+  text('It is the cure.', W / 2, 858, { size: 40, italic: true, align: 'center', color: C.amberSoft, alpha: a * cure });
+  text('The reform also concentrates complex care where teams do it often.', W / 2, 220, { size: 30, italic: true, align: 'center', color: C.inkDim, alpha: a * prog(t, t1 + 0.5, t1 + 1.5) });
+}
+
+HC.scene({
+  key: 'scene-03',
+  duration: 32.5,
+  draw(t, k) {
+    background(0.1);
+    evidence(t, k.seg(t, 0, 1.0, 0.2), k);
+    shrinking(t, window4(t, k.at(1) - 0.4, k.at(1) + 0.6, 99, 100), k);
+  },
+});
+</script>
+</body>
+</html>

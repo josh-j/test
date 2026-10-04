@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Scene 6 · Changing shape</title>
+<style>html, body { margin: 0; background: #0b1a20; overflow: hidden; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="lib/timings.js"></script>
+<script src="lib/hospital-common.js"></script>
+<script>
+// The Hospital That Must Change Shape · Scene 6 "Changing shape" (who pays, and how it is done)
+const { W, H, ctx, C, prog, window4, lerp, rgba, background, text, source, bed, chair, person, hospital, roundRect } = HC;
+
+// Two streams of money that never mix.
+function streams(t, a, k) {
+  if (a <= 0.01) return;
+  const t0 = k.at(0);
+  text('Who pays for a new shape?', W / 2, 200, { size: 60, align: 'center', alpha: a });
+  hospital(W / 2 - 260, 860, 520, 6, 2, { cols: 13, alpha: a });
+  const flows = [
+    { from: 200, color: C.blue, label: 'The state', note: 'pays for buildings', at: t0 + 2.5 },
+    { from: W - 200, color: C.green, label: 'The insurers', note: 'pay for treatment', at: t0 + 4.5 },
+  ];
+  for (const f of flows) {
+    const p = prog(t, f.at, f.at + 1.6);
+    if (p <= 0.01) continue;
+    ctx.save(); ctx.globalAlpha = a * p; ctx.strokeStyle = f.color; ctx.lineWidth = 22; ctx.lineCap = 'round';
+    ctx.setLineDash([2, 30]); ctx.lineDashOffset = -t * 40;
+    const tx = f.from < W / 2 ? W / 2 - 160 : W / 2 + 160;
+    ctx.beginPath(); ctx.moveTo(f.from, 420); ctx.bezierCurveTo(f.from, 600, tx, 520, tx, 640); ctx.stroke();
+    ctx.restore();
+    text(f.label, f.from, 360, { size: 42, align: 'center', color: f.color, alpha: a * p });
+    text(f.note, f.from, 400, { size: 28, italic: true, align: 'center', color: C.inkDim, alpha: a * p });
+  }
+}
+
+// The planned campus: a blueprint drawn on, with a shared outpatient theatre.
+function campus(t, a, k) {
+  if (a <= 0.01) return;
+  const t1 = k.at(1);
+  const draw = prog(t, t1, t1 + 4);
+  const x = 260, y = 300, w = 900, h = 480;
+  ctx.save(); ctx.globalAlpha = a;
+  ctx.strokeStyle = rgba(C.blue, 0.9); ctx.lineWidth = 3;
+  ctx.setLineDash([w * 4 * draw, 99999]);
+  ctx.strokeRect(x, y, w, h);
+  ctx.setLineDash([]);
+  // floors
+  ctx.strokeStyle = rgba(C.blue, 0.4 * draw); ctx.lineWidth = 2;
+  for (let f = 1; f < 4; f++) { ctx.beginPath(); ctx.moveTo(x, y + f * h / 4); ctx.lineTo(x + w, y + f * h / 4); ctx.stroke(); }
+  // first floor: outpatient theatre highlighted
+  const ot = prog(t, t1 + 3.5, t1 + 5);
+  ctx.fillStyle = rgba(C.amber, 0.25 * ot); ctx.fillRect(x, y + 3 * h / 4, w, h / 4);
+  ctx.restore();
+  text('outpatient operating centre (first floor)', x + 30, y + h - 40, { size: 30, color: C.amberSoft, alpha: a * ot });
+  // two kinds of surgeon walk in together
+  const walk = prog(t, t1 + 6, t1 + 9);
+  person(lerp(x - 200, x + 200, walk), y + h + 120, 1.0, C.ink, a * prog(t, t1 + 6, t1 + 6.6));
+  person(lerp(x - 280, x + 120, walk), y + h + 120, 1.0, C.green, a * prog(t, t1 + 6, t1 + 6.6));
+  text('hospital surgeons and local practice doctors, side by side', x + 300, y + h + 100, { size: 28, italic: true, color: C.inkDim, alpha: a * prog(t, t1 + 7, t1 + 8) });
+  // facts
+  const fx = 1260;
+  text('€85m', fx, 400, { size: 96, color: C.blue, alpha: a * prog(t, t1 + 1.5, t1 + 2.5) });
+  text('in state funds set aside (2024)', fx, 450, { size: 28, italic: true, color: C.inkDim, alpha: a * prog(t, t1 + 1.5, t1 + 2.5) });
+  text('so far only planning costs are confirmed', fx, 490, { size: 26, italic: true, color: C.inkFaint, alpha: a * prog(t, t1 + 2, t1 + 3) });
+  const yrs = prog(t, t1 + 11, t1 + 12.5);
+  text('5–6 years', fx, 640, { size: 80, color: C.amberSoft, alpha: a * yrs });
+  text('to open, once the money is confirmed', fx, 690, { size: 28, italic: true, color: C.inkDim, alpha: a * yrs });
+  text('A plan, not yet built.', fx, 760, { size: 28, italic: true, color: C.inkFaint, alpha: a * yrs });
+  source('Saarland health ministry (Nov 2024) · Klinikum Saarbrücken, Gesundheitscampus Winterberg', a);
+}
+
+// What hospitals that adapt well tend to do: three vignettes.
+function adapt(t, a, k) {
+  if (a <= 0.01) return;
+  const t2 = k.at(2);
+  text('Hospitals that adapt well…', W / 2, 190, { size: 56, align: 'center', alpha: a });
+  const cards = [
+    { at: t2 + 2.5, title: 'give day surgery its own space', draw: (cx, cy, al) => { chair(cx - 60, cy + 40, 1.1, C.ink, al); chair(cx + 90, cy + 40, 0.8, C.inkDim, al); } },
+    { at: t2 + 5.8, title: 'decide before the day', draw: (cx, cy, al) => {
+      ctx.save(); ctx.globalAlpha = al; ctx.fillStyle = '#20393f'; roundRect(cx - 120, cy - 110, 240, 220, 14); ctx.fill();
+      ctx.fillStyle = C.amberSoft; ctx.fillRect(cx - 120, cy - 110, 240, 44);
+      ctx.strokeStyle = C.green; ctx.lineWidth = 12; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(cx - 50, cy + 10); ctx.lineTo(cx - 10, cy + 50); ctx.lineTo(cx + 60, cy - 30); ctx.stroke(); ctx.restore();
+    } },
+    { at: t2 + 8.8, title: 'choose what the empty bed is for', draw: (cx, cy, al) => {
+      bed(cx - 110, cy + 10, 1.0, C.inkDim, al);
+      text('close it', cx - 110, cy + 120, { size: 26, italic: true, color: C.blue, alpha: al * prog(t, t2 + 10.5, t2 + 11.3) });
+      text('or give it to someone waiting', cx - 110, cy + 156, { size: 26, italic: true, color: C.green, alpha: al * prog(t, t2 + 11.5, t2 + 12.3) });
+    } },
+  ];
+  cards.forEach((c, i) => {
+    const ca = a * prog(t, c.at, c.at + 0.9);
+    const cx = 380 + i * 580, cy = 520;
+    ctx.save(); ctx.globalAlpha = ca; ctx.fillStyle = 'rgba(239,230,214,0.05)'; roundRect(cx - 250, cy - 200, 500, 470, 18); ctx.fill(); ctx.restore();
+    c.draw(cx, cy, ca);
+    text(c.title, cx, cy - 150, { size: 30, align: 'center', color: C.amberSoft, alpha: ca });
+  });
+  source('Practice recommendations reported in Ärzteblatt (May 2026); observations, not measured results', a);
+}
+
+HC.scene({
+  key: 'scene-06',
+  duration: 44,
+  draw(t, k) {
+    background(0.12);
+    streams(t, k.seg(t, 0, 1.0, 0.3), k);
+    campus(t, k.seg(t, 1, 0.4, 0.3), k);
+    adapt(t, window4(t, k.at(2) - 0.5, k.at(2) + 0.5, 99, 100), k);
+  },
+});
+</script>
+</body>
+</html>
