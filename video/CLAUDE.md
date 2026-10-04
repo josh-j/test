@@ -58,3 +58,18 @@ For anything beyond simple canvas drawing, build scenes on `scenes/lib/motion.js
 Style rules learned the hard way: keep the frame moving (camera drift, staggered builds, transitions
 that carry shapes into the next beat), use few words in big type, put sources in small text, and
 put a sound cue on every cut.
+
+## Narration exactness and review tools
+
+- **Word timings:** `NODE_USE_ENV_PROXY=1 PREFIX=ptb node narration/align-words.mjs 1 2 …` transcribes each
+  paragraph on its own (Whisper, word timestamps) into `<prefix>-XX.words.json`; bundle them into
+  `scenes/lib/words.js` and cue animation on exact words (`w('phrase')` / `we('phrase')` in
+  `scenes/pass-the-blame-v2.html`). Numbers come back as digits ("2035", "94") and US spelling ("theater").
+- **TTS ad-libs:** text-to-speech sometimes reads the next paragraph early. Diff the word list against the
+  script before building; cut any extra words with `python3 narration/cut-adlibs.py <chapter>:<paragraph>`,
+  which trims the audio at the end of the paragraph's last scripted word and shifts the sidecars.
+- **Stills:** `node tools/stills.mjs scenes/x.html "?ch=2&lo=1" out/stills cuts` renders one still per shot
+  (or pass times); `montage` them into a contact sheet and look before any long render.
+- **3D dioramas (v2):** `scenes/lib/ptb2/` = `kit.js` (renderer, bloom + tilt-shift post, palette, instanced
+  foliage, people, cars), `island.js` (the main world) and `sets.js` (close-up studio sets). Pages need an
+  importmap for `three` and `three/addons/`. `?lo=1` renders the 3D at half size for drafts.

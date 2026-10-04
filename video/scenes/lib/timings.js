@@ -3,17 +3,17 @@ window.TIMINGS = {
  "ptb-01": [
   {
    "start": 0,
-   "end": 20.8,
+   "end": 16.37,
    "text": "Germany's hospitals say they're underfunded. The insurers say hospitals cost too much. Surgeons say the prices ignore what surgery really takes. The states say Berlin is meddling. Berlin says the system has too many beds and too little reform."
   },
   {
-   "start": 21.8,
-   "end": 26.45,
+   "start": 17.37,
+   "end": 22.02,
    "text": "Everyone feels the pressure. Everyone points somewhere else."
   },
   {
-   "start": 27.95,
-   "end": 37.25,
+   "start": 23.52,
+   "end": 32.82,
    "text": "To find out who's right, we'll follow one small operation through the whole machine — and see where the blame finally lands."
   }
  ],
@@ -145,17 +145,17 @@ window.TIMINGS = {
   },
   {
    "start": 31.35,
-   "end": 44.1,
+   "end": 41.35,
    "text": "Berlin points to the states. The states point to Berlin. Both point to the negotiators. The negotiators point to the law."
   },
   {
-   "start": 45.3,
-   "end": 67.55,
+   "start": 42.55,
+   "end": 64.8,
    "text": "Step back and you see why. The money for buildings and the money for treatment come through different pipes. Rules come from one capital, planning from another, prices from a table where no side can decide alone. No one owns a patient's whole journey — from the doctor's practice, to the operating theatre, to the bed at home."
   },
   {
-   "start": 68.75,
-   "end": 74.05,
+   "start": 66,
+   "end": 71.3,
    "text": "In a machine like this, blame never has to land anywhere."
   }
  ],
@@ -177,17 +177,17 @@ window.TIMINGS = {
   },
   {
    "start": 34.2,
-   "end": 59.15,
+   "end": 54.7,
    "text": "And some of it is choices — which means it can change. A price that pays nothing for training or for the hardest cases. A readiness payment that moves money rather than adding it. Buildings the states pay for only in part. Rules that for years made the night in hospital the default."
   },
   {
-   "start": 60.35,
-   "end": 83,
+   "start": 55.9,
+   "end": 73.16,
    "text": "The direction — sending more patients safely home — is right. The pressure is real. But blame is the easy part. The harder question is ownership: who will be responsible for the whole journey, and be judged by what happens to the patient in that home?"
   },
   {
-   "start": 84.2,
-   "end": 88.8,
+   "start": 74.36,
+   "end": 78.96,
    "text": "Until someone owns that, everyone will keep pointing."
   }
  ],

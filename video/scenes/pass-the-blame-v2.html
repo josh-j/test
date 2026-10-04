@@ -1,0 +1,755 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Pass the Blame</title>
+<link rel="stylesheet" href="lib/motion.css">
+<script type="importmap">{"imports":{"three":"../node_modules/three/build/three.module.js","three/addons/":"../node_modules/three/examples/jsm/"}}</script>
+<style>
+  #stage { background: #0b1626; }
+  #gl { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  #finish { background: radial-gradient(ellipse at center, rgba(0,0,0,0) 58%, rgba(5,10,20,0.45) 100%); }
+  #grain { opacity: 0.045; }
+
+  /* soft data: frosted glass cards, calm navy/teal, clean numerals */
+  .card { position: absolute; padding: 22px 28px; border-radius: 20px; color: #eaf4f6; font-family: var(--sans);
+          background: rgba(14, 30, 46, 0.62); border: 1px solid rgba(150, 215, 225, 0.22);
+          backdrop-filter: blur(12px); box-shadow: 0 10px 40px rgba(0,0,0,0.25); visibility: hidden; }
+  .card .k { font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(160, 225, 230, 0.75); font-weight: 600; }
+  .card .v { font-size: 64px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; margin-top: 6px; font-variant-numeric: tabular-nums;
+             color: #ffffff; text-shadow: 0 0 18px rgba(127, 224, 207, 0.35); }
+  .card .v.amber { color: #ffd08a; text-shadow: 0 0 18px rgba(246, 181, 91, 0.4); }
+  .card .v.coral { color: #ffb4a3; text-shadow: 0 0 18px rgba(255, 138, 115, 0.4); }
+  .card .s { font-size: 21px; color: rgba(234, 244, 246, 0.72); margin-top: 6px; line-height: 1.35; }
+  .card .src { font-size: 14px; color: rgba(234, 244, 246, 0.42); margin-top: 10px; letter-spacing: 0.02em; }
+  .pill { position: absolute; padding: 10px 18px; border-radius: 999px; white-space: nowrap;
+          background: rgba(14, 30, 46, 0.72); border: 1px solid rgba(255, 160, 140, 0.45); color: #ffe3dc;
+          font-family: var(--sans); font-weight: 500; font-size: 24px; visibility: hidden; backdrop-filter: blur(8px); }
+  .pill b { color: #ffb4a3; font-weight: 600; }
+  .lbl { position: absolute; font-family: var(--sans); font-weight: 600; font-size: 17px; letter-spacing: 0.14em;
+         text-transform: uppercase; color: rgba(244, 248, 250, 0.95); text-shadow: 0 1px 8px rgba(0,0,0,0.85); visibility: hidden; white-space: nowrap; }
+  #chapter { position: absolute; left: 96px; top: 84px; visibility: hidden; }
+  #chapter .n { text-shadow: 0 1px 10px rgba(0,0,0,0.55); font-family: var(--sans); font-weight: 600; font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(160, 225, 230, 0.85); }
+  #chapter .q { font-family: var(--serif); font-weight: 400; font-size: 64px; letter-spacing: -0.015em; color: #fff; margin-top: 10px;
+                text-shadow: 0 2px 20px rgba(0,0,0,0.5); max-width: 1200px; line-height: 1.05; }
+  #title { position: absolute; left: 50%; top: 42%; text-align: center; visibility: hidden; }
+  #title .t { font-family: var(--serif); font-weight: 300; font-size: 150px; letter-spacing: -0.03em; color: #fff; text-shadow: 0 4px 40px rgba(0,0,0,0.5); }
+  #title .st { font-family: var(--sans); font-size: 26px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255, 190, 170, 0.9); margin-top: 8px; }
+  /* age grid */
+  .grid100 { display: grid; grid-template-columns: repeat(10, 18px); gap: 7px; margin-top: 14px; }
+  .grid100 i { width: 18px; height: 18px; border-radius: 50%; background: rgba(160, 225, 230, 0.25); display: block; }
+  .grid100 i.on { background: #ffd08a; box-shadow: 0 0 8px rgba(246, 181, 91, 0.6); }
+  .bars .row { display: flex; align-items: center; gap: 14px; margin-top: 12px; font-size: 22px; }
+  .bars .row span:first-child { width: 120px; color: rgba(234, 244, 246, 0.8); }
+  .bars .bar { height: 16px; border-radius: 8px; background: #7fe0cf; transform-origin: 0 50%; }
+  .bars .bar.amber { background: #f6b55b; }
+  .bars .num { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+  #gl { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  #dip { position: absolute; inset: 0; background: #0b1424; opacity: 0; pointer-events: none; }
+  /* pressure meter: big, plain, labelled */
+  #meter { position: absolute; right: 80px; top: 72px; width: 500px; padding: 22px 26px 18px; border-radius: 20px; visibility: hidden;
+           background: rgba(12, 24, 38, 0.74); border: 1px solid rgba(150, 215, 225, 0.25); backdrop-filter: blur(12px); font-family: var(--sans); color: #eaf4f6; }
+  #meter .mk { display: flex; justify-content: space-between; align-items: baseline; }
+  #meter .mk span:first-child { font-size: 20px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: rgba(160, 225, 230, 0.85); }
+  #meter .lv { font-size: 34px; font-weight: 700; letter-spacing: -0.01em; }
+  #meter .segs { display: flex; gap: 6px; margin-top: 14px; }
+  #meter .segs i { flex: 1; height: 30px; border-radius: 6px; background: rgba(160, 225, 230, 0.13); display: block; }
+  #meter .scale { display: flex; justify-content: space-between; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(234, 244, 246, 0.45); margin-top: 6px; }
+  #meter ul { list-style: none; margin: 12px 0 0; padding: 0; }
+  #meter li { font-size: 22px; line-height: 1.5; color: rgba(234, 244, 246, 0.9); visibility: hidden; }
+  #meter li::before { content: '▲'; font-size: 13px; color: #ffb4a3; margin-right: 12px; position: relative; top: -3px; }
+  /* data labels pinned to 3D bars */
+  .dl { position: absolute; text-align: center; font-family: var(--sans); color: #fff; visibility: hidden; white-space: nowrap; text-shadow: 0 2px 12px rgba(0,0,0,0.6); }
+  .dl .n { font-size: 44px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .dl .c { font-size: 17px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(234, 244, 246, 0.75); margin-top: 2px; }
+  .dl.amber .n { color: #ffd08a; } .dl.coral .n { color: #ffb4a3; } .dl.teal .n { color: #9ff0e0; }
+  .vlayer { position: absolute; left: 96px; width: 600px; padding: 20px 26px; border-radius: 20px; visibility: hidden;
+           background: rgba(14, 30, 46, 0.72); border: 1px solid rgba(150, 215, 225, 0.22); backdrop-filter: blur(12px); font-family: var(--sans); color: #eaf4f6; }
+  .vlayer .n { font-size: 18px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; }
+  .vlayer .h { font-family: var(--serif); font-size: 44px; margin-top: 6px; }
+  .vlayer .s { font-size: 21px; color: rgba(234, 244, 246, 0.72); margin-top: 6px; line-height: 1.4; }
+  .vlayer ol { margin: 8px 0 0; padding-left: 26px; font-size: 21px; line-height: 1.5; color: rgba(234, 244, 246, 0.85); }
+  .vlayer ol li { visibility: hidden; }
+
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1920" height="1080"></canvas>
+  <div id="ui"></div>
+  <div id="dip"></div>
+</div>
+<script src="../node_modules/gsap/dist/gsap.min.js"></script>
+<script src="../node_modules/gsap/dist/SplitText.min.js"></script>
+<script src="../node_modules/gsap/dist/MorphSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/DrawSVGPlugin.min.js"></script>
+<script src="../node_modules/gsap/dist/CustomEase.min.js"></script>
+<script src="lib/timings.js"></script>
+<script src="lib/words.js"></script>
+<script src="lib/motion.js"></script>
+<script type="module">
+// "Pass the Blame" v2: the island diorama plus close-up sets, cut on exact narration words.
+// ?ch=1..9 picks the chapter; &lo=1 renders the 3D at half resolution for drafts.
+import { THREE, createRenderer, createPost } from './lib/ptb2/kit.js';
+import { createIsland } from './lib/ptb2/island.js';
+import { peopleSet, barsSet, salarySet, coinsSet, roomSet, pingpongSet, factorySet, wardSet, layersSet } from './lib/ptb2/sets.js';
+
+const Q = new URLSearchParams(location.search);
+const CH = Number(Q.get('ch') ?? 1);
+const LO = Q.get('lo') ? 0.5 : 1;                 // draft: render the 3D at half resolution
+const RW = 1920 * LO, RH = 1080 * LO;
+const { renderer, envMap } = createRenderer(document.getElementById('gl'), RW, RH);
+const post = createPost(renderer, RW, RH);
+const I = createIsland(envMap);
+const ui = document.getElementById('ui');
+
+// ---------- sets (built on first use) and the cut list ----------
+const SETS = { island: I };
+const use = (name, make) => (SETS[name] ??= make());
+const cuts = [];                 // { t, set, dip }
+let TL;                          // the chapter timeline
+// A shot: cut to `set` at time `at`, place its camera at `from`, then move toward `to`.
+// The move lasts until the next cut unless `dur` is given.
+function shot(set, at, from, to = null, { dur = null, ease = 'sine.inOut', dip = true, cue = true } = {}) {
+  cuts.push({ t: at, set, dip, from, to, dur, ease });
+  if (cue && at > 0.05) M.cue(at, 'whoosh', 0.28);
+}
+function finishShots() {
+  cuts.sort((a, b) => a.t - b.t);
+  cuts.forEach((c, i) => {
+    const next = cuts[i + 1]?.t ?? DURATION;
+    TL.set(c.set.rig, { ...c.from }, c.t);
+    if (c.to) TL.to(c.set.rig, { ...c.to, duration: Math.min(c.dur ?? 1e9, next - c.t), ease: c.ease }, c.t);
+  });
+}
+
+// ---------- DOM helpers ----------
+const html = (s) => { const d = document.createElement('div'); d.innerHTML = s.trim(); const el = d.firstElementChild; ui.appendChild(el); return el; };
+const card = (id, x, y, k, v, s = '', src = '', cls = '', w = 420) =>
+  html(`<div class="card" id="${id}" style="left:${x}px; top:${y}px; width:${w}px"><div class="k">${k}</div><div class="v ${cls}">${v}</div>${s ? `<div class="s">${s}</div>` : ''}${src ? `<div class="src">${src}</div>` : ''}</div>`);
+const pins = [];
+// Pin an element to a 3D point of a set (shown only while that set is on screen).
+function pinTo(el, set, at, { ax = -50, ay = -100 } = {}) { gsap.set(el, { xPercent: ax, yPercent: ay }); pins.push({ el, set, at }); return el; }
+const isl = (b, dy) => () => I.screen(b, dy).clone();
+const pill = (id, set, at, text) => pinTo(html(`<div class="pill" id="${id}">${text}</div>`), set, at);
+const label = (id, set, at, text) => pinTo(html(`<div class="lbl" id="${id}">${text}</div>`), set, at);
+const dataLabel = (id, set, at, n, c, cls = '') => pinTo(html(`<div class="dl ${cls}" id="${id}"><div class="n">${n}</div><div class="c">${c}</div></div>`), set, at);
+const chapterCard = (n, q) => html(`<div id="chapter"><div class="n">${n}</div><div class="q">${q}</div></div>`);
+function showChapter(tl, at = 0.4, out = 4.0) {
+  M.fadeIn(tl, '#chapter', at, { y: 20, dur: 0.8 }); M.cue(at, 'swell', 0.5);
+  tl.to('#chapter', { autoAlpha: 0, y: -10, duration: 0.6 }, out);
+}
+const show = (tl, sel, at, out = null, opts = {}) => {
+  M.fadeIn(tl, sel, at, { y: 16, dur: 0.6, ...opts }); M.cue(at, 'pop', 0.4);
+  if (out !== null) tl.to(sel, { autoAlpha: 0, y: -8, duration: 0.45 }, out);
+};
+const hide = (tl, sel, at) => tl.to(sel, { autoAlpha: 0, duration: 0.4 }, at);
+const beamTo = (tl, name, at, dur = 0.9) => { const p = I.B_POS(name); tl.to(I.beam, { x: p.x, z: p.z, duration: dur, ease: 'power3.inOut' }, at); M.cue(at, 'whoosh', 0.3); };
+const S = (name, over = {}) => ({ ...I.SHOTS[name], ...over });
+
+// ---------- the pressure meter ----------
+function meterEl(drivers) {
+  return html(`<div id="meter"><div class="mk"><span>Pressure</span><span class="lv" id="mLv">Low</span></div>
+    <div class="segs">${'<i></i>'.repeat(12)}</div><div class="scale"><span>Low</span><span>High</span></div>
+    <ul>${drivers.map((d, i) => `<li data-i="${i}">${d}</li>`).join('')}</ul></div>`);
+}
+const SEG_COL = (i) => (i < 4 ? '#7fe0cf' : i < 8 ? '#f6b55b' : '#ff8a73');
+const meterState = { v: 0 };
+function paintMeter() {
+  const n = Math.round(meterState.v * 12);
+  document.querySelectorAll('#meter .segs i').forEach((el, i) => { el.style.background = i < n ? SEG_COL(i) : ''; el.style.boxShadow = i < n ? `0 0 12px ${SEG_COL(i)}66` : ''; });
+  const lv = document.getElementById('mLv'); if (!lv) return;
+  const v = meterState.v; lv.textContent = v < 0.34 ? 'Low' : v < 0.5 ? 'Rising' : v < 0.75 ? 'High' : 'Very high';
+  lv.style.color = SEG_COL(Math.max(0, n - 1));
+}
+const meter = (tl, at, v, dur = 1.4) => tl.to(meterState, { v, duration: dur, ease: 'power2.inOut', onUpdate: paintMeter }, at);
+
+// ---------- narration: exact word times ----------
+let K, VOICE_AT, WORDS;
+const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+// Grow bar `key` of a bars set from `from`, landing exactly at `land` (just after its number is spoken).
+const grow = (set, key, from, land) => TL.to(set.state, { [key]: 1, duration: Math.max(0.4, land - from), ease: 'power2.out' }, from);
+const FT = (tl, target, from, to, at) => { tl.set(target, from, at); tl.to(target, to, at); };
+function find(phrase, after) {
+  const toks = phrase.split(/\s+/).map(norm).filter(Boolean);
+  for (let i = 0; i < WORDS.length; i++) {
+    if (VOICE_AT + WORDS[i].start < after - 1e-6) continue;
+    if (toks.every((t, j) => WORDS[i + j] && norm(WORDS[i + j].w) === t)) return [VOICE_AT + WORDS[i].start, VOICE_AT + WORDS[i + toks.length - 1].end];
+  }
+  throw new Error(`phrase not found in narration: "${phrase}"`);
+}
+const w = (phrase, after = 0) => find(phrase, after)[0];      // when the phrase starts
+const we = (phrase, after = 0) => find(phrase, after)[1];     // when its last word ends
+
+// ---------- continuity: island state at the start of each chapter ----------
+function baseState(ch) {
+  const s = I.state;
+  s.day = [1, 1, 1, 0.95, 0.85, 0.7, 0.5, 0.35, 0.08, 0][ch];
+  s.pipeTreat = ch >= 5 ? 1 : 0; s.pipeBuild = ch >= 6 ? 1 : 0; s.buildFill = ch >= 6 ? 0.45 : 1;
+  s.factory = ch >= 3 ? 0.35 : 1; s.hospLit = ch >= 5 ? 0.34 : 1; s.decisions = ch >= 8 ? 1 : 0;
+  s.homeLit = ch >= 9 ? 1 : 0; s.whole = ch >= 9 ? 1 : 0; s.tokens = 0; s.journey = -1; s.ambulance = -1;
+  I.beam.on = 0;
+}
+
+// =====================================================================================
+const CHAPTERS = {
+  // ---------------------------------------------------------------- cold open
+  1: { voiceAt: 2.2, tail: 5.5, build(tl) {
+    baseState(1);
+    const ward = use('ward', () => wardSet(envMap));
+    shot(I, 0, S('high', { dist: 92, angle: 0.7 }), S('wide', { dist: 60, angle: 1.0 }), { ease: 'power2.out', dip: false });
+    M.cue(0.2, 'swell', 0.8);
+    // each side, in its own place, says who is to blame
+    const hosp = w("Germany's hospitals");
+    shot(I, hosp - 0.35, S('hospital', { dist: 26, angle: 1.3 }), { dist: 21, angle: 1.45 });
+    tl.set(I.beam, { x: I.B_POS('hospital').x, z: I.B_POS('hospital').z }, 0);
+    tl.to(I.beam, { on: 1, duration: 0.6 }, hosp - 0.35);
+    pill('p0', I, isl('hospital', 5.6), 'Hospitals: <b>underfunded</b>'); M.pop(tl, '#p0', hosp + 0.3, { cue: null });
+    const ins = w('The insurers say');
+    shot(I, ins - 0.25, S('insurers', { dist: 28, tilt: 0.2 }), { dist: 23, tilt: 0.3 }); beamTo(tl, 'insurers', ins - 0.25, 0.01);
+    pill('p1', I, isl('insurers', 7.6), 'Insurers: <b>hospitals cost too much</b>'); M.pop(tl, '#p1', ins + 0.3, { cue: null });
+    const sur = w('Surgeons say');
+    tl.set(ward.state, { surgery: 1, night: 0.2 }, 0);
+    shot(ward, sur - 0.25, { angle: 1.62, tilt: 0.08, dist: 9, tx: 0, ty: 2.8, tz: 0, fov: 30 }, { angle: 1.5, dist: 8 });
+    pill('p2', ward, () => ward.anchor('theatre').setY(3.55), 'Surgeons: <b>prices ignore what surgery takes</b>'); M.pop(tl, '#p2', sur + 0.3, { cue: null });
+    const sts = w('The states say');
+    shot(I, sts - 0.25, S('state', { dist: 24, angle: 1.2 }), { dist: 20, angle: 1.38 }); beamTo(tl, 'state', sts - 0.25, 0.01);
+    pill('p3', I, isl('state', 5.0), 'States: <b>Berlin is meddling</b>'); M.pop(tl, '#p3', sts + 0.3, { cue: null });
+    const ber = w('Berlin says');
+    shot(I, ber - 0.2, S('berlin', { dist: 25, angle: 2.15 }), { dist: 20.5, angle: 1.95 }); beamTo(tl, 'berlin', ber - 0.2, 0.01);
+    pill('p4', I, isl('berlin', 4.6), 'Berlin: <b>too many beds, too little reform</b>'); M.pop(tl, '#p4', ber + 0.3, { cue: null });
+    hide(tl, '#p0', ins - 0.25); hide(tl, '#p1', sur - 0.25); hide(tl, '#p3', ber - 0.2);
+    // everyone points: the beam whips round the island
+    const ev = w('Everyone feels');
+    shot(I, ev - 0.3, S('high', { dist: 58, angle: 0.9 }), { dist: 66, angle: 1.35 });
+    ['state', 'insurers', 'hospital', 'berlin', 'practice', 'insurers', 'state', 'hospital', 'table'].forEach((b, i) => beamTo(tl, b, w('Everyone points') - 0.2 + i * 0.36, 0.32));
+    tl.to(I.beam, { on: 0, duration: 0.8 }, K.end(1) + 0.2);
+    // follow one operation: a low tracking shot of one patient on the road
+    const fo = w('To find out');
+    FT(tl, I.state, { journey: 0.02 }, { journey: 0.3, duration: K.end(2) + 6 - fo, ease: 'none' }, fo - 0.5);
+    shot(I, fo - 0.5, { angle: 1.9, tilt: 0.32, dist: 7.5, tx: 8, ty: 0.6, tz: 6.4, fov: 30, follow: 1 }, { angle: 1.55, dist: 8.5 });
+    tl.set(I.rig, { follow: 0 }, K.end(2) + 0.6);
+    // title over the island
+    shot(I, K.end(2) + 0.6, S('wide', { dist: 46, angle: 1.3, tilt: 0.42 }), { dist: 54, angle: 1.15, tilt: 0.5 });
+    html(`<div id="scrim" style="position:absolute; inset:0; background:radial-gradient(60% 45% at 50% 42%, rgba(8,16,28,0.62), rgba(8,16,28,0) 100%); visibility:hidden"></div>`);
+    M.fadeIn(tl, '#scrim', K.end(2) + 0.7, { y: 0, dur: 1.2 });
+    html(`<div id="title"><div class="t">Pass the Blame</div><div class="st">Germany · healthcare · 2026</div></div>`);
+    gsap.set('#title', { xPercent: -50, yPercent: -50 });
+    M.fadeIn(tl, '#title', K.end(2) + 0.9, { y: 20, dur: 1.1 }); M.cue(K.end(2) + 0.9, 'hit', 0.7);
+    tl.to(['.pill'], { autoAlpha: 0, duration: 0.01 }, ev - 0.3);
+  } },
+
+  // ---------------------------------------------------------------- 1 · the pressure
+  2: { voiceAt: 2.0, build(tl) {
+    baseState(2);
+    chapterCard('Chapter 1 · The pressure', 'Why is everyone under pressure?'); showChapter(tl, 0.4, w('One German') - 1.0);
+    shot(I, 0, S('wide', { dist: 50, angle: 0.95, tilt: 0.5 }), { dist: 56, angle: 1.25, tilt: 0.58 }, { dip: false });
+    meterEl(['Ageing population', 'Costs growing faster than income', 'Economy barely growing']);
+    M.fadeIn(tl, '#meter', w('nobody chose') - 0.2, { y: 10 }); meter(tl, w('nobody chose'), 0.25);
+    // 100 people: one in five aged 67+, then one in four
+    const pe = use('people', () => peopleSet(envMap));
+    const g = w('One German');
+    tl.set(pe.state, { pop: 0, aged: 0 }, 0);
+    tl.to(pe.state, { pop: 1, duration: 1.6, ease: 'power2.out' }, g - 0.3);
+    tl.to(pe.state, { aged: 20, duration: 1.0, ease: 'none' }, w('67') - 0.1);
+    tl.to(pe.state, { aged: 25, duration: 0.8, ease: 'none' }, w('2035'));
+    shot(pe, g - 0.3, { angle: 1.1, tilt: 0.9, dist: 25, tx: 0, ty: 0, tz: 0.4, fov: 30 }, { angle: 1.45, tilt: 0.55, dist: 21.5 });
+    card('cAge', 96, 300, 'Aged 67 or over', '<span style="display:grid"><span id="ageA" style="grid-area:1/1">1 in 5 · 2024</span><span id="ageB" style="grid-area:1/1; visibility:hidden">1 in 4 · 2035</span></span>', 'of every 100 Germans (2035: projected)', 'Destatis projection, Dec 2025', 'amber', 420);
+    show(tl, '#cAge', w('67') - 0.2);
+    tl.to('#ageA', { autoAlpha: 0, duration: 0.3 }, w('2035') + 0.5); tl.to('#ageB', { autoAlpha: 1, duration: 0.3 }, w('2035') + 0.6);
+    M.cue(w('2035') + 0.6, 'tick', 0.5);
+    M.fadeIn(tl, '#meter li[data-i="0"]', w('More patients'), { y: 6 }); meter(tl, w('More patients'), 0.4);
+    hide(tl, '#cAge', w('Health already') - 0.3);
+    // €538bn: coins, one coin = €1bn
+    const co = use('spend', () => coinsSet(envMap, { value: 538, perStack: 30, cols: 6, coin: 0.36 }));
+    const ha = w('Health already');
+    tl.set(co.state, { fill: 0 }, 0); tl.to(co.state, { fill: 1, duration: 2.6, ease: 'power1.inOut' }, ha);
+    shot(co, ha - 0.25, { angle: 1.0, tilt: 0.42, dist: 21, tx: 0, ty: 1.5, tz: 0, fov: 30 }, { angle: 1.3, tilt: 0.34, dist: 23 });
+    card('cSpend', 96, 300, 'Health spending · 2024', '€538bn', 'a year · 12.4% of GDP', 'Destatis · each coin = €1bn', '', 380);
+    show(tl, '#cSpend', w('500 billion') - 0.2);
+    hide(tl, '#cSpend', w('Contributions') - 0.3);
+    // 42% of a salary
+    const sa = use('salary', () => salarySet(envMap));
+    const ct = w('Contributions');
+    tl.set(sa.state, { split: 0, spin: -0.4 }, 0);
+    tl.to(sa.state, { spin: 0.3, duration: 9, ease: 'none' }, ct - 0.3);
+    tl.to(sa.state, { split: 1, duration: 1.4, ease: 'back.out(1.4)' }, w('42') - 0.1); M.cue(w('42') - 0.1, 'pop', 0.6);
+    shot(sa, ct - 0.3, { angle: 1.2, tilt: 0.75, dist: 14, tx: 0, ty: 0.4, tz: 0, fov: 30 }, { angle: 1.45, tilt: 0.55, dist: 12.5 });
+    dataLabel('dSal', sa, () => sa.anchor('wedge'), '≈42%', 'health · pensions · care · unemployment', 'amber');
+    show(tl, '#dSal', w('42') + 0.6);
+    hide(tl, '#dSal', w('This year') - 0.3);
+    card('cRates', 96, 300, 'Social contributions · 2026', '≈42%', 'of a typical gross salary, employee + employer shares together', '2026 contribution rates', 'amber', 380);
+    show(tl, '#cRates', w('typical salary') - 0.2, w('This year') - 0.3);
+    // insurers: spending +7.1% vs income +4.1%
+    const gp = use('gap', () => barsSet(envMap, { bars: [{ v: 7.1, color: 0xf6b55b }, { v: 4.1, color: 0x7fe0cf }], max: 8, height: 4.2, width: 1.7, gap: 1.6 }));
+    const ty = w('This year');
+    shot(gp, ty - 0.3, { angle: 1.2, tilt: 0.2, dist: 13, tx: 0, ty: 1.9, tz: 0, fov: 30 }, { angle: 1.6, tilt: 0.14, dist: 11.5 });
+    grow(gp, 'b0', ty - 0.15, w('spending grew') + 0.5); grow(gp, 'b1', w('spending grew') + 0.4, w('their income') + 0.5);
+    dataLabel('dSp', gp, () => gp.anchor('bar0'), '+7.1%', 'spending', 'amber'); dataLabel('dIn', gp, () => gp.anchor('bar1'), '+4.1%', 'income', 'teal');
+    show(tl, '#dSp', w('spending grew') + 0.6); show(tl, '#dIn', w('their income') + 0.6);
+    card('cGap', 96, 300, 'Public insurers · H1 2026', 'A widening gap', 'projected shortfall without action: €19bn in 2027, €44bn in 2030. A law to close it passed in July 2026.', 'BMG', 'coral', 420);
+    show(tl, '#cGap', w('Without action') - 0.2);
+    M.fadeIn(tl, '#meter li[data-i="1"]', w('their income') + 0.4, { y: 6 }); meter(tl, w('their income') + 0.4, 0.55);
+    hide(tl, '#cGap', w('And the economy') - 0.3);
+    // the economy: the line slows
+    const fa = use('factory', () => factorySet(envMap));
+    const ec = w('And the economy');
+    tl.set(fa.state, { travel: 0, lit: 1, smoke: 1 }, 0);
+    tl.to(fa.state, { travel: 6, duration: w('three years') - ec + 0.3, ease: 'power2.out' }, ec - 0.3);
+    tl.to(fa.state, { lit: 0.35, smoke: 0.3, duration: 1.2 }, w('stalled') - 0.2);
+    shot(fa, ec - 0.3, { angle: 1.15, tilt: 0.3, dist: 15, tx: 0, ty: 1.4, tz: 0, fov: 30 }, { angle: 1.4, tilt: 0.22, dist: 13 });
+    // GDP: three years of almost nothing, then a forecast
+    const gd = use('gdp', () => barsSet(envMap, { bars: [-0.8, 0.0, 0.2, 1.3, 1.1, 0.4].map((v, i) => ({ v: v || 0.02, color: v < 0 ? 0xff8a73 : i < 3 ? 0x7fe0cf : 0xbfe6ef, ghost: i > 2 })), max: 1.4, height: 3.2, negative: true, width: 1.05, gap: 0.55 }));
+    const yr = w('three years');
+    shot(gd, yr - 0.3, { angle: 1.35, tilt: 0.14, dist: 17, tx: 0, ty: 2.7, tz: 0, fov: 30 }, { angle: 1.57, tilt: 0.1, dist: 15.5 });
+    [0, 1, 2].forEach((i) => tl.to(gd.state, { ['b' + i]: 1, duration: 0.8 }, yr + 0.1 + i * 0.35));
+    const GDP = [['−0.8%', '2023', 'coral'], ['0.0%', '2024', ''], ['+0.2%', '2025', 'teal'], ['+1.3%', '2026*', 'teal'], ['+1.1%', '2027*', 'teal'], ['+0.4%', '2028*', 'teal']];
+    GDP.forEach(([n, c, cls], i) => dataLabel('dG' + i, gd, () => gd.anchor('bar' + i), n, c, cls));
+    [0, 1, 2].forEach((i) => show(tl, '#dG' + i, yr + 0.4 + i * 0.35));
+    card('cGdpSrc', 96, 84, 'German GDP growth', '', '', 'Destatis · Joint Economic Forecast, Sep 2026 · *forecast', '', 520);
+    gsap.set('#cGdpSrc .v', { display: 'none' });
+    show(tl, '#cGdpSrc', yr + 0.6);
+    // energy-hungry industry and competition: back to the factory, now dim
+    const en = w('Energy hungry');
+    shot(fa, en - 0.25, { angle: 1.75, tilt: 0.2, dist: 12, tx: -1, ty: 1.2, tz: 0, fov: 30 }, { angle: 1.55, dist: 11 });
+    hide(tl, '#cGdpSrc', en - 0.25);
+    card('cEnergy', 96, 300, 'Energy-intensive industry', '−18%', 'output since 2021', 'Destatis', 'coral', 360);
+    show(tl, '#cEnergy', en + 0.2);
+    pill('pChina', fa, () => new THREE.Vector3(2.5, 3.4, 0), 'Competition: <b>Chinese factories</b>');
+    M.pop(tl, '#pChina', w('Chinese factories') - 0.1);
+    hide(tl, ['#cEnergy', '#pChina'], w('Growth is expected') - 0.3);
+    // forecast: up a little, then fading
+    const ge = w('Growth is expected');
+    shot(gd, ge - 0.3, { angle: 1.75, tilt: 0.12, dist: 15, tx: 0.8, ty: 2.7, tz: 0, fov: 30 }, { angle: 1.5, dist: 16.5 });
+    [3, 4, 5].forEach((i) => { tl.to(gd.state, { ['b' + i]: 1, duration: 0.8 }, ge + 0.3 + (i - 3) * 0.55); show(tl, '#dG' + i, ge + 0.6 + (i - 3) * 0.55); });
+    show(tl, '#cGdpSrc', ge + 0.2);
+    M.fadeIn(tl, '#meter li[data-i="2"]', ge + 2.2, { y: 6 }); meter(tl, ge + 2.2, 0.72);
+    hide(tl, '#cGdpSrc', w('Not a collapse') - 0.3);
+    // not a collapse: the island at dusk, the beam begins to look for someone
+    const nc = w('Not a collapse');
+    shot(I, nc - 0.3, S('wide', { dist: 52, angle: 1.35, tilt: 0.5 }), { dist: 47, angle: 1.05, tilt: 0.45 });
+    tl.to(I.state, { day: 0.92, duration: 5 }, nc);
+    meter(tl, w('money will be tight'), 0.8, 1.6);
+    tl.set(I.beam, { x: I.B_POS('table').x, z: I.B_POS('table').z }, 0);
+    tl.to(I.beam, { on: 1, duration: 0.6 }, w('look for someone') - 0.2);
+    ['insurers', 'hospital', 'berlin', 'state'].forEach((b, i) => beamTo(tl, b, w('look for someone') + 0.2 + i * 0.5, 0.42));
+  } },
+
+  // ---------------------------------------------------------------- 2 · one operation
+  3: { voiceAt: 2.0, build(tl) {
+    baseState(3);
+    const ward = use('ward', () => wardSet(envMap));
+    chapterCard('Chapter 2 · One operation', 'What did Germany change?'); showChapter(tl, 0.4, w('Our operation') + 1.2);
+    shot(I, 0, S('hospital', { dist: 30, angle: 1.65, tilt: 0.4 }), { dist: 24, angle: 1.45, tilt: 0.32 }, { dip: false });
+    // the operation itself, inside the theatre
+    const op = w('a groin hernia');
+    tl.set(ward.state, { night: 0, surgery: 0, overnight: 0, resident: 0, clock: 10.5 }, 0);
+    tl.to(ward.state, { surgery: 1, duration: 1.2 }, op);
+    tl.to(ward.state, { clock: 11.6, duration: 8, ease: 'none' }, op);
+    shot(ward, op - 0.3, { angle: 1.3, tilt: 0.15, dist: 12, tx: 0, ty: 2.7, tz: 0, fov: 30 }, { angle: 1.6, tilt: 0.1, dist: 9.5 });
+    label('lTheatre', ward, () => ward.anchor('theatre').setY(3.7), 'Operating theatre'); M.fadeIn(tl, '#lTheatre', op + 0.5, { y: 6 });
+    card('cOps', 96, 300, 'Groin hernia repairs', '≈250,000', 'a year in Germany', 'BDC', '', 360);
+    show(tl, '#cOps', w('Germany does') + 0.3, w('In England') - 0.3);
+    // same day: England, Sweden, Germany
+    const dc = use('daycase', () => barsSet(envMap, { bars: [{ v: 79, color: 0x7fe0cf }, { v: 80, color: 0x7fe0cf }, { v: 14, color: 0xf6b55b }], max: 90, height: 4.4, width: 1.5, gap: 1.0 }));
+    const en = w('In England');
+    shot(dc, en - 0.3, { angle: 1.25, tilt: 0.24, dist: 15, tx: 0, ty: 2.1, tz: 0, fov: 30 }, { angle: 1.6, tilt: 0.16, dist: 13.5 });
+    grow(dc, 'b0', en - 0.15, w('4 in 5') + 0.5); grow(dc, 'b1', en, w('4 in 5') + 0.6); grow(dc, 'b2', w('4 in 5') + 0.6, w('1 in 7') + 0.5);
+    dataLabel('dE', dc, () => dc.anchor('bar0'), '79%', 'England', 'teal'); dataLabel('dS', dc, () => dc.anchor('bar1'), '~80%', 'Sweden', 'teal'); dataLabel('dD', dc, () => dc.anchor('bar2'), '14%', 'Germany', 'amber');
+    show(tl, ['#dE', '#dS'], w('4 in 5') + 0.5); show(tl, '#dD', w('1 in 7') + 0.4);
+    card('cDcK', 96, 84, 'Home the same day · groin hernia', '', '', 'Joyner 2023 · Swedish Hernia Register · Herniamed 2019', '', 600); gsap.set('#cDcK .v', { display: 'none' });
+    show(tl, '#cDcK', en + 0.4, w('partly because') - 0.3);
+    // the overnight default: the ward fills, the clock runs through the night
+    const pb = w('partly because');
+    tl.set(ward.state, { surgery: 0 }, pb - 0.3);
+    FT(tl, ward.state, { night: 0.1, clock: 18 }, { night: 0.85, clock: 23.5, duration: 4.5, ease: 'none' }, pb - 0.3);
+    FT(tl, ward.state, { overnight: 0 }, { overnight: 1, duration: 2.5, ease: 'none' }, pb);
+    shot(ward, pb - 0.3, { angle: 1.5, tilt: 0.12, dist: 10, tx: 0, ty: 4.6, tz: 0, fov: 30 }, { angle: 1.7, dist: 11.5, ty: 4.4 });
+    label('lWard', ward, () => ward.anchor('ward').setY(5.45), 'Ward · one night'); M.fadeIn(tl, '#lWard', pb + 0.4, { y: 6 });
+    card('cBeds', 96, 300, 'Hospital beds per 100,000', '759', 'Germany, vs EU average 507 (2024)', 'Eurostat', '', 360);
+    show(tl, '#cBeds', w('the default') - 0.2, w('For most patients') - 0.3);
+    // most can go home: patients walk down the road
+    const fm = w('For most patients');
+    tl.set(I.state, { tokens: 0 }, 0); tl.to(I.state, { tokens: 0.62, duration: K.end(1) - fm + 1.5, ease: 'none' }, fm - 0.3);
+    shot(I, fm - 0.3, S('road', { dist: 26, angle: 1.15, tilt: 0.36 }), { dist: 22, angle: 1.4, tilt: 0.3 });
+    label('lHome', I, isl('home', 2.4), 'Home'); label('lHosp', I, isl('hospital', 5.2), 'Hospital');
+    M.fadeIn(tl, ['#lHome', '#lHosp'], fm + 0.4, { y: 6 });
+    // one price, either way
+    const sf = w('So from');
+    shot(I, sf - 0.3, S('wide', { dist: 34, angle: 1.3, tilt: 0.42, tx: 2, tz: 5 }), { dist: 30, angle: 1.45 });
+    pill('pPrice', I, () => new THREE.Vector3(2, 4.6, 5.2), 'One price · <b>home or overnight</b>');
+    M.pop(tl, '#pPrice', w('one price') - 0.1);
+    card('cPrice', 96, 300, '2026 · simple repair', '€2,082.60', 'same price, home the same day or after one night. Complex variants up to €3,639.', 'Hybrid-DRG G24Q · KBV', 'amber', 420);
+    show(tl, '#cPrice', w('For a simple') - 0.2);
+    tl.to(I.state, { tokens: 1, duration: 6, ease: 'none' }, sf);
+    hide(tl, ['#cPrice', '#pPrice', '#lHome', '#lHosp'], w('a sensible fix') - 0.3);
+    // and yet: the table, everyone unhappy
+    const rm = use('room', () => roomSet(envMap));
+    const sx = w('a sensible fix');
+    tl.set(rm.state, { argue: 0, law: 0, arbiter: 0, slump: 0 }, 0);
+    tl.to(rm.state, { slump: 1, duration: 1.4 }, w('unhappy') - 0.4);
+    shot(rm, sx - 0.3, { angle: 1.0, tilt: 0.7, dist: 17, tx: 0, ty: 1.2, tz: 0, fov: 30 }, { angle: 1.3, tilt: 0.5, dist: 13.5 });
+    [['lI', 'insurers', 'Insurers'], ['lHo', 'hospitals', 'Hospitals'], ['lDo', 'doctors', 'Doctors']].forEach(([id, n, t]) => label(id, rm, () => rm.anchor(n), t));
+    M.fadeIn(tl, ['#lI', '#lHo', '#lDo'], sx + 0.4, { y: 6 });
+  } },
+
+  // ---------------------------------------------------------------- 3 · the insurers
+  4: { voiceAt: 2.0, build(tl) {
+    baseState(4);
+    chapterCard('Chapter 3 · The insurers', '“It\'s costing us more.”'); showChapter(tl, 0.4, w('The insurers point') + 1.4);
+    shot(I, 0, S('insurers', { dist: 30, angle: 0.75, tilt: 0.36 }), { dist: 24, angle: 0.95, tilt: 0.28 }, { dip: false });
+    tl.set(I.beam, { x: I.B_POS('insurers').x, z: I.B_POS('insurers').z }, 0); tl.to(I.beam, { on: 1, duration: 0.8 }, 1.0); M.cue(1.0, 'whoosh', 0.4);
+    // the money: amber pipes from the insurers
+    const tb = w('point at the bill');
+    shot(I, w('Their own research') - 0.3, S('wide', { dist: 36, angle: 0.75, tilt: 0.5, tx: 3, tz: -1 }), { dist: 32, angle: 1.0 });
+    tl.to(I.state, { pipeTreat: 1, duration: 3, ease: 'power2.inOut' }, w('Their own research') - 0.2);
+    label('lAmber', I, () => new THREE.Vector3(3.5, 6.2, -0.6), 'Treatment money'); M.fadeIn(tl, '#lAmber', w('Their own research') + 1.6, { y: 6 });
+    void tb;
+    // +€360m: one coin = €1m
+    const co = use('extra', () => coinsSet(envMap, { value: 360, perStack: 30, cols: 6, coin: 0.36 }));
+    const th = w('360');
+    tl.set(co.state, { fill: 0 }, 0); tl.to(co.state, { fill: 1, duration: 2.4, ease: 'power1.inOut' }, th - 0.1);
+    shot(co, th - 0.6, { angle: 1.1, tilt: 0.45, dist: 19, tx: 0, ty: 1.4, tz: 0, fov: 30 }, { angle: 1.4, tilt: 0.36, dist: 21 });
+    html(`<div class="card" id="cBill" style="left:96px; top:300px; width:430px"><div class="k">Same-price operations · 2025</div><div class="v coral" id="billV">+€0m</div>
+      <div class="s">more insurer spending, after inflation</div><div class="src">WIdO, the AOK insurers' research institute · Sep 2026 · each coin = €1m</div></div>`);
+    show(tl, '#cBill', th - 0.4);
+    M.countUp(tl, '#billV', 0, 360, th - 0.1, { dur: 2.4, fmt: (v) => `+€${Math.round(v)}m` }); M.cue(th + 2.3, 'hit', 0.6);
+    hide(tl, '#cBill', w('The price blended') - 0.3);
+    // why 1: a blended price, so the practices' cheap operations earned more
+    const bl = w('The price blended');
+    tl.to(I.state, { treatFlow: 2.6, duration: 3 }, w('now earned more') - 0.5);
+    shot(I, bl - 0.3, S('practice', { dist: 19, angle: 0.95, tilt: 0.42, tx: 5.6, tz: 0.4 }), { dist: 16, angle: 1.15 });
+    card('cWhy1', 96, 300, 'Why · the price', 'Blended', 'old hospital rate + old outpatient rate: operations once done cheaply in practices now earn more', '', 'amber', 420);
+    show(tl, '#cWhy1', bl + 0.4);
+    label('lPr', I, isl('practice', 2.2), "Doctors' practice"); M.fadeIn(tl, '#lPr', bl + 0.6, { y: 6 });
+    // why 2: more cases
+    const cr = w('cases rose');
+    shot(I, cr - 0.3, S('road', { dist: 24, angle: 1.0, tilt: 0.34, tx: 4, tz: 4 }), { dist: 21, angle: 1.2 });
+    tl.set(I.state, { tokens: 0 }, 0); tl.to(I.state, { tokens: 0.75, duration: 5, ease: 'none' }, cr - 0.3);
+    card('cWhy2', 96, 300, 'Why · volume', '+17%', 'more cases', 'WIdO', 'amber', 300);
+    show(tl, '#cWhy2', w('17') - 0.1);
+    hide(tl, ['#cWhy1', '#cWhy2', '#lPr', '#lAmber'], w('So is it') - 0.3);
+    // not quite: the three sides at the table, and the arbitration committee
+    const rm = use('room', () => roomSet(envMap));
+    const sq = w('So is it');
+    tl.set(rm.state, { argue: 0, law: 0, arbiter: 0, slump: 0, gavel: 0 }, 0);
+    shot(rm, sq - 0.3, { angle: 1.55, tilt: 0.42, dist: 13, tx: 0, ty: 1.4, tz: 0, fov: 30 }, { angle: 1.25, tilt: 0.5, dist: 14 });
+    tl.to(rm.state, { argue: 1, duration: 1.2 }, w('negotiate them') - 0.2);
+    [['lI', 'insurers', 'Insurers'], ['lHo', 'hospitals', 'Hospitals'], ['lDo', 'doctors', 'Doctors']].forEach(([id, n, t]) => label(id, rm, () => rm.anchor(n), t));
+    M.fadeIn(tl, ['#lI', '#lHo', '#lDo'], w('Insurers don\'t') + 0.2, { y: 6 });
+    const ar = w('an arbitration');
+    shot(rm, w('This year the three') - 0.3, { angle: 1.57, tilt: 0.3, dist: 15, tx: 0, ty: 2.0, tz: -1, fov: 30 }, { angle: 1.57, tilt: 0.26, dist: 13 });
+    tl.to(rm.state, { arbiter: 1, duration: 1.4, ease: 'power2.out' }, ar - 0.4);
+    FT(tl, rm.state, { gavel: 0 }, { gavel: 1, duration: 0.45, ease: 'power2.in' }, we('decided') - 0.35); M.cue(we('decided') + 0.05, 'hit', 1);
+    label('lArb', rm, () => rm.anchor('bench'), 'Arbitration committee'); M.fadeIn(tl, '#lArb', ar + 0.6, { y: 6 });
+    card('cTable', 1340, 300, 'Who sets the price', 'Three sides', 'insurers, hospitals and doctors negotiate it. For 2026 they could not agree, so an arbitration committee decided.', 'KBV · GKV-Spitzenverband', '', 440);
+    show(tl, '#cTable', w('This year the three') + 0.2);
+    hide(tl, ['#cTable', '#lI', '#lHo', '#lDo', '#lArb'], K.at(3) - 0.3);
+    // the beam moves on
+    shot(I, K.at(3) - 0.3, S('wide', { dist: 44, angle: 0.95, tilt: 0.5 }), { dist: 48, angle: 1.3 });
+    tl.set(I.beam, { x: I.B_POS('insurers').x, z: I.B_POS('insurers').z }, K.at(3) - 0.31);
+    beamTo(tl, 'hospital', K.at(3) + 0.2, 1.6);
+  } },
+
+  // ---------------------------------------------------------------- 4 · the hospitals
+  5: { voiceAt: 2.0, build(tl) {
+    baseState(5);
+    const ward = use('ward', () => wardSet(envMap));
+    chapterCard('Chapter 4 · The hospitals', '“We\'re left with the hard cases.”'); showChapter(tl, 0.4, w('One price suits') - 0.4);
+    tl.set(I.beam, { x: I.B_POS('hospital').x, z: I.B_POS('hospital').z, on: 1 }, 0);
+    shot(I, 0, S('hospital', { dist: 28, angle: 1.25, tilt: 0.4 }), { dist: 23, angle: 1.4 }, { dip: false });
+    // sorting: simple patients go out, complex ones come back up the hill
+    const op = w('One price suits');
+    tl.set(I.state, { tokens: 0 }, 0); tl.to(I.state, { tokens: 1, duration: 9, ease: 'none' }, op - 0.3);
+    shot(I, op - 0.3, S('road', { dist: 25, angle: 1.25, tilt: 0.38 }), { dist: 21, angle: 1.45, tilt: 0.3 });
+    card('cSort', 96, 300, 'Who goes where', 'Simple → out', 'younger, healthier patients are treated elsewhere; some outpatient centres pick exactly those', 'Herniamed registry · industry commentary', '', 430);
+    show(tl, '#cSort', w('the easiest') - 0.2, w('The frail') - 0.3);
+    // the hard cases: an ambulance comes up the hill
+    const fr = w('The frail');
+    tl.set(I.state, { ambulance: -1 }, 0); FT(tl, I.state, { ambulance: 0 }, { ambulance: 1, duration: K.end(0) - fr + 1.0, ease: 'power1.inOut' }, fr - 0.4);
+    tl.to(I.state, { day: 0.7, duration: 4 }, fr);
+    shot(I, fr - 0.4, S('bridge', { dist: 15, angle: 0.65, tilt: 0.24 }), { dist: 18, angle: 1.0, tilt: 0.3, tx: -3.5, tz: 3 });
+    label('lHard', I, isl('hospital', 5.2), 'Frail · repeat · large · emergency'); M.fadeIn(tl, '#lHard', fr + 1.0, { y: 6 });
+    hide(tl, '#lHard', K.at(1) - 0.3);
+    // ready all night
+    const rn = w('ready all night');
+    tl.set(ward.state, { surgery: 0, resident: 0, overnight: 0.75, ambulance: 0, night: 0.95, clock: 2.7, er: 1, op: 0.25, ward: 0.25 }, K.at(1) - 0.31);
+    tl.to(ward.state, { clock: 3.4, duration: 12, ease: 'none' }, K.at(1) - 0.3);
+    tl.to(ward.state, { ambulance: 1, duration: 3, ease: 'power2.out' }, rn);
+    shot(ward, K.at(1) - 0.3, { angle: 1.57, tilt: 0.08, dist: 18, tx: 0, ty: 2.6, tz: 0, fov: 30 }, { angle: 1.42, tilt: 0.1, dist: 15.5 });
+    label('lEr', ward, () => ward.anchor('er').setY(1.75), 'Emergency · 3 a.m.'); M.fadeIn(tl, '#lEr', rn + 0.4, { y: 6 });
+    card('cReady', 96, 300, 'Readiness payment', 'Moved, not added', 'about 60% of case payments shifted into a fixed budget; fully in place from 2030', 'KHVVG / KHAG · AOK', '', 430);
+    show(tl, '#cReady', w('A readiness payment') + 0.3, K.at(2) - 0.3);
+    hide(tl, '#lEr', K.at(2) - 0.3);
+    // the buildings: the state's blue pipe, half full
+    const bd = w('the buildings');
+    shot(I, K.at(2) - 0.3, S('capitals', { dist: 34, angle: 1.55, tilt: 0.5, tx: -4, tz: -3 }), { dist: 30, angle: 1.75 });
+    tl.to(I.state, { pipeBuild: 1, duration: 2.6, ease: 'power2.inOut' }, bd);
+    tl.to(I.state, { buildFill: 0.45, duration: 1 }, w('about half'));
+    label('lBlue', I, () => new THREE.Vector3(-5.4, 6.0, -0.6), 'Building money · from the state'); M.fadeIn(tl, '#lBlue', bd + 1.6, { y: 6 });
+    card('cInvest', 96, 300, 'Building money from the states', '~½', 'of what hospitals need', 'DKG, the hospitals’ association', 'amber', 360);
+    show(tl, '#cInvest', w('about half') - 0.1);
+    hide(tl, ['#cInvest', '#lBlue'], w('Two in three') - 0.3);
+    // two in three lost money
+    const tt = w('Two in three');
+    shot(I, tt - 0.3, S('hospitalLow', { dist: 19, angle: 1.95 }), { dist: 16.5, angle: 1.75 });
+    tl.to(I.state, { day: 0.55, duration: 3 }, tt);
+    card('cLoss', 96, 300, 'Hospitals losing money', '2 in 3', 'in 2024 (survey of 376 general hospitals)', 'DKI, the hospitals’ institute', 'coral', 380);
+    show(tl, '#cLoss', tt + 0.1);
+    hide(tl, '#cLoss', w('In Saarbrücken') - 0.3);
+    // Saarbrücken: €15.4m from the city (one coin = €1m)
+    const sb = use('city', () => coinsSet(envMap, { value: 15.4, perStack: 16, cols: 1, coin: 0.55 }));
+    const sa = w('In Saarbrücken');
+    tl.set(sb.state, { fill: 0 }, 0); tl.to(sb.state, { fill: 1, duration: w('15') + 1.0 - sa, ease: 'power1.inOut' }, sa - 0.1);
+    shot(sb, sa - 0.3, { angle: 1.2, tilt: 0.3, dist: 10, tx: 0, ty: 1.0, tz: 0, fov: 30 }, { angle: 1.5, tilt: 0.24, dist: 9 });
+    card('cCity', 96, 300, 'Saarbrücken · 2026', '€15.4m', 'from the city to keep its hospital steady (the whole hospital, not one operation)', 'City of Saarbrücken budget · each coin = €1m', 'amber', 420);
+    show(tl, '#cCity', w('15') + 0.4);
+    hide(tl, '#cCity', K.at(3) - 0.3);
+    // not powerless: who goes home, how theatres run
+    const np = w('not powerless');
+    tl.set(ward.state, { night: 0.3, er: 1, op: 1, ward: 1, surgery: 1, overnight: 0.25, ambulance: 0, clock: 9.5 }, K.at(3) - 0.31);
+    shot(ward, K.at(3) - 0.3, { angle: 1.85, tilt: 0.16, dist: 15, tx: 0, ty: 2.9, tz: 0, fov: 30 }, { angle: 1.6, tilt: 0.12, dist: 12 });
+    card('cPower', 96, 300, 'But', 'Not powerless', 'hospitals still choose which patients go home, how their theatres run, who they work with', '', '', 430);
+    show(tl, '#cPower', np - 0.1);
+    hide(tl, '#cPower', K.at(4) - 0.3);
+    // the beam moves on
+    shot(I, K.at(4) - 0.3, S('wide', { dist: 46, angle: 1.2, tilt: 0.5 }), { dist: 50, angle: 1.0 });
+    tl.to(I.beam, { on: 0.6, duration: 0.6 }, K.at(4));
+    beamTo(tl, 'practice', K.at(4) + 0.3, 1.4);
+  } },
+
+  // ---------------------------------------------------------------- 5 · the surgeons
+  6: { voiceAt: 2.0, build(tl) {
+    baseState(6);
+    const ward = use('ward', () => wardSet(envMap));
+    chapterCard('Chapter 5 · The surgeons', '“The price ignores what surgery takes.”'); showChapter(tl, 0.4, w('Most agree') + 0.4);
+    tl.set(ward.state, { night: 0.15, er: 1, op: 1, ward: 1, surgery: 1, overnight: 0, resident: 0, ambulance: 0, clock: 8.2 }, 0);
+    tl.to(ward.state, { clock: 9.4, duration: 20, ease: 'none' }, 0);
+    shot(ward, 0, { angle: 1.25, tilt: 0.18, dist: 14, tx: 0, ty: 2.8, tz: 0, fov: 30 }, { angle: 1.5, tilt: 0.12, dist: 9 }, { dip: false });
+    // keyhole surgery: recommended, costs more on the day
+    const kh = w('keyhole surgery');
+    shot(ward, w('but the recommended') - 0.3, { angle: 1.9, tilt: 0.06, dist: 7, tx: -0.8, ty: 3.0, tz: 0, fov: 30 }, { angle: 1.7, dist: 6.2 });
+    label('lLap', ward, () => new THREE.Vector3(-2.4, 4.0, -1.3), 'Keyhole camera'); M.fadeIn(tl, '#lLap', kh + 0.3, { y: 6 });
+    card('cKey', 96, 300, 'Keyhole repair with mesh', 'Recommended', 'for a one-sided groin hernia: less pain afterwards, more cost on the day', 'HerniaSurge 2023', '', 420);
+    show(tl, '#cKey', kh + 0.2, w('In Germany') - 0.3);
+    hide(tl, '#lLap', w('In Germany') - 0.3);
+    // 72% vs 34%
+    const lp = use('lap', () => barsSet(envMap, { bars: [{ v: 72, color: 0x7fe0cf }, { v: 34, color: 0xf6b55b }], max: 80, height: 4.2, width: 1.7, gap: 1.6 }));
+    const ig = w('In Germany');
+    shot(lp, ig - 0.3, { angle: 1.85, tilt: 0.2, dist: 13, tx: 0, ty: 1.9, tz: 0, fov: 30 }, { angle: 1.55, tilt: 0.15, dist: 11.5 });
+    grow(lp, 'b0', ig - 0.15, w('three quarters') + 0.5); grow(lp, 'b1', w('three quarters') + 0.4, w('only a third') + 0.5);
+    dataLabel('dIn', lp, () => lp.anchor('bar0'), '72%', 'inpatient', 'teal'); dataLabel('dOut', lp, () => lp.anchor('bar1'), '34%', 'outpatient', 'amber');
+    show(tl, '#dIn', w('three quarters') + 0.4); show(tl, '#dOut', w('only a third') + 0.4);
+    card('cKeySrc', 96, 84, 'Keyhole share of groin hernia repairs · 2019', '', '', 'Herniamed · patient groups differ', '', 560); gsap.set('#cKeySrc .v', { display: 'none' });
+    show(tl, '#cKeySrc', ig + 0.4);
+    card('cDk', 1340, 300, 'Denmark', 'Keyhole + same day', 'almost all groin hernias are outpatient; keyhole is the standard', 'Danish consensus 2025', '', 440);
+    show(tl, '#cDk', w('In Denmark') + 0.1);
+    hide(tl, ['#cKeySrc', '#cDk'], K.at(1) - 0.3);
+    // the next surgeon has to learn
+    const ns = w('the next surgeon');
+    tl.set(ward.state, { resident: 0 }, 0); tl.to(ward.state, { resident: 1, duration: 1.0, ease: 'back.out(1.6)' }, ns + 0.3);
+    shot(ward, K.at(1) - 0.3, { angle: 1.35, tilt: 0.1, dist: 8, tx: -0.4, ty: 2.8, tz: 0, fov: 30 }, { angle: 1.55, dist: 7 });
+    label('lRes', ward, () => new THREE.Vector3(-1.1, 4.25, 0.7), 'Resident'); M.fadeIn(tl, '#lRes', ns + 0.8, { y: 6 });
+    hide(tl, '#lRes', w('Supervised residents') + 0.9);
+    // 94 vs 70 minutes
+    const mn = use('minutes', () => barsSet(envMap, { bars: [{ v: 94, color: 0xf6b55b }, { v: 70, color: 0x7fe0cf }], max: 100, height: 4.4, width: 1.7, gap: 1.6 }));
+    const sr = w('Supervised residents');
+    shot(mn, sr - 0.2, { angle: 1.35, tilt: 0.22, dist: 13, tx: 0, ty: 2.0, tz: 0, fov: 30 }, { angle: 1.6, tilt: 0.14, dist: 11.5 });
+    grow(mn, 'b0', sr - 0.05, w('94') + 0.5); grow(mn, 'b1', w('94') + 0.5, w('70') + 0.5);
+    dataLabel('dR', mn, () => mn.anchor('bar0'), '94 min', 'resident, supervised', 'amber'); dataLabel('dX', mn, () => mn.anchor('bar1'), '70 min', 'experienced', 'teal');
+    show(tl, '#dR', w('94') + 0.4); show(tl, '#dX', w('70') + 0.4);
+    card('cTrain', 96, 300, 'Keyhole repair · operating time', '+24 min', 'to train the next surgeon, with no extra complications. The price has no line for it.', 'Frankfurt study, 2025 · DHG, the surgeons’ society, 2024', 'amber', 430);
+    show(tl, '#cTrain', w('The price has no line') - 0.1);
+    hide(tl, '#cTrain', K.at(2) - 0.3);
+    // so, the government?
+    shot(I, K.at(2) - 0.3, S('high', { dist: 56, angle: 1.1 }), { ...I.SHOTS.berlin, dist: 30, angle: 2.0, tilt: 0.5 }, { ease: 'power2.inOut' });
+    tl.to(I.beam, { on: 0.9, duration: 0.6 }, K.at(2)); tl.set(I.beam, { x: I.B_POS('practice').x, z: I.B_POS('practice').z }, 0);
+    beamTo(tl, 'berlin', K.at(2) + 0.4, 1.6);
+  } },
+
+  // ---------------------------------------------------------------- 6 · up the chain
+  7: { voiceAt: 2.0, build(tl) {
+    baseState(7);
+    chapterCard('Chapter 6 · Up the chain', '“Not us.”'); showChapter(tl, 0.4, w('Berlin writes') - 0.2);
+    shot(I, 0, S('high', { dist: 62, angle: 0.95 }), { dist: 56, angle: 1.2 }, { dip: false });
+    tl.to(I.state, { decisions: 1, duration: 2.5 }, w('the decisions upward') - 0.2); M.cue(w('the decisions upward'), 'swell', 0.6);
+    tl.set(I.beam, { x: I.B_POS('berlin').x, z: I.B_POS('berlin').z }, 0);
+    // Berlin
+    const bw = w('Berlin writes');
+    shot(I, bw - 0.3, S('berlin', { dist: 24, angle: 2.2 }), { dist: 19.5, angle: 1.95 });
+    tl.to(I.beam, { on: 1, duration: 0.8 }, bw);
+    card('cFed', 1340, 300, 'Berlin writes the rules', 'One price · readiness pay', 'and a transformation fund of up to €50bn to 2035', 'KHPflEG · KHVVG / KHAG · BAS', '', 440);
+    show(tl, '#cFed', w('The single price') - 0.1, w('a fund of') - 0.3);
+    // €50bn fund: coins, one coin = €1bn
+    const fd = use('fund', () => coinsSet(envMap, { value: 50, perStack: 25, cols: 2, coin: 0.5 }));
+    const fo = w('a fund of');
+    tl.set(fd.state, { fill: 0 }, 0); tl.to(fd.state, { fill: 1, duration: w('50') + 0.9 - fo, ease: 'power1.inOut' }, fo - 0.1);
+    shot(fd, fo - 0.3, { angle: 1.15, tilt: 0.34, dist: 11, tx: 0, ty: 1.3, tz: 0, fov: 30 }, { angle: 1.45, tilt: 0.28, dist: 10 });
+    card('cFund', 96, 300, 'Transformation fund', 'up to €50bn', 'to 2035, to help hospitals restructure', 'BAS · each coin = €1bn', 'amber', 380);
+    show(tl, '#cFund', w('50') + 0.3);
+    hide(tl, '#cFund', w('It argues') - 0.3);
+    // too many beds: 759 vs 507
+    const bb = use('beds', () => barsSet(envMap, { bars: [{ v: 759, color: 0xf6b55b }, { v: 507, color: 0x7fe0cf }], max: 800, height: 4.4, width: 1.7, gap: 1.6 }));
+    const ia = w('It argues');
+    shot(bb, ia - 0.3, { angle: 1.3, tilt: 0.2, dist: 13, tx: 0, ty: 2.0, tz: 0, fov: 30 }, { angle: 1.6, tilt: 0.14, dist: 11.5 });
+    grow(bb, 'b0', ia - 0.15, w('too many beds') + 0.5); grow(bb, 'b1', ia, w('too many beds') + 0.6);
+    dataLabel('dDe', bb, () => bb.anchor('bar0'), '759', 'Germany', 'amber'); dataLabel('dEu', bb, () => bb.anchor('bar1'), '507', 'EU average', 'teal');
+    show(tl, ['#dDe', '#dEu'], w('too many beds') + 0.6);
+    card('cBedsK', 96, 84, 'Hospital beds per 100,000 people · 2024', '', '', 'Eurostat', '', 520); gsap.set('#cBedsK .v', { display: 'none' });
+    show(tl, '#cBedsK', ia + 0.3, K.at(1) - 0.3);
+    // the states
+    shot(I, K.at(1) - 0.3, S('state', { dist: 24, angle: 1.55 }), { dist: 19.5, angle: 1.35 });
+    beamTo(tl, 'state', K.at(1) - 0.2, 1);
+    card('cStates', 96, 300, 'The states', 'Plan + build', '7 states pushed back on the 2024 reform as federal overreach', 'Bundesrat, Nov 2024', '', 400);
+    show(tl, '#cStates', w('The states plan') + 0.3, K.at(2) - 0.3);
+    // ping-pong: Berlin, states, negotiators, the law
+    const hops = ['berlin', 'state', 'berlin', 'table', 'law'];
+    const pp = use('pingpong', () => pingpongSet(envMap, hops));
+    const t0 = K.at(2);
+    tl.set(pp.state, { hop: 0, ball: 0 }, 0);
+    tl.to(pp.state, { ball: 1, duration: 0.3 }, t0 - 0.2);
+    const legs = [[w('Berlin points to'), we('to the states')], [w('The states point'), we('to Berlin', w('The states point'))], [w('Both point'), we('the negotiators')], [w('The negotiators point'), we('the law')]];
+    legs.forEach(([a, b], i) => { FT(tl, pp.state, { hop: i }, { hop: i + 1, duration: Math.max(0.5, b - a - 0.1), ease: 'power1.inOut' }, a + 0.1); M.cue(b, 'tick', 0.6); });
+    shot(pp, t0 - 0.3, { angle: Math.PI / 2, tilt: 0.42, dist: 23, tx: 0, ty: 1.4, tz: 0, fov: 30 }, { angle: 1.4, tilt: 0.34, dist: 20 });
+    [['lB', 'berlin', 'Berlin'], ['lS', 'state', 'The states'], ['lT', 'table', 'Negotiators'], ['lL', 'law', 'The law']].forEach(([id, n, t]) => label(id, pp, () => pp.anchor(n), t));
+    M.fadeIn(tl, ['#lB', '#lS'], t0 + 0.2, { y: 6 }); M.fadeIn(tl, '#lT', w('Both point'), { y: 6 }); M.fadeIn(tl, '#lL', w('The negotiators point'), { y: 6 });
+    // step back: the whole machine
+    const sb = w('Step back');
+    shot(I, sb - 0.3, S('high', { dist: 40, angle: 1.3, tilt: 0.75 }), { dist: 64, angle: 1.05, tilt: 0.95 }, { dur: 6, ease: 'power2.inOut' });
+    tl.to(I.beam, { on: 0, duration: 0.6 }, sb - 0.3);
+    label('lBe', I, isl('berlin', 4.4), 'Berlin · rules'); label('lSt', I, isl('state', 4.6), 'State · planning + buildings');
+    label('lIn', I, isl('insurers', 7.8), 'Insurers · treatment money'); label('lTa', I, isl('table', 2.6), 'Price table');
+    label('lHo2', I, isl('hospital', 5.2), 'Hospital'); label('lPr', I, isl('practice', 2.0), 'Practice'); label('lHm', I, isl('home', 2.4), 'Home');
+    M.fadeIn(tl, ['#lBe', '#lSt', '#lIn', '#lTa', '#lHo2', '#lPr', '#lHm'], sb + 1.2, { y: 6 });
+    card('cPipes', 1340, 300, 'Two pipes, never joined', 'Blue ≠ amber', 'building money from the states · treatment money from the insurers', '', '', 440);
+    show(tl, '#cPipes', w('different pipes') - 0.2);
+    hide(tl, '#cPipes', w('No one owns') - 0.3);
+    hide(tl, ['#lBe', '#lSt', '#lIn', '#lTa', '#lHo2', '#lPr', '#lHm'], w('No one owns') - 0.3);
+    // no one owns the whole journey: follow one patient through it
+    const no = w('No one owns');
+    FT(tl, I.state, { journey: 0.02 }, { journey: 0.98, duration: K.end(3) - no + 1.0, ease: 'none' }, no - 0.3);
+    shot(I, no - 0.3, { angle: 1.25, tilt: 0.42, dist: 11, tx: 0, ty: 0.6, tz: 0, fov: 30, follow: 1 }, { angle: 1.75, tilt: 0.3, dist: 12 });
+    tl.set(I.rig, { follow: 0 }, K.at(4) - 0.3);
+    label('jP', I, isl('practice', 2.0), 'Practice'); label('jT', I, isl('hospital', 5.0), 'Theatre'); label('jH', I, isl('home', 2.4), 'Home');
+    M.fadeIn(tl, '#jP', w("the doctor's practice") - 0.1, { y: 6 }); M.fadeIn(tl, '#jT', w('operating theater') - 0.1, { y: 6 }); M.fadeIn(tl, '#jH', w('bed at home') - 0.1, { y: 6 });
+    hide(tl, ['#jP', '#jT', '#jH'], K.at(4) - 0.3);
+    // in a machine like this: the beam has nowhere to land
+    shot(I, K.at(4) - 0.3, S('high', { dist: 70, angle: 1.0, tilt: 1.0 }), { dist: 76, angle: 1.25 });
+    tl.to(I.state, { day: 0.3, duration: 4 }, K.at(4));
+    tl.set(I.beam, { x: I.B_POS('table').x, z: I.B_POS('table').z }, K.at(4) - 0.31);
+    tl.to(I.beam, { keyframes: { on: [0, 1, 0.3, 0.8, 0.15, 0.6, 0.1, 0.35, 0] }, duration: 2.6, ease: 'none' }, w('blame never') - 0.2);
+    ['berlin', 'state', 'insurers', 'hospital'].forEach((b, i) => beamTo(tl, b, w('blame never') + i * 0.55, 0.45));
+  } },
+
+  // ---------------------------------------------------------------- 7 · the verdict
+  8: { voiceAt: 2.0, build(tl) {
+    baseState(8);
+    chapterCard('Chapter 7 · The verdict', 'So who is to blame?'); showChapter(tl, 0.4, K.at(1) - 0.3);
+    shot(I, 0, S('high', { dist: 70, angle: 0.95 }), { dist: 58, angle: 1.2, tilt: 0.8 }, { dip: false });
+    const ly = use('layers', () => layersSet(envMap));
+    tl.set(ly.state, { l1: 0, l2: 0, l3: 0, f1: 0, f2: 0, f3: 0, lever: 0 }, 0);
+    const layer = (id, top, color, n, h, s) => html(`<div class="vlayer" id="${id}" style="top:${top}px"><div class="n" style="color:${color}">${n}</div><div class="h">${h}</div><div class="s">${s}</div></div>`);
+    // layer 1: forces
+    const l1 = K.at(1);
+    tl.to(ly.state, { l1: 1, f1: 1, duration: 1.4, ease: 'power2.out' }, l1 - 0.2);
+    shot(ly, l1 - 0.3, { angle: 1.35, tilt: 0.12, dist: 15, tx: 0, ty: 1.2, tz: 0, fov: 30 }, { angle: 1.55, tilt: 0.2, dist: 13 });
+    layer('L1', 260, 'rgba(160,225,230,0.9)', 'Layer 1 · Forces', 'No one’s fault', 'an older country and a slower economy squeeze everyone at once');
+    show(tl, '#L1', l1 + 0.6, K.at(2) - 0.3);
+    // layer 2: design
+    const l2 = K.at(2);
+    tl.to(ly.state, { l2: 1, f2: 1, f1: 0.2, duration: 1.4, ease: 'power2.out' }, l2 - 0.2);
+    shot(ly, l2 - 0.3, { angle: 1.75, tilt: 0.22, dist: 15, tx: 0, ty: 2.6, tz: 0, fov: 30 }, { angle: 1.5, tilt: 0.26, dist: 14 });
+    layer('L2', 260, '#8cc3dd', 'Layer 2 · Design', 'Split responsibility', 'two capitals, two pipes and a negotiating table: every problem can be passed along');
+    show(tl, '#L2', l2 + 0.6, K.at(3) - 0.3);
+    // layer 3: choices, each one a lever that can be moved
+    const l3 = K.at(3);
+    tl.to(ly.state, { l3: 1, f3: 1, f2: 0.2, duration: 1.4, ease: 'power2.out' }, l3 - 0.2);
+    shot(ly, l3 - 0.3, { angle: 1.3, tilt: 0.3, dist: 16, tx: 0, ty: 3.4, tz: 0, fov: 30 }, { angle: 1.57, tilt: 0.42, dist: 11, ty: 4.6 });
+    html(`<div class="vlayer" id="L3" style="top:220px"><div class="n" style="color:#ffd08a">Layer 3 · Choices</div><div class="h">Can be changed</div><ol>
+      <li>A price with nothing for training or the hardest cases</li><li>Readiness money moved, not added</li><li>Buildings the states pay for only in part</li><li>Years of rules that made the night the default</li></ol></div>`);
+    show(tl, '#L3', l3 + 0.5);
+    const ch = [w('A price that pays'), w('A readiness payment that'), w('Buildings the states'), w('Rules that for years')];
+    ch.forEach((t, i) => { M.fadeIn(tl, `#L3 li:nth-child(${i + 1})`, t, { y: 6, dur: 0.5 }); tl.to(ly.state, { lever: i + 1, duration: 0.6, ease: 'back.out(2)' }, t + 0.2); M.cue(t + 0.3, 'tick', 0.7); });
+    hide(tl, '#L3', K.at(4) - 0.3);
+    // the direction is right: patients walking safely home
+    const di = w('The direction');
+    tl.set(I.state, { tokens: 0, day: 0.25 }, di - 0.31); tl.to(I.state, { tokens: 0.7, duration: 7, ease: 'none' }, di - 0.3);
+    shot(I, di - 0.3, S('road', { dist: 22, angle: 1.2, tilt: 0.3 }), { dist: 19, angle: 1.45, tilt: 0.26 });
+    // the pressure is real
+    const pr = w('The pressure is real');
+    meterEl(['Ageing population', 'Costs growing faster than income', 'Economy barely growing']);
+    meterState.v = 0.8; paintMeter();
+    gsap.set('#meter li', { autoAlpha: 1 });
+    show(tl, '#meter', pr - 0.1, w('But blame') - 0.2);
+    // ownership: one pipe joins the whole journey; the home lights up
+    const ow = w('ownership');
+    shot(I, w('But blame') - 0.3, S('wide', { dist: 50, angle: 1.0, tilt: 0.55 }), { dist: 44, angle: 1.3, tilt: 0.5 });
+    tl.to(I.state, { whole: 1, duration: 4.5, ease: 'power2.inOut' }, ow); M.cue(ow, 'swell', 0.7);
+    tl.to(I.state, { day: 0.05, duration: 4 }, w('But blame'));
+    label('lWhole', I, () => new THREE.Vector3(-0.5, 6.4, 7.2), 'One journey · one owner'); M.fadeIn(tl, '#lWhole', ow + 2.4, { y: 6 });
+    hide(tl, '#lWhole', w('patient in that home') - 1.6);
+    const ph = w('patient in that home');
+    shot(I, ph - 1.5, S('home', { dist: 18, angle: 0.55, tilt: 0.66 }), { dist: 13.5, angle: 0.7, tilt: 0.58 }, { ease: 'power2.inOut' });
+    tl.to(I.state, { homeLit: 1, duration: 1.4 }, we('in that home') - 0.4);
+    // until someone owns that
+    const un = K.at(5);
+    shot(I, un - 0.3, S('wide', { dist: 40, angle: 1.3, tilt: 0.5 }), { dist: 62, angle: 1.0, tilt: 0.7 });
+    tl.set(I.beam, { x: I.B_POS('hospital').x, z: I.B_POS('hospital').z }, un - 0.31);
+    tl.to(I.beam, { on: 0.7, duration: 0.5 }, w('keep pointing') - 0.4);
+    ['insurers', 'berlin', 'state', 'practice', 'hospital', 'insurers'].forEach((b, i) => beamTo(tl, b, w('keep pointing') + i * 0.4, 0.35));
+  } },
+
+  // ---------------------------------------------------------------- end card
+  9: { voiceAt: 0, duration: 14, build(tl) {
+    baseState(9);
+    shot(I, 0, S('wide', { dist: 60, angle: 0.95, tilt: 0.55 }), { angle: 1.4 }, { dip: false, cue: false });
+    html(`<div class="card" id="cEnd" style="left:50%; top:50%; width:1120px; text-align:center">
+      <div class="k">Pass the Blame</div><div class="v" style="font-family:var(--serif); font-weight:300; font-size:58px; margin-top:14px">Until someone owns the whole journey,<br>everyone will keep pointing.</div>
+      <div class="src" style="font-size:16px; margin-top:28px; line-height:1.6">Positions are summaries of each side's published stance. Facts as of 3 October 2026.<br>
+      Sources: Destatis · BMG · Joint Economic Forecast · Eurostat · Herniamed · NHS HES · Swedish Hernia Register · Danish consensus 2025 · HerniaSurge · HerStAmb ·<br>
+      Oehler et al. 2025 · DHG · WIdO/AOK · KBV · GKV-Spitzenverband · DKG/DKI · BAS · Bundesrat · Saarland ministry · Klinikum Saarbrücken · City of Saarbrücken.<br>
+      Narration: AI voice (OpenAI). Animation rendered in code.</div></div>`);
+    gsap.set('#cEnd', { xPercent: -50, yPercent: -50 });
+    M.fadeIn(tl, '#cEnd', 0.8, { y: 20, dur: 1.2 });
+  } },
+};
+
+// =====================================================================================
+const C = CHAPTERS[CH];
+const key = CH <= 8 ? `ptb-0${CH}` : null;
+const segs = key ? window.TIMINGS[key] : null;
+VOICE_AT = C.voiceAt; WORDS = key ? window.WORDS[key].filter((x) => norm(x.w)) : [];
+const DURATION = C.duration ?? +(VOICE_AT + segs[segs.length - 1].end + (C.tail ?? 2.2)).toFixed(2);
+const dip = document.getElementById('dip');
+const v3 = new THREE.Vector3();
+let lastSet = null;
+
+M.scene({
+  duration: DURATION, key, voiceAt: VOICE_AT, fadeIn: CH === 1 ? 1.2 : 0.7, fadeOut: 0.7,
+  build(tl, k) { TL = tl; K = k; C.build(tl, k); finishShots(); },
+  afterSeek(t) {
+    // the active shot
+    let i = 0; while (i + 1 < cuts.length && cuts[i + 1].t <= t) i++;
+    const c = cuts[i], set = c.set;
+    set.update(t);
+    const p = set === I ? { ...I.post, threshold: 0.95 + 0.45 * I.state.day } : set.post;
+    post.render(set.scene, set.camera, p);
+    // a short dip to navy across each cut
+    let d = 0;
+    for (const x of cuts) if (x.dip && x.t > 0.05) d = Math.max(d, 1 - Math.abs(t - x.t) / 0.2);
+    dip.style.opacity = Math.max(0, d).toFixed(3);
+    // pinned labels follow their 3D anchors; hidden while their set is off screen
+    for (const pn of pins) {
+      if (pn.set !== set) { pn.el.style.display = 'none'; continue; }
+      pn.el.style.display = '';
+      v3.copy(pn.at()).project(set.camera);
+      pn.el.style.left = `${(v3.x * 0.5 + 0.5) * 1920}px`; pn.el.style.top = `${(-v3.y * 0.5 + 0.5) * 1080}px`;
+    }
+    lastSet = set;
+  },
+});
+window.CHAPTER = { CH, duration: DURATION, voiceAt: VOICE_AT, cuts: () => cuts.map((c) => +c.t.toFixed(2)) };
+</script>
+</body>
+</html>
