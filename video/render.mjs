@@ -7,6 +7,8 @@
 //   --preview           fast draft: half resolution, 15 fps, JPEG frames (for motion review)
 //   --scale 0.5         render at a fraction of full resolution
 //   --fps 15            override the scene's frame rate
+//   --frames 0:192      render only frames [a, b) of the scene (for chunked, resumable renders)
+//   --info              print { duration, fps, frames } as JSON and exit
 //
 // A scene must define:
 //   window.VIDEO = { width, height, fps, duration }   // duration in seconds
@@ -50,7 +52,10 @@ await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const base = `http://127.0.0.1:${server.address().port}`;
 
 // SwiftShader gives WebGL (Three.js) in headless Chromium without a GPU.
-const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+// GPU=1 tries the machine's real GPU (full Chromium in new headless mode); otherwise SwiftShader (CPU) is used.
+const browser = await chromium.launch(process.env.GPU
+  ? { channel: 'chromium', args: ['--ignore-gpu-blocklist', '--enable-gpu'] }
+  : { args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const page = await browser.newPage({ deviceScaleFactor: scale });
 // Tells the scene not to start its own realtime playback loop.
 await page.addInitScript(() => { window.__RENDER__ = true; });
@@ -64,6 +69,9 @@ const { width, height, duration } = video;
 const fps = Number(flag('fps') ?? (preview ? 15 : video.fps));
 await page.setViewportSize({ width, height });
 const frames = Math.round(duration * fps);
+if (args.includes('--info')) { console.log(JSON.stringify({ duration, fps, frames })); await browser.close(); server.close(); process.exit(0); }
+const [f0, f1] = (flag('frames') ?? `0:${frames}`).split(':').map(Number);
+const first = Math.max(0, f0), last = Math.min(frames, f1);
 
 const cues = await page.evaluate(() => window.CUES || []);
 if (cues.length) writeFileSync(out.replace(/\.mp4$/, '.cues.json'), JSON.stringify(cues, null, 1) + '\n');
@@ -78,15 +86,15 @@ const done = new Promise((resolve, reject) =>
   ffmpeg.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`ffmpeg exited ${code}`)))));
 
 const started = Date.now();
-for (let i = 0; i < frames; i++) {
+for (let i = first; i < last; i++) {
   await page.evaluate((t) => window.seek(t), i / fps);
   const img = await page.screenshot({ type: imageType, quality: preview ? 85 : undefined, clip: { x: 0, y: 0, width, height } });
   if (!ffmpeg.stdin.write(img)) await new Promise((r) => ffmpeg.stdin.once('drain', r));
-  if (i % fps === 0) process.stdout.write(`\rframe ${i + 1}/${frames}`);
+  if (i % fps === 0) process.stdout.write(`\rframe ${i + 1}/${last}`);
 }
 ffmpeg.stdin.end();
 await done;
 await browser.close();
 server.close();
-console.log(`\rrendered ${frames} frames (${Math.round(width * scale)}x${Math.round(height * scale)}@${fps}) to ${out} in ${((Date.now() - started) / 1000).toFixed(1)}s` +
+console.log(`\rrendered ${last - first} frames (${Math.round(width * scale)}x${Math.round(height * scale)}@${fps}) to ${out} in ${((Date.now() - started) / 1000).toFixed(1)}s` +
   (cues.length ? ` · ${cues.length} sound cues` : ''));

@@ -14,13 +14,26 @@ node narration/build-timings.mjs > /dev/null
 
 voice_at() { case $1 in 1) echo 2.2;; 9) echo -;; *) echo 2.0;; esac; }
 
-render_ch() {
-  local n=$1
-  node render.mjs scenes/pass-the-blame-v2.html --query "?ch=$n$LOQ" $RFLAGS --out "$OUT/ch$n$SUFFIX.mp4" > "$OUT/ch$n$SUFFIX.log" 2>&1
-  echo "chapter $n: $(tail -c 140 "$OUT/ch$n$SUFFIX.log" | tr '\r' '\n' | tail -1)"
+# Render in 8-second chunks: each chunk is written to .part and renamed when complete, so a
+# restarted build skips finished chunks and only redoes the ones cut off.
+CHUNK=${CHUNK:-192}
+mkdir -p "$OUT/chunks$SUFFIX"
+render_chunk() {
+  local n=$1 a=$2 b=$3 f="$OUT/chunks$SUFFIX/ch$1-$(printf %05d $2).mp4"
+  [ -f "$f" ] && return 0
+  node render.mjs scenes/pass-the-blame-v2.html --query "?ch=$n$LOQ" $RFLAGS --frames "$a:$b" --out "${f%.mp4}.part.mp4" > "${f%.mp4}.log" 2>&1 \
+    && mv "${f%.mp4}.part.mp4" "$f" && mv "${f%.mp4}.part.cues.json" "$OUT/ch$n$SUFFIX.cues.json" 2>/dev/null; echo "ch$n $a-$b: $(tail -c 120 "${f%.mp4}.log" | tr '\r' '\n' | tail -1)"
 }
-export -f render_ch; export OUT SUFFIX RFLAGS LOQ
-echo "${CHAPTERS:-1 2 3 4 5 6 7 8 9}" | tr ' ' '\n' | xargs -P "${JOBS:-4}" -I{} bash -c 'render_ch {}'
+export -f render_chunk; export OUT SUFFIX RFLAGS LOQ
+JOBS_LIST=$(for n in ${CHAPTERS:-1 2 3 4 5 6 7 8 9}; do
+  total=$(node render.mjs scenes/pass-the-blame-v2.html --query "?ch=$n$LOQ" $RFLAGS --info | tail -1 | python3 -c "import json,sys; print(json.load(sys.stdin)['frames'])")
+  for ((a = 0; a < total; a += CHUNK)); do echo "$n $a $((a + CHUNK < total ? a + CHUNK : total))"; done
+done)
+echo "$JOBS_LIST" | xargs -P "${JOBS:-4}" -L 1 bash -c 'render_chunk "$0" "$1" "$2"'
+for n in 1 2 3 4 5 6 7 8 9; do
+  ls "$OUT/chunks$SUFFIX"/ch$n-*.mp4 | grep -v part | sed "s|^$OUT/|file '|; s|\$|'|" > "$OUT/ch$n$SUFFIX.list"
+  ffmpeg -y -loglevel error -f concat -safe 0 -i "$OUT/ch$n$SUFFIX.list" -c copy "$OUT/ch$n$SUFFIX.mp4"
+done
 
 # Per-chapter audio: narration placed at its start + synthesised sound cues.
 : > "$OUT/video$SUFFIX.txt"; : > "$OUT/audio$SUFFIX.txt"

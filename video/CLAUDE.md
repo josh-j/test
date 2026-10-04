@@ -73,3 +73,17 @@ put a sound cue on every cut.
 - **3D dioramas (v2):** `scenes/lib/ptb2/` = `kit.js` (renderer, bloom + tilt-shift post, palette, instanced
   foliage, people, cars), `island.js` (the main world) and `sets.js` (close-up studio sets). Pages need an
   importmap for `three` and `three/addons/`. `?lo=1` renders the 3D at half size for drafts.
+
+## Building "Pass the Blame" v2 on your own machine
+
+Needs Node 18+, ffmpeg, Python 3 with numpy (`pip install numpy`). From `video/`:
+
+    npm install && npx playwright install chromium
+    PREVIEW=1 tools/ptb2-build.sh       # draft: half-res 3D, 12 fps (check it first)
+    tools/ptb2-build.sh                 # full: 1080p, 24 fps (FPS=30 for 30 fps)
+
+- `JOBS=8` renders 8 chunks at once (default 4); use about one job per 2 CPU cores.
+- `GPU=1` uses the real GPU instead of SwiftShader; time one chunk with and without it.
+- The build renders 8-second chunks into `out/ptb2/chunks/` and skips finished ones, so just
+  rerun it after an interruption. Output: `out/ptb2/pass-the-blame.mp4` (or `.preview.mp4`).
+- The narration (`narration/ptb-0X.voice.wav`, ad-libs already cut) is committed; no API key needed.
